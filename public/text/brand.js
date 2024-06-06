@@ -1,6 +1,6 @@
 module.exports = {
   agency: {
-    name: 'Agency',
+    name: 'ExertLogics',
     desc: 'Luxiren Agency - React Single Landing Page Template',
     prefix: 'luxiren',
     footerText: 'Luxiren Agency - All Rights Reserved 2021',
