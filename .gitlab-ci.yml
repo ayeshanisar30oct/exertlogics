@@ -1,0 +1,49 @@
+stages:
+  - build
+  - test
+  - deploy
+
+variables:
+  SSH_PRIVATE_KEY: $SSH_PRIVATE_KEY
+  SSH_KNOWN_HOSTS: $SSH_KNOWN_HOSTS
+
+before_script:
+  # Install SSH agent and add private key
+  - 'which ssh-agent || ( apt-get update -y && apt-get install openssh-client -y )'
+  - eval $(ssh-agent -s)
+  - echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add -
+  - mkdir -p ~/.ssh
+  - chmod 700 ~/.ssh
+  - echo "$SSH_KNOWN_HOSTS" > ~/.ssh/known_hosts
+
+cache:
+  paths:
+    - node_modules/
+
+build_job:
+  stage: build
+  image: node:14
+  script:
+    - npm install
+    - npm run build
+  artifacts:
+    paths:
+      - .next
+      - node_modules
+
+test_job:
+  stage: test
+  image: node:14
+  script:
+    - npm install
+    - npm run build
+    - npm test
+
+deploy_job:
+  stage: deploy
+  image: node:14
+  script:
+    - echo "Deploying the project to Hostinger..."
+    - scp -P 65002 -r .next/* u344353325@195.179.236.254:/home/u344353325/domains/exertlogics.com/public_html/web
+  only:
+    - main
