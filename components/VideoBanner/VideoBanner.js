@@ -14,7 +14,9 @@ import { useTranslation } from 'next-i18next';
 import { useText } from 'theme/common';
 import imgApi from 'public/images/imgAPI';
 import yt from 'youtube';
+import routeLink from 'public/text/link';
 import useStyles from './banner-style';
+import Link from '../Link';
 
 function VideoBanner() {
   // Theme breakpoints
@@ -98,15 +100,30 @@ function VideoBanner() {
           <Grid item md={6} xs={12}>
             <div className={classes.bannerText}>
               <div className={classes.title}>
-                <Typography variant="h3" className={cx(classes.textHelper, text.title)}>
-                  {t('agency-landing.banner_title')}
+                <Typography
+                  variant="h3"
+                  className={cx(classes.textHelper, text.title)}
+                >
+                  {t("agency-landing.banner_title")}
                 </Typography>
               </div>
-              <Typography className={cx(classes.subtitle, text.subtitle)} variant="h5">
-                {t('agency-landing.banner_subtitle')}
+              <Typography
+                className={cx(classes.subtitle, text.subtitle)}
+                variant="h5"
+              >
+                {t("agency-landing.banner_subtitle")}
               </Typography>
-              <Button variant="outlined" size="large" color="secondary" className={classes.button}>
-                {t('agency-landing.banner_button')}
+
+              <Button
+                variant="outlined"
+                size="large"
+                color="secondary"
+                target="blank"
+                className={classes.button}
+                component={Link}
+                to={routeLink.agency.contact}
+              >
+                {t("agency-landing.banner_button")}
                 <SendIcon className={classes.icon} />
               </Button>
             </div>
@@ -117,11 +134,17 @@ function VideoBanner() {
                 <div className={classes.videoFigure}>
                   <div className={classes.innerFigure}>
                     {isDesktop && (
-                      <IconButton className={classes.btnPlay} onClick={_onTogglePause} size="large">
+                      <IconButton
+                        className={classes.btnPlay}
+                        onClick={_onTogglePause}
+                        size="large"
+                      >
                         {playCtrl ? <PauseIcon /> : <PlayIcon />}
                       </IconButton>
                     )}
-                    {!play || isMobile ? <img src={imgApi.agency[0]} alt="cover" /> : null}
+                    {!play || isMobile ? (
+                      <img src={imgApi.agency[0]} alt="cover" />
+                    ) : null}
                     <div className={classes.overlay} />
                     {yt.use && (
                       <div className={classes.video}>

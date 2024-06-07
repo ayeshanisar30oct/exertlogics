@@ -9,7 +9,7 @@ import Container from '@mui/material/Container';
 import AnchorLink from 'react-anchor-link-smooth-scroll';
 import Scrollspy from 'react-scrollspy';
 import { useTranslation } from 'next-i18next';
-import logo from 'public/images/agency-logo.svg';
+import logo from '/public/images/el-logo.png';
 import brand from 'public/text/brand';
 import routeLink from 'public/text/link';
 import Link from '../Link';
@@ -71,6 +71,7 @@ function Header(props) {
     createData(navMenu[1], '#' + navMenu[1], 200),
     createData(navMenu[2], '#' + navMenu[2], 200),
     createData(navMenu[3], '#' + navMenu[3], 200),
+    createData(navMenu[4], '#' + navMenu[3], 200),
   ]);
   const [openDrawer, setOpenDrawer] = useState(false);
   const handleOpenDrawer = () => {
@@ -139,11 +140,6 @@ function Header(props) {
                       )}
                     </li>
                   ))}
-                  <li>
-                    <Button component={Link} to={routeLink.agency.contact}>
-                      {t('agency-landing.header_contact')}
-                    </Button>
-                  </li>
                 </Scrollspy>
               )}
               <Settings toggleDark={onToggleDark} toggleDir={onToggleDir} invert={invert} />

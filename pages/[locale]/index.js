@@ -77,7 +77,7 @@ function Landing(props) {
     <React.Fragment>
       <Head>
         <title>
-          { brand.agency.name + ' - Home Page' }
+          { brand.agency.name + ' - Software Agency' }
         </title>
       </Head>
       <CssBaseline />
@@ -103,10 +103,10 @@ function Landing(props) {
             <section className={isMobile ? classes.spaceTopShort : classes.spaceTop} id="testimonials">
               <Testimonials />
             </section>
-            <section id="case-studies">
+            <section id="our-projects">
               <CaseStudies />
             </section>
-            <section className={classes.spaceTopShort} id="call-to-action">
+            <section className={classes.spaceTopShort} id="contact">
               <CallAction />
             </section>
             <section className={classes.spaceTopShort} id="address">

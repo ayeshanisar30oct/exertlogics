@@ -1,7 +1,8 @@
 const link = {
   agency: {
     home: '/',
-    contact: '/contact'
+    banner_button: '/contact',
+    contact: '#contact'
   }
 };
 

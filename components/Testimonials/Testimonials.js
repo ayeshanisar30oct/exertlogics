@@ -4,76 +4,76 @@ import { useTheme } from '@mui/material/styles';
 import Container from '@mui/material/Container';
 import Carousel from 'react-slick';
 import { useTranslation } from 'next-i18next';
+import imgAPI from 'public/images/imgAPI';
 import TestimonialCard from '../Cards/Testimonial';
 import TitleIcon from '../Title/WithIcon';
 import CompanyLogo from '../CompanyLogo';
 import SquareParallax from '../Parallax/SingleSquare';
-import imgAPI from 'public/images/imgAPI';
 import useStyle from './testi-style';
 
 const testiContent = [
   {
     text: 'Sed imperdiet enim ligula, vitae viverra justo porta vel.',
-    avatar: imgAPI.avatar[10],
-    name: 'John Doe',
-    title: 'Chief Digital Officer',
-    rating: 5
-  },
-  {
-    text: 'Cras convallis lacus orci, tristique tincidunt magna consequat in. In vel pulvinar est, at euismod libero.',
-    avatar: imgAPI.avatar[1],
-    name: 'Jean Doe',
-    title: 'Chief Digital Officer',
-    rating: 4
-  },
-  {
-    text: 'Cras convallis lacus orci, tristique tincidunt magna consequat in. In vel pulvinar est, at euismod libero.',
-    avatar: imgAPI.avatar[2],
-    name: 'Jena Doe',
-    title: 'Graphic Designer',
-    rating: 4
-  },
-  {
-    text: 'Sed imperdiet enim ligula, vitae viverra justo porta vel.',
     avatar: imgAPI.avatar[3],
     name: 'Jovelin Doe',
     title: 'Senior Graphic Designer',
-    rating: 3
+    rating: 3,
   },
   {
     text: 'Cras convallis lacus orci, tristique tincidunt magna consequat in. In vel pulvinar est, at euismod libero.',
     avatar: imgAPI.avatar[4],
     name: 'Jihan Doe',
     title: 'CEO Software House',
-    rating: 5
+    rating: 5,
   },
   {
     text: 'Cras convallis lacus orci, tristique tincidunt magna consequat in. In vel pulvinar est, at euismod libero.',
     avatar: imgAPI.avatar[6],
     name: 'Jovelin Doe',
     title: 'Senior Graphic Designer',
-    rating: 5
+    rating: 5,
   },
   {
     text: 'Cras convallis lacus orci, tristique tincidunt magna consequat in. In vel pulvinar est, at euismod libero.',
     avatar: imgAPI.avatar[7],
     name: 'John Doe',
     title: 'Senior Graphic Designer',
-    rating: 4
+    rating: 4,
   },
   {
     text: 'Sed imperdiet enim ligula, vitae viverra justo porta vel.',
     avatar: imgAPI.avatar[10],
     name: 'John Doe',
     title: 'Chief Digital Officer',
-    rating: 5
+    rating: 5,
   },
   {
     text: 'Cras convallis lacus orci, tristique tincidunt magna consequat in. In vel pulvinar est, at euismod libero.',
     avatar: imgAPI.avatar[1],
     name: 'Jean Doe',
     title: 'Chief Digital Officer',
-    rating: 4
+    rating: 4,
+  },
+  {
+    text: 'This team is pretty amazing actually. Stepped in on our 50+ WordPress sites and did a great job on the edits/changes/JS/CSS etc all the front-end stuff.',
+    avatar: imgAPI.avatar[10],
+    name: 'Jeff Venn',
+    title: 'CEO Of CWS',
+    rating: 5,
+  },
+  {
+    text: 'Highly recommended! The guys understood the requirements really well and implementation was quicker and better than I expected.',
+    avatar: imgAPI.avatar[1],
+    name: 'Henna',
+    title: 'CEO Of ITGem',
+    rating: 4,
+  },
+  {
+    text: 'Always a pleasure working with ExertLogics, timely delivery excellent results. Keep up the good job.',
+    avatar: imgAPI.avatar[2],
+    name: 'Edith Muthoni',
+    title: 'Miwok Limited',
+    rating: 4,
   },
 ];
 
