@@ -16,7 +16,7 @@ const useStyles = makeStyles({ uniqId: 'logo' })((theme) => ({
     '& img': {
       height: 64,
       margin: theme.spacing(0, 4),
-      filter: 'grayscale(1) contrast(0.5) brightness(1.5)',
+      // filter: 'grayscale(1) contrast(0.5) brightness(1.5)',
     },
   }
 }));

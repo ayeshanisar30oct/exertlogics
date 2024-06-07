@@ -2,7 +2,8 @@ const menu = [
   'about',
   'services',
   'our-expertise',
-  'case-studies',
+  'our-projects',
+  'contact'
 ];
 
 export default menu;

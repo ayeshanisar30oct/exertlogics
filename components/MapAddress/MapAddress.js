@@ -72,15 +72,15 @@ function MapAdress() {
                   <Grid container>
                     <Grid item sm={6} xs={12}>
                       <PhoneIcon className={classes.icon} />
-                      +123 456 78 91
+                      +92-326-0363688
                     </Grid>
                     <Grid item sm={6} xs={12}>
                       <EmailIcon className={classes.icon} />
-                      hello@luxi.com
+                      info@exertlogics.com
                     </Grid>
                     <Grid item xs={12}>
                       <LocationIcon className={classes.icon} />
-                      Lorem ipsum street no.14 Block A
+                      Building C-21, 16 Lake City Main Blvd, Block M 1 Block, CCD, Lahore, Pakistan
                     </Grid>
                   </Grid>
                 </Paper>
@@ -92,7 +92,7 @@ function MapAdress() {
                 delay={500}
                 duration={0.3}
               >
-                <Paper className={classes.paper}>
+                {/* <Paper className={classes.paper}>
                   <Typography variant="h6" display="block">
                     {t('agency-landing.office_branch')}
                   </Typography>
@@ -110,14 +110,14 @@ function MapAdress() {
                       Lorem ipsum street Block C - Vestibullum Building
                     </Grid>
                   </Grid>
-                </Paper>
+                </Paper> */}
               </ScrollAnimation>
             </div>
           </Grid>
           <Grid item md={6} xs={12}>
             <Paper className={classes.map} elevation={10}>
               <MapWithAMarker
-                googleMapURL="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places"
+                googleMapURL="https://maps.app.goo.gl/mW5jmZG53KPGxhyV6"
                 loadingElement={<div style={{ height: '100%' }} />}
                 containerElement={<div style={{ height: '700px' }} />}
                 mapElement={<div style={{ height: '100%' }} />}

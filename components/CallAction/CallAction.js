@@ -45,7 +45,7 @@ function CallAction() {
               </Grid>
               <Grid item md={3} xs={12}>
                 <Grid container alignItems="center">
-                  <Button component={Link} size="large" variant="outlined" color="secondary" href={linkRoute.agency.contact} className={classes.button}>
+                  <Button target="_blank" component={Link} size="large" variant="outlined" color="secondary" href={linkRoute.agency.contact} className={classes.button}>
                     {t('agency-landing.cta_btn')}
                     <SendIcon className={classes.rightIcon} />
                   </Button>

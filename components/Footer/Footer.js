@@ -13,7 +13,7 @@ import Typography from '@mui/material/Typography';
 import Link from '@mui/material/Link';
 import IconButton from '@mui/material/IconButton';
 import { useTranslation } from 'next-i18next';
-import logo from 'public/images/agency-logo.svg';
+import logo from '/public/images/el-logo.png';
 import brand from 'public/text/brand';
 import { useTextAlign } from 'theme/common';
 import useStyles from './footer-style';
@@ -69,24 +69,43 @@ function Footer(props) {
               {brand.agency.projectName}
             </Typography>
           </div>
-          <Typography color="textPrimary" className={classes.footerDesc} gutterBottom>
-            {t('agency-landing.footer_paragraph')}
+          <Typography
+            color="textPrimary"
+            className={classes.footerDesc}
+            gutterBottom
+          >
+            {t("agency-landing.footer_paragraph")}
           </Typography>
           {isDesktop && <Copyright />}
         </Grid>
         <Grid item xs={12} md={6}>
           <Grid container spacing={4} justify-content="space-evenly">
-            {footers.map(footer => (
-              <Grid item xs={12} md={3} key={footer.title} className={classes.siteMapItem}>
+            {footers.map((footer) => (
+              <Grid
+                item
+                xs={12}
+                md={3}
+                key={footer.title}
+                className={classes.siteMapItem}
+              >
                 {isDesktop && (
                   <div>
-                    <Typography variant="h6" className={classes.title} color="textPrimary" gutterBottom>
+                    <Typography
+                      variant="h6"
+                      className={classes.title}
+                      color="textPrimary"
+                      gutterBottom
+                    >
                       {footer.title}
                     </Typography>
                     <ul>
                       {footer.description.map((item, index) => (
                         <li key={item}>
-                          <Link href={footer.link[index]} variant="subtitle1" color="textSecondary">
+                          <Link
+                            href={footer.link[index]}
+                            variant="subtitle1"
+                            color="textSecondary"
+                          >
                             {item}
                           </Link>
                         </li>
@@ -102,22 +121,26 @@ function Footer(props) {
                     }}
                   >
                     <AccordionSummary
-                      expandIcon={<ExpandMoreIcon className={classes.accordionIcon} />}
+                      expandIcon={
+                        <ExpandMoreIcon className={classes.accordionIcon} />
+                      }
                       aria-controls="panel1a-content"
                       id="panel1a-header"
                       classes={{
                         content: classes.accordionContent,
                       }}
                     >
-                      <strong>
-                        {footer.title}
-                      </strong>
+                      <strong>{footer.title}</strong>
                     </AccordionSummary>
                     <AccordionDetails>
                       <ul>
                         {footer.description.map((item, index) => (
                           <li key={item}>
-                            <Link href={footer.link[index]} variant="subtitle1" color="textSecondary">
+                            <Link
+                              href={footer.link[index]}
+                              variant="subtitle1"
+                              color="textSecondary"
+                            >
                               {item}
                             </Link>
                           </li>
@@ -133,16 +156,40 @@ function Footer(props) {
         <Grid item xs={12} md={3}>
           <div className={classes.socmed}>
             <IconButton aria-label="FB" className={classes.margin} size="small">
-              <i className="ion-logo-twitter" />
+              <a
+                href="https://www.facebook.com/exertlogics/"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <i className="ion-logo-facebook" />
+              </a>
             </IconButton>
             <IconButton aria-label="TW" className={classes.margin} size="small">
-              <i className="ion-logo-facebook" />
+              <a
+                href="https://twitter.com/ExertLogics"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <i className="ion-logo-twitter" />
+              </a>
             </IconButton>
             <IconButton aria-label="IG" className={classes.margin} size="small">
-              <i className="ion-logo-instagram" />
+              <a
+                href="https://twitter.com/ExertLogics"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <i className="ion-logo-instagram" />
+              </a>
             </IconButton>
             <IconButton aria-label="LI" className={classes.margin} size="small">
-              <i className="ion-logo-linkedin" />
+              <a
+                href="https://www.linkedin.com/company/86300689/admin/dashboard/"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <i className="ion-logo-linkedin" />
+              </a>
             </IconButton>
           </div>
           <SelectLang toggleDir={toggleDir} />

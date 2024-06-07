@@ -110,27 +110,6 @@ function Settings(props) {
           </ListItem>
         </List>
         <Divider />
-        <List
-          component="nav"
-          className={classes.langMenu}
-          aria-label="Language-menu"
-          subheader={(
-            <ListSubheader component="div">
-              {t('agency-landing.header_language')}
-            </ListSubheader>
-          )}
-        >
-          {i18nextConfig.i18n.locales.map((locale) => (
-            <LanguageSwitch
-              ssg={i18nextConfig.ssg}
-              locale={locale}
-              key={locale}
-              checked={locale === currentLocale}
-              toggleDir={props.toggleDir}
-              closePopup={handleClose}
-            />
-          ))}
-        </List>
       </Popover>
     </div>
   );

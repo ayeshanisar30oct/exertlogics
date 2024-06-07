@@ -48,12 +48,12 @@ const footerStyles = makeStyles({ uniqId: 'footer' })((theme, _params, classes) 
       padding: theme.spacing(0, 3)
     },
     '& img': {
-      filter: 'grayscale(1) contrast(0.5) brightness(1.5)',
-      width: 48,
+      // filter: 'grayscale(1) contrast(0.5) brightness(1.5)',
+      width: 40,
       marginRight: theme.spacing(),
     },
     '& h6': {
-      color: theme.palette.text.disabled,
+      // color: theme.palette.text.disabled,
     }
   },
   footerDesc: {

@@ -15,31 +15,35 @@ import DotsParallax from '../Parallax/Dots';
 
 const servicesList = [
   {
-    title: 'Lorem Ipsum',
-    desc: 'Proin ac arcu nisl. Duis eu molestie lectus. Nam quis mauris faucibus, aliquet elit eu, rhoncus ipsum.',
-    img: imgApi.agency[2]
-  }, {
-    title: 'Etiam rhoncus',
-    desc: 'Proin quis pellentesque dui. Ut sed leo neque. Nullam aliquet iaculis neque a commodo.',
-    img: imgApi.agency[3]
-  }, {
-    title: 'Duis fermentum',
-    desc: 'Quisque consectetur lectus vel orci porttitor gravida ac eu erat. Nullam accumsan nibh tortor.',
-    img: imgApi.agency[4]
+    title: 'UI/UX Designing',
+    desc: 'The design of your web/mobile app is the first impression of your business. Our highly professional designers will assure you of the impressive outlook of the website/app.',
+    img: imgApi.agency[2],
   },
   {
-    title: 'Lorem Ipsum',
-    desc: 'Proin ac arcu nisl. Duis eu molestie lectus. Nam quis mauris faucibus, aliquet elit eu, rhoncus ipsum.',
-    img: imgApi.agency[2]
-  }, {
-    title: 'Etiam rhoncus',
-    desc: 'Proin quis pellentesque dui. Ut sed leo neque. Nullam aliquet iaculis neque a commodo.',
-    img: imgApi.agency[3]
-  }, {
-    title: 'Duis fermentum',
-    desc: 'Quisque consectetur lectus vel orci porttitor gravida ac eu erat. Nullam accumsan nibh tortor.',
-    img: imgApi.agency[4]
-  }
+    title: 'Mobile Development',
+    desc: 'We have a team of experienced and dedicated mobile app developers who can create a custom app for you, according to your specific requirements.',
+    img: imgApi.agency[3],
+  },
+  {
+    title: 'Web Development',
+    desc: 'We have a team of highly experienced developers who can develop a perfect web solution for clients. Our team is always up to date with the latest technologies so that we can provide our clients with the best!',
+    img: imgApi.agency[4],
+  },
+  {
+    title: 'Marketing | SEO | SEM',
+    desc: 'As marketing has a trivial role in the success of any business. Exertlogics can provide you with great SEO services while staying within the policies of the major search engines.',
+    img: imgApi.agency[2],
+  },
+  {
+    title: 'Data Sciences',
+    desc: 'The key to the quality and success of your web App/website is how your data is managed and optimized. We at Exertlogics can provide you with the best solution for your data design.',
+    img: imgApi.agency[3],
+  },
+  {
+    title: 'E-Commerce Solutions',
+    desc: 'We provide the best e-commerce solutions for your business with scalable solutions and simplified ordering processes and seamless payment methods.',
+    img: imgApi.agency[4],
+  },
 ];
 
 function Services() {
@@ -118,12 +122,12 @@ function Services() {
       <div className={classes.floatingTitle}>
         <Container fixed>
           <div className={classes.title}>
-            <TitleIcon text={t('agency-landing.services_title')} icon="apps" extended />
+            <TitleIcon text={t('agency-landing.services_title')} icon='apps' extended />
             <nav className={classes.arrow}>
-              <Fab size="small" onClick={() => slider.current.slickNext()} aria-label="prev" className={classes.margin}>
+              <Fab size='small' onClick={() => slider.current.slickNext()} aria-label='prev' className={classes.margin}>
                 <PrevIcon />
               </Fab>
-              <Fab size="small" onClick={() => slider.current.slickPrev()} aria-label="next" className={classes.margin}>
+              <Fab size='small' onClick={() => slider.current.slickPrev()} aria-label='next' className={classes.margin}>
                 <NextIcon />
               </Fab>
             </nav>
