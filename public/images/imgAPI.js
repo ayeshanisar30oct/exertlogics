@@ -10,7 +10,7 @@ const imgAPI = {
     '/images/avatars/pp_boy2.svg',
     '/images/avatars/pp_boy3.svg',
     '/images/avatars/pp_boy4.svg',
-    '/images/avatars/pp_boy5.svg'
+    '/images/avatars/pp_boy5.svg',
   ],
   photo: [
     'https://via.placeholder.com/675x900/e1ad92/ffffff',
@@ -30,7 +30,7 @@ const imgAPI = {
   ],
   agency: [
     'https://via.placeholder.com/964x723/1071ef/FFFFFF',
-    'https://via.placeholder.com/1280x825/99d8ff/FFFFFF',
+    'https://res.cloudinary.com/imajin/image/upload/v1568621904/agency/office_building_yrr3le.jpg',
     'https://via.placeholder.com/490x327/ffc999/FFFFFF',
     'https://via.placeholder.com/490x327/ffc999/FFFFFF',
     'https://via.placeholder.com/490x327/ffc999/FFFFFF',
