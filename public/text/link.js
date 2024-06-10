@@ -2,7 +2,7 @@ const link = {
   agency: {
     home: '/',
     banner_button: '/contact',
-    contact: '#contact'
+    contact: '/contact'
   }
 };
 
