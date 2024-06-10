@@ -65,13 +65,13 @@ function Header(props) {
     onToggleDir,
     invert,
   } = props;
- 
+
   const [menuList] = useState([
     createData(navMenu[0], '#' + navMenu[0], 200),
     createData(navMenu[1], '#' + navMenu[1], 200),
     createData(navMenu[2], '#' + navMenu[2], 200),
     createData(navMenu[3], '#' + navMenu[3], 200),
-    createData(navMenu[4], '#' + navMenu[3], 200),
+    createData(navMenu[4], '#' + navMenu[4], 200),
   ]);
   const [openDrawer, setOpenDrawer] = useState(false);
   const handleOpenDrawer = () => {
