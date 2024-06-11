@@ -2,6 +2,7 @@ import connectDB from '../../../backend/db/connectDB';
 import User from '../../../backend/models/User';
 import { validate } from '../../../backend/utils/validation';
 import { registerSchema } from '../../../backend/utils/schemas';
+import { generateAccessToken } from 'backend/utils/JWT/token';
 
 export async function signup(req, res) {
     // Validate the request body
@@ -33,10 +34,13 @@ export async function signup(req, res) {
       });
   
       await user.save();
+      console.log("USER ID :",user.id)
+      const token = await generateAccessToken({id : user.id});
+
   
-      res.status(200).json({ msg: 'User registered successfully' });
+      res.status(200).json({ msg: 'User registered successfully', token });
     } catch (err) {
       console.error(err.message);
-      res.status(500).send('Server Error');
+      res.status(500).send({status:'fail',message: err.message});
     }
   }
