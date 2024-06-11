@@ -126,7 +126,7 @@ function Header(props) {
                 )}
               </div>
             </nav>
-            <nav className={cx(classes.navMenu, invert && classes.invert)}>
+            <nav id="header-nav" className={cx(classes.navMenu, invert && classes.invert)}>
               {isDesktop && (
                 <Scrollspy items={navMenu} currentClassName="active">
                   {menuList.map((item) => (
