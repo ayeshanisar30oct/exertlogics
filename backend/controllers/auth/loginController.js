@@ -2,7 +2,9 @@
 import { validate } from "../../utils/validation";
 import { loginSchema } from "../../utils/schemas";
 import { generateAccessToken } from "../../utils/JWT/token";
-// import connectDB from '../../db/connectDB';
+import connectDB from '../../db/connectDB';
+import { User } from '../../models';
+
 
 export async function login(req, res) {
   // Validate the request body
