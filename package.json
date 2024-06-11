@@ -18,7 +18,8 @@
 		"dev": "next dev -p 3001",
 		"build": "next build",
 		"start": "next start -p 3001",
-		"now-build": "next build"
+		"now-build": "next build",
+		"lint": "eslint ."
 	},
 	"dependencies": {
 		"@babel/core": "^7.16.5",

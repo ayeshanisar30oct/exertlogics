@@ -1,5 +1,5 @@
 "use client";
-import "./css/satoshi.css";
+import "./css/satoshi.module.css";
 // import "./css/style.css";
 import React, { useEffect, useState } from "react";
 import Loader from "./components/common/Loader";
