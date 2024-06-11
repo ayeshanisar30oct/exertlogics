@@ -1,3 +1,4 @@
+import '../public/styles/globals.css';
 import React, { useState, useEffect } from 'react';
 import Head from 'next/head';
 import App from 'next/app';
@@ -23,7 +24,6 @@ import '../vendors/top-loading-bar.css';
 import '../vendors/page-transition.css';
 import '../vendors/slick/slick.css';
 import '../vendors/slick/slick-theme.css';
-import '../public/styles/globals.css';
 
 let themeType = '';
 if (typeof Storage !== 'undefined') { // eslint-disable-line
