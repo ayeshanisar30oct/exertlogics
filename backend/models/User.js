@@ -1,16 +1,18 @@
 import mongoose from 'mongoose';
-import bcrypt from 'bcrypt';
+import bcrypt from 'bcryptjs';
 
 const UserSchema = new mongoose.Schema({
   name: {
     type: String,
     required: true,
+    lowercase: true,
     minlength: 3,
     maxlength: 30,
   },
   email: {
     type: String,
     required: true,
+    lowercase : true,
     unique: true,
   },
   password: {
@@ -21,10 +23,10 @@ const UserSchema = new mongoose.Schema({
       validator: function(v) {
         return /^(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])/.test(v);
       },
-      message: props => 'Password must contain at least one uppercase letter, one digit, and one special character',
+      message: 'Password must contain at least one uppercase letter, one digit, and one special character',
     },
   },
-}, { toJSON: { virtuals: true }, toObject: { virtuals: true } });
+}, { toJSON: { virtuals: true }, toObject: { virtuals: true } },{ timestamps: true });
 
 UserSchema.virtual('confirmPassword')
   .get(function() {
@@ -56,4 +58,7 @@ UserSchema.methods.comparePassword = async function(candidatePassword) {
   return bcrypt.compare(candidatePassword, this.password);
 };
 
-module.exports = mongoose.model('User', UserSchema);
+// Check if the model already exists before defining it
+const User = mongoose.models.User || mongoose.model('User', UserSchema);
+
+module.exports = User;
