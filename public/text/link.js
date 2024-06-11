@@ -1,9 +1,10 @@
 const link = {
   agency: {
-    home: '/',
-    banner_button: '/contact',
-    contact: '/contact',
-    login: '/contact'
+    home: "/",
+    banner_button: "/contact",
+    contact: "/contact",
+    // login: "/dashboard/page",
+    login: "/dashboard/page",
   },
 };
 
