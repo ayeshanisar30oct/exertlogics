@@ -10,7 +10,7 @@ import useStyles from './error-style';
 function Error(props) {
   const { classes } = useStyles();
   const { errCode, text } = props;
-  const { t } = useTranslation('common');
+  const { t } = useTranslation('common');z
 
   return (
     <div className={classes.errorWrap}>
