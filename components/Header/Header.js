@@ -101,14 +101,14 @@ function Header(props) {
                 <IconButton
                   onClick={handleOpenDrawer}
                   className={cx(
-                    "hamburger hamburger--spin",
+                    'hamburger hamburger--spin',
                     classes.mobileMenu,
-                    openDrawer && "is-active"
+                    openDrawer && 'is-active'
                   )}
                   size="large"
                 >
                   <span className="hamburger-box">
-                    <span className={cx(classes.bar, "hamburger-inner")} />
+                    <span className={cx(classes.bar, 'hamburger-inner')} />
                   </span>
                 </IconButton>
               )}
