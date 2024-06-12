@@ -15,6 +15,41 @@ const loginSchema = Joi.object({
   password: Joi.string().min(8).required(),
 });
 
+const homeSchema = Joi.object({
+  title: Joi.string().required(),
+  subTitle: Joi.string().required(),
+  videoUrl: Joi.string().uri().required(),
+});
+
+const logoSchema = Joi.object({
+  logoLightUrl: Joi.string().uri(),
+  logoDarkUrl: Joi.string().uri(),
+  faviconUrl: Joi.string().uri(),
+});
+
+const socialLinksSchema = Joi.object({
+  url: Joi.string().required().messages({
+    'string.base': '"url" should be a type of text',
+    'string.empty': '"url" cannot be an empty field',
+    'any.required': '"url" is a required field',
+  }),
+  type: Joi.string().required().messages({
+    'string.base': '"type" should be a type of text',
+    'string.empty': '"type" cannot be an empty field',
+    'any.required': '"type" is a required field',
+  }),
+});
+
+const footerSchema = Joi.object({
+  id : Joi.string().required(),
+  subTitle: Joi.string().required(),
+  copyrightText: Joi.string().required(),
+  socialLinks: Joi.array().items(socialLinksSchema).messages({
+    'array.base': '"links" should be an array of link objects',
+  }),
+
+});
+
 
 const linkSchema = Joi.object({
   title: Joi.string().required().messages({
@@ -51,4 +86,4 @@ const navBarSchema = Joi.object({
 });
 
 
-export { registerSchema, loginSchema, navBarSchema };
+export { registerSchema, loginSchema, navBarSchema, homeSchema, logoSchema, footerSchema };

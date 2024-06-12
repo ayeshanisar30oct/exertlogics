@@ -2,21 +2,15 @@ import connectDB from "../../../backend/db/connectDB";
 import { validate } from "../../../backend/utils/validation";
 import { navBarSchema } from "backend/utils/schemas";
 import { NavBar } from "../../models";
+import catchAsync from "backend/utils/catchAsync";
 
-
-export const getHeader = async (req, res) => {
-      // Connect to the database
+export const getHeader = catchAsync(async (req, res) => {
+  // Connect to the database
   await connectDB();
 
-    try {
-        const header = await NavBar.findOne({});
-        res.status(200).json({status: 'success', header})
-    } catch (error) {
-        console.error(err.message);
-        res.status(500).send({ status: "fail", message: err.message });
-    }
-}
-
+  const header = await NavBar.findOne({});
+  res.status(200).json({ status: "success", header });
+});
 
 // export async function createHeader(req, res) {
 //   // Validate the request body
@@ -52,7 +46,7 @@ export const getHeader = async (req, res) => {
 // }
 
 // Update Header data
-export const updateHeader = async (req, res) => {
+export const updateHeader = catchAsync(async (req, res) => {
   // Validate the request body
   const { isValid, errors, value } = validate(navBarSchema, req.body);
   if (!isValid) {
@@ -65,20 +59,17 @@ export const updateHeader = async (req, res) => {
   // Connect to the database
   await connectDB();
 
-  try {
-    // console.log("BODY DATA :", value);
-    const navBar = await NavBar.findById(value.id);
-    Object.assign(navBar, value);
-    await navBar.save();
-
-    res.status(200).json({
-        status: "success",
-        message: "Header updated successfully!",
-        navBar,
-      });
-
-  } catch (err) {
-    console.error(err.message);
-    res.status(500).send({ status: "fail", message: err.message });
+  // console.log("BODY DATA :", value);
+  const navBar = await NavBar.findById(value.id);
+  if(!navBar){
+    throw new Error("No data against the ID")
   }
-}
+  Object.assign(navBar, value);
+  await navBar.save();
+
+  res.status(200).json({
+    status: "success",
+    message: "Header updated successfully!",
+    navBar,
+  });
+});
