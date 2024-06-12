@@ -1,7 +1,6 @@
 import {
     getHome,
-    createHome,
-    updateHome,
+    createHome
   } from "../../../backend/controllers/home/homeController";
   
   export default async function handler(req, res) {
