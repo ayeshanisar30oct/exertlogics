@@ -2,9 +2,8 @@
 import { validate } from "../../utils/validation";
 import { loginSchema } from "../../utils/schemas";
 import { generateAccessToken } from "../../utils/JWT/token";
-import connectDB from '../../db/connectDB';
-import { User } from '../../models';
-
+import connectDB from "../../db/connectDB";
+import { User } from "../../models";
 
 export async function login(req, res) {
   // Validate the request body
@@ -27,18 +26,16 @@ export async function login(req, res) {
 
     // Compare the password
     if (!user || !(await user.comparePassword(password))) {
-      return res.status(400).json({ msg: "Invalid credentials" });
+      return res.status(400).json({ staus : 'fail', msg: "Invalid credentials" });
     }
 
     // Generate JWT token
     const payload = {
-      user: {
-        id: user.id,
-      },
+      id: user.id,
     };
     const token = generateAccessToken(payload);
 
-    res.status(200).json({status : 'success' , token });
+    res.status(200).json({ status: "success", token });
   } catch (err) {
     console.error(err.message);
     res.status(500).send("Server Error");
