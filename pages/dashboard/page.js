@@ -1,7 +1,8 @@
 
 import DefaultLayout from "./components/Layouts/DefaultLayout";
 import Navbar from "./components/Navbar";
-import Footer from "./components/Footer";
+import Settings from "./components/Settings";
+
 
 export const metadata = {
   title:
@@ -13,9 +14,8 @@ export default function Home() {
   return (
     <>
       <DefaultLayout>
-        {/* <ECommerce /> */}
-        <Navbar/>
-        <Footer/>
+        {/* <Navbar/> */}
+      <Settings/>
       </DefaultLayout>
     </>
   );
