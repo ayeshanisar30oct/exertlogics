@@ -1,12 +1,12 @@
 import User from './User';
-import NavBar from './Navbar';
+import Header from './Header';
 import Footer from './Footer';
 import Home from './Home';
 import Logo from './Logo';
 
 module.exports = {
   User,
-  NavBar,
+  Header,
   Home,
   Footer,
   Logo,

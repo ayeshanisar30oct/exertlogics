@@ -41,7 +41,6 @@ const socialLinksSchema = Joi.object({
 });
 
 const footerSchema = Joi.object({
-  id : Joi.string().required(),
   subTitle: Joi.string().required(),
   copyrightText: Joi.string().required(),
   socialLinks: Joi.array().items(socialLinksSchema).messages({
@@ -64,16 +63,10 @@ const linkSchema = Joi.object({
   }),
 });
 
-const navBarSchema = Joi.object({
+const headerSchema = Joi.object({
   id: Joi.string().messages({
     'string.base': '"id" should be a type of text',
     'string.empty': '"id" cannot be an empty field',
-  }),
-  logo: Joi.string().uri().required().messages({
-    'string.base': '"logo" should be a type of text',
-    'string.empty': '"logo" cannot be an empty field',
-    'string.uri': '"logo" must be a valid URI',
-    'any.required': '"logo" is a required field',
   }),
   siteTitle: Joi.string().required().messages({
     'string.base': '"siteTitle" should be a type of text',
@@ -86,4 +79,4 @@ const navBarSchema = Joi.object({
 });
 
 
-export { registerSchema, loginSchema, navBarSchema, homeSchema, logoSchema, footerSchema };
+export { registerSchema, loginSchema, headerSchema, homeSchema, logoSchema, footerSchema };

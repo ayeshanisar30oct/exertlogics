@@ -13,11 +13,7 @@ const linkSchema = new Schema({
   },
 });
 
-const navBarSchema = new Schema({
-  logo: {
-    type: String,
-    required: true,
-  },
+const HeaderSchema = new Schema({
   siteTitle: {
     type: String,
     required: true,
@@ -26,6 +22,6 @@ const navBarSchema = new Schema({
 });
 
 // Check if the model already exists before defining it
-const NavBar = mongoose.models.NavBar || mongoose.model('NavBar', navBarSchema);
+const Header = mongoose.models.Header || mongoose.model('Header', HeaderSchema);
 
-module.exports = NavBar;
+module.exports = Header;

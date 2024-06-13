@@ -1,20 +1,25 @@
-import connectDB from "../../../backend/db/connectDB";
-import { validate } from "../../../backend/utils/validation";
-import { navBarSchema } from "backend/utils/schemas";
-import { NavBar } from "../../models";
+import connectDB from "../../db/connectDB";
+import { validate } from "../../utils/validation";
+import { headerSchema } from "backend/utils/schemas";
+import { Header } from "../../models";
 import catchAsync from "backend/utils/catchAsync";
 
 export const getHeader = catchAsync(async (req, res) => {
   // Connect to the database
   await connectDB();
 
-  const header = await NavBar.findOne({});
+  const header = await Header.find({});
+  if (!header.length) {
+    return res
+      .status(200)
+      .json({ status: "success", message: "No data found!" });
+  }
   res.status(200).json({ status: "success", header });
 });
 
 // export async function createHeader(req, res) {
 //   // Validate the request body
-//   const { isValid, errors, value } = validate(navBarSchema, req.body);
+// const { isValid, errors, value } = validate(headerSchema, req.body);
 //   if (!isValid) {
 //     return res.status(400).json({
 //       msg: "Validation error",
@@ -48,7 +53,7 @@ export const getHeader = catchAsync(async (req, res) => {
 // Update Header data
 export const updateHeader = catchAsync(async (req, res) => {
   // Validate the request body
-  const { isValid, errors, value } = validate(navBarSchema, req.body);
+  const { isValid, errors, value } = validate(headerSchema, req.body);
   if (!isValid) {
     return res.status(400).json({
       msg: "Validation error",
@@ -60,16 +65,17 @@ export const updateHeader = catchAsync(async (req, res) => {
   await connectDB();
 
   // console.log("BODY DATA :", value);
-  const navBar = await NavBar.findById(value.id);
-  if(!navBar){
-    throw new Error("No data against the ID")
+  // Find the existing document or create a new one if it doesn't exist
+  let header = await Header.findOne();
+  if (!header) {
+    header = new Header();
   }
-  Object.assign(navBar, value);
-  await navBar.save();
+  Object.assign(header, value);
+  await header.save();
 
   res.status(200).json({
     status: "success",
     message: "Header updated successfully!",
-    navBar,
+    header,
   });
 });

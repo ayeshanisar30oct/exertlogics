@@ -12,7 +12,7 @@ export const getFooter = catchAsync(async (req, res) => {
   res.status(200).json({ status: "success", footer });
 });
 
-export const createFooter = catchAsync(async(req, res) => {
+export const createFooter = catchAsync(async (req, res) => {
   // Validate the request body
   const { isValid, errors, value } = validate(footerSchema, req.body);
   if (!isValid) {
@@ -27,44 +27,44 @@ export const createFooter = catchAsync(async(req, res) => {
   // Connect to the database
   await connectDB();
 
-    console.log("BODY DATA :", value);
-    const footer = new Footer(value);
+  console.log("BODY DATA :", value);
+  const footer = new Footer(value);
 
-    await footer.save();
+  await footer.save();
 
-    res.status(200).json({
-      status: "success",
-      message: "Footer data created successfully!",
-      footer,
-    });
-
+  res.status(200).json({
+    status: "success",
+    message: "Footer data created successfully!",
+    footer,
+  });
 });
 
 // Update Header data
 export const updateFooter = catchAsync(async (req, res) => {
-    // Validate the request body
-    const { isValid, errors, value } = validate(footerSchema, req.body);
-    if (!isValid) {
-      return res.status(400).json({
-        msg: "Validation error",
-        errors,
-      });
-    }
-  
-    // Connect to the database
-    await connectDB();
-  
-    // console.log("BODY DATA :", value);
-    const footer = await Footer.findById(value.id);
-    if(!footer){
-      throw new Error("No data against the ID")
-    }
-    Object.assign(footer, value);
-    await footer.save();
-  
-    res.status(200).json({
-      status: "success",
-      message: "Footer updated successfully!",
-      footer,
+  // Validate the request body
+  const { isValid, errors, value } = validate(footerSchema, req.body);
+  if (!isValid) {
+    return res.status(400).json({
+      msg: "Validation error",
+      errors,
     });
+  }
+
+  // Connect to the database
+  await connectDB();
+
+  // console.log("BODY DATA :", value);
+  let footer = await Footer.findOne();
+  if (!footer) {
+    // Find the existing document or create a new one if it doesn't exist
+    footer = new Footer();
+  }
+  Object.assign(footer, value);
+  await footer.save();
+
+  res.status(200).json({
+    status: "success",
+    message: "Footer updated successfully!",
+    footer,
   });
+});
