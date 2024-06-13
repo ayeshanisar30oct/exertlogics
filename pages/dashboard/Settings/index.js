@@ -1,12 +1,12 @@
-import Logos from "./Logos";
-import Menu from "./Menu";
-import GeneralSettings from "./GeneralSettings";
+// import Logos from "./logos";
+// import Menu from "./Menu";
+import GeneralSettings from "./genral-settings";
 
 export default function Settings() {
   return (
     <>
-    <Logos/>
-    <Menu/>
+    {/* <Logos/>
+    <Menu/> */}
     <GeneralSettings/>
     </>
   );

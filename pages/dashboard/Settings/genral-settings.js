@@ -2,6 +2,7 @@ import Breadcrumb from "../components/Breadcrumbs/Breadcrumb";
 
 import { useEffect, useState } from "react";
 import React from "react";
+import DefaultLayout from "../components/Layouts/DefaultLayout";
 
 const GeneralSettings = () => {
 
@@ -13,6 +14,8 @@ const GeneralSettings = () => {
     const [linkedinURL, setLinkedinURL] = useState();
     const [descriptionData, setDescriptionData] = useState();
     const [copyrightData, setCopyrightData] = useState();
+    const [isLoading, setIsLoading] = useState(false);
+    const [error, setError] = useState(false);
 
 // GET FOOTER DATA
 useEffect(() => {
@@ -68,20 +71,108 @@ const handleInputChange = (e) => {
   setSocialLinks(e.target.value);
 };
 
+  // Handler function to update state
+  const fbInputHandler = (e) => {
+    console.log("FB INPUT :",e.target.value)
+    setFacebookURL(e.target.value);
+
+  };
+const twtInputHandler = (e) => {
+  console.log("Twitter Value :",e.target.value)
+  setTwitterURL(e.target.value);
+  // setSocialLinks(e.target.value);
+};
+const instaInputHandler = (e) => {
+  console.log("Instagram Value :",e.target.value)
+  setInstagramURL(e.target.value);
+  // setSocialLinks(e.target.value);
+};
+const linkedinInputHandler = (e) => {
+  console.log("Twitter Value :",e.target.value)
+  setLinkedinURL(e.target.value);
+  // setSocialLinks(e.target.value);
+};
+const descInputHandler = (e) => {
+  console.log("Twitter Value :",e.target.value)
+  setDescriptionData(e.target.value);
+  // setSocialLinks(e.target.value);
+};
+const copyrightInputHandler = (e) => {
+  console.log("Twitter Value :",e.target.value)
+  setCopyrightData(e.target.value);
+  // setSocialLinks(e.target.value);
+};
+
+
+
+const formSubmitHandler = async (e) => {
+  e.preventDefault();
+  setError(false); // Clear any previous errors
+
+  // Basic validation
+  if (
+    facebookURL.trim() === '' ||
+    twitterURL.trim() === '' ||
+    instagramURL.trim() === '' ||
+    linkedinURL.trim() === '' ||
+    descriptionData.trim() === '' ||
+    copyrightData.trim() === ''
+  ) {
+    setError('Invalid data');
+    return;
+  }
+
+  const bodyData = {
+    subTitle: descriptionData,
+    copyrightText: copyrightData,
+    socialLinks: [
+      { type: 'facebook', url: facebookURL },
+      { type: 'twitter', url: twitterURL },
+      { type: 'instagram', url: instagramURL },
+      { type: 'linkedin', url: linkedinURL },
+    ],
+  };
+
+  setIsLoading(true); // Set loading state
+
+  try {
+    const response = await fetch('http://localhost:3001/api/footer', {
+      method: 'PATCH',
+      body: JSON.stringify(bodyData),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+
+    const result = await response.json();
+    console.log('Form submitted successfully:', result);
+  } catch (error) {
+    console.error('Error submitting form:', error);
+    setError(true);
+  } finally {
+    setIsLoading(false); // Reset loading state
+  }
+};
+
   return (
-    <>
+    <DefaultLayout>
       <div className="mx-auto">
         <Breadcrumb pageName="Settings" />
         <div className="grid grid-cols-5 gap-8">
           <div className="col-span-5 xl:col-span-5">
             <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
               <div className="border-b border-stroke px-7 py-4 dark:border-strokedark">
+                {error && <p>Please provide valid data!</p>}
                 <h3 className="font-medium text-black dark:text-white">
                   Website Information
                 </h3>
               </div>
               <div className="p-7">
-                <form action="#">
+                <form onSubmit={formSubmitHandler}>
                   <div className="mb-5.5 flex flex-col gap-5.5 sm:flex-row">
                     <div className="w-full sm:w-1/2">
                       <label
@@ -97,7 +188,7 @@ const handleInputChange = (e) => {
                           name="facebook"
                           id="facebook"
                           value={facebookURL}
-                          onChange={handleInputChange}
+                          onChange= {fbInputHandler}
                         />
                       </div>
                     </div>
@@ -115,7 +206,7 @@ const handleInputChange = (e) => {
                         name="twitter"
                         id="twitter"
                         value={twitterURL}
-                        onChange={handleInputChange}
+                        onChange= {twtInputHandler}
                       />
                     </div>
                   </div>
@@ -134,7 +225,7 @@ const handleInputChange = (e) => {
                           name="instagram"
                           id="instagram"
                           value={instagramURL}
-                          onChange={handleInputChange}
+                          onChange={instaInputHandler}
                         />
                       </div>
                     </div>
@@ -152,7 +243,7 @@ const handleInputChange = (e) => {
                         name="linkedIn"
                         id="linkedIn"
                         value={linkedinURL}
-                        onChange={handleInputChange}
+                        onChange={linkedinInputHandler}
                       />
                     </div>
                   </div>
@@ -200,7 +291,8 @@ const handleInputChange = (e) => {
                         name="description"
                         id="description"
                         rows={4}
-                        defaultValue={descriptionData}
+                        value={descriptionData}
+                        onChange={descInputHandler}
                       ></textarea>
                     </div>
                   </div>
@@ -216,7 +308,8 @@ const handleInputChange = (e) => {
                       type="text"
                       name="copyright"
                       id="copyright"
-                      defaultValue={copyrightData}
+                      value={copyrightData}
+                      onChange={copyrightInputHandler}
                     />
                   </div>
                   <div className="flex justify-end gap-4.5">
@@ -229,6 +322,7 @@ const handleInputChange = (e) => {
                     <button
                       className="flex justify-center rounded bg-primary px-6 py-2 font-medium text-gray hover:bg-opacity-90"
                       type="submit"
+                      disabled = {isLoading}
                     >
                       Save
                     </button>
@@ -239,7 +333,7 @@ const handleInputChange = (e) => {
           </div>
         </div>
       </div>
-    </>
+    </DefaultLayout>
   );
 };
 

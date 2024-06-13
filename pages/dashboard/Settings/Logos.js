@@ -1,9 +1,87 @@
 import Breadcrumb from "../components/Breadcrumbs/Breadcrumb";
 import Image from "next/image";
-import React from "react";
+import React, { useState, useEffect } from "react";
+import DefaultLayout from "../components/Layouts/DefaultLayout";
 const Logos = () => {
+  const [lightLogo, setLightLogo] = useState();
+  const [darkLogo, setDarkLogo] = useState();
+  const [favicon, setFavicon] = useState();
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(false);
+  const [file, setFile ] = useState(null);
+
+  useEffect(async()=>{
+    try {
+      setIsLoading(true);
+      setError(false);
+      const resp = await fetch('http://localhost:3001/api/logo');
+      if (!resp.ok) {
+        throw new Error('Error occured fetching data!');
+      }
+  
+      const data = await resp.json();
+      console.log('Form submitted successfully:', data);
+      setLightLogo(data.logos[0].logoLightUrl)
+      setDarkLogo(data.logos[0].logoDarkUrl)
+      setFavicon(data.logos[0].faviconUrl)
+    } catch (err) {
+      console.error('Something went wrong:', err);
+      setError(true);
+    } finally {
+      setIsLoading(false); // Reset loading state
+    }
+
+  },[])
+
+  const fileChangeHandler = (e) => {
+    console.log("File is :",e.target.files[0],"Name is :",e.target.name)
+    setFile(e.target.files[0]);
+  };
+
+  const handleSubmit = async (e) => {
+    console.log()
+    e.preventDefault();
+  
+    try {
+      setIsLoading(true)
+      const formData = new FormData();
+      formData.append('file', file);
+      console.log("FORM DATA OBJECT :",formData)
+      // formData.append('type', );
+  
+      const res = await fetch('http://localhost:3001/api/logo', {
+        method: 'PATCH',
+        body: formData,
+      });
+  
+      if (!res.ok) {
+        throw new Error('Network response was not ok');
+      }
+  
+      const data = await res.json();
+      console.log("Response is:", data);
+      setIsLoading(false);
+    } catch (error) {
+      console.error('Error during form submission:', error);
+      setError(true);
+      setIsLoading(false);
+    }
+  };
+  
+
+  // const logoLightHandler = () => {
+    
+  // }
+  // const logoDarkHandler = () => {
+
+  // }
+  // const faviconHandler = () => {
+
+  // }
+
   return (
-    <>
+    
+    <DefaultLayout>
       <div className="mx-auto">
         <Breadcrumb pageName="Logos" />
        
@@ -20,24 +98,24 @@ const Logos = () => {
                   <div className="mb-4 flex items-center gap-3">
                     <div className="h-14 w-14 rounded-full">
                       <Image
-                        src={"/images/user/user-03.png"}
+                        src={lightLogo ? lightLogo :"/images/user/user-03.png"}
                         width={55}
                         height={55}
-                        alt="User"
+                        alt="Logi Light"
                       />
                     </div>
                     <div>
                       <span className="mb-1.5 text-black dark:text-white">
                         Edit logo
                       </span>
-                      <span className="flex gap-2.5">
+                      {/* <span className="flex gap-2.5">
                         <button className="text-sm hover:text-primary">
                           Delete
                         </button>
                         <button className="text-sm hover:text-primary">
                           Update
                         </button>
-                      </span>
+                      </span> */}
                     </div>
                   </div>
 
@@ -52,6 +130,8 @@ const Logos = () => {
                   >
                     <input
                       type="file"
+                      onChange={fileChangeHandler}
+                      name="logoLight"
                       accept="image/*"
                       className="absolute inset-0 z-50 m-0 h-full w-full cursor-pointer p-0 opacity-0 outline-none"
                     />
@@ -96,13 +176,14 @@ const Logos = () => {
                   <div className="flex justify-end gap-4.5">
                     <button
                       className="flex justify-center rounded border border-stroke px-6 py-2 font-medium text-black hover:shadow-1 dark:border-strokedark dark:text-white"
-                      type="submit"
+                      type="button"
                     >
                       Cancel
                     </button>
                     <button
                       className="flex justify-center rounded bg-primary px-6 py-2 font-medium text-gray hover:bg-opacity-90"
-                      type="submit"
+                      type="button"
+                      onClick={handleSubmit}
                     >
                       Save
                     </button>
@@ -123,7 +204,7 @@ const Logos = () => {
                   <div className="mb-4 flex items-center gap-3">
                     <div className="h-14 w-14 rounded-full">
                       <Image
-                        src={"/images/user/user-03.png"}
+                        src={darkLogo ? darkLogo : "/images/user/user-03.png"}
                         width={55}
                         height={55}
                         alt="User"
@@ -133,14 +214,14 @@ const Logos = () => {
                       <span className="mb-1.5 text-black dark:text-white">
                         Edit Logo
                       </span>
-                      <span className="flex gap-2.5">
+                      {/* <span className="flex gap-2.5">
                         <button className="text-sm hover:text-primary">
                           Delete
                         </button>
                         <button className="text-sm hover:text-primary">
                           Update
                         </button>
-                      </span>
+                      </span> */}
                     </div>
                   </div>
 
@@ -150,6 +231,8 @@ const Logos = () => {
                   >
                     <input
                       type="file"
+                       onChange={fileChangeHandler}
+                      name="logoDark"
                       accept="image/*"
                       className="absolute inset-0 z-50 m-0 h-full w-full cursor-pointer p-0 opacity-0 outline-none"
                     />
@@ -194,13 +277,14 @@ const Logos = () => {
                   <div className="flex justify-end gap-4.5">
                     <button
                       className="flex justify-center rounded border border-stroke px-6 py-2 font-medium text-black hover:shadow-1 dark:border-strokedark dark:text-white"
-                      type="submit"
+                      type="button"
                     >
                       Cancel
                     </button>
                     <button
                       className="flex justify-center rounded bg-primary px-6 py-2 font-medium text-gray hover:bg-opacity-90"
-                      type="submit"
+                      type="button"
+                      onClick={handleSubmit}
                     >
                       Save
                     </button>
@@ -221,7 +305,7 @@ const Logos = () => {
                   <div className="mb-4 flex items-center gap-3">
                     <div className="h-14 w-14 rounded-full">
                       <Image
-                        src={"/images/user/user-03.png"}
+                        src={favicon ? favicon : "/images/user/user-03.png"}
                         width={55}
                         height={55}
                         alt="User"
@@ -231,14 +315,14 @@ const Logos = () => {
                       <span className="mb-1.5 text-black dark:text-white">
                         Edit Favicon
                       </span>
-                      <span className="flex gap-2.5">
+                      {/* <span className="flex gap-2.5">
                         <button className="text-sm hover:text-primary">
                           Delete
                         </button>
                         <button className="text-sm hover:text-primary">
                           Update
                         </button>
-                      </span>
+                      </span> */}
                     </div>
                   </div>
 
@@ -248,6 +332,8 @@ const Logos = () => {
                   >
                     <input
                       type="file"
+                       onChange={fileChangeHandler}
+                      name="favicon"
                       accept="image/*"
                       className="absolute inset-0 z-50 m-0 h-full w-full cursor-pointer p-0 opacity-0 outline-none"
                     />
@@ -292,13 +378,14 @@ const Logos = () => {
                   <div className="flex justify-end gap-4.5">
                     <button
                       className="flex justify-center rounded border border-stroke px-6 py-2 font-medium text-black hover:shadow-1 dark:border-strokedark dark:text-white"
-                      type="submit"
+                      type="button"
                     >
                       Cancel
                     </button>
                     <button
                       className="flex justify-center rounded bg-primary px-6 py-2 font-medium text-gray hover:bg-opacity-90"
-                      type="submit"
+                      type="button"
+                      onClick={handleSubmit}
                     >
                       Save
                     </button>
@@ -309,7 +396,7 @@ const Logos = () => {
           </div>
         </div>
       </div>
-    </>
+      </DefaultLayout>
   );
 };
 

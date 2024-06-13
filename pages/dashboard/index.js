@@ -1,5 +1,5 @@
 
-import Settings from "./Settings";
+import Settings from "./settings";
 import DefaultLayout from "./components/Layouts/DefaultLayout";
 
 

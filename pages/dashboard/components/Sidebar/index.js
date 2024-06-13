@@ -301,14 +301,14 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
 
               <SidebarLinkGroup
                 activeCondition={
-                  pathname === "/Settings" || pathname.includes("Settings")
+                  pathname === "/dashboard" || pathname.includes("dashboard")
                 }
               >
                 {(handleClick, open) => {
                   return (
                     <React.Fragment>
                       <Link
-                        href="#"
+                        href="/"
                         className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
                           (pathname === "/settings" ||
                             pathname.includes("settings")) &&
@@ -378,9 +378,10 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
                         <ul className="mb-5.5 mt-4 flex flex-col gap-2.5 pl-6">
                           <li>
                             <Link
-                              href="/Settings/GeneralSettings"
+                              href="/dashboard/settings/"
+                              // href="#"
                               className={`group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white ${
-                                pathname === "/forms/form-elements" &&
+                                pathname === "/dashboard/settings/" &&
                                 "text-white"
                               }`}
                             >
@@ -389,9 +390,9 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
                           </li>
                           <li>
                             <Link
-                              href="/Settings/Logos"
+                              href="/dashboard/settings/logos"
                               className={`group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white ${
-                                pathname === "/forms/form-layout" &&
+                                pathname === "/dashboard/settings/logos/" &&
                                 "text-white"
                               } `}
                             >
@@ -400,13 +401,13 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
                           </li>
                           <li>
                             <Link
-                              href="/Settings/Menu"
+                              href="/dashboard/settings/menus"
                               className={`group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white ${
-                                pathname === "/forms/form-layout" &&
+                                pathname === "/dashboard/settings/menus/" &&
                                 "text-white"
                               } `}
                             >
-                              Menu
+                              Menus
                             </Link>
                           </li>
                         </ul>
