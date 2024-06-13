@@ -1,70 +1,10 @@
-import connectDB from "../../../backend/db/connectDB";
-import { validate } from "../../../backend/utils/validation";
 import { footerSchema } from "backend/utils/schemas";
 import { Footer } from "../../models";
-import catchAsync from "backend/utils/catchAsync";
+import updateFactory, { getFactory } from "backend/utils/factory/updateFactory";
 
-export const getFooter = catchAsync(async (req, res) => {
-  // Connect to the database
-  await connectDB();
+// Get footer data
+export const getFooter = getFactory(Footer);
 
-  const footer = await Footer.find({});
-  res.status(200).json({ status: "success", footer });
-});
+// Create or update Header data
+export const updateFooter = updateFactory(Footer,footerSchema)
 
-export const createFooter = catchAsync(async (req, res) => {
-  // Validate the request body
-  const { isValid, errors, value } = validate(footerSchema, req.body);
-  if (!isValid) {
-    return res.status(400).json({
-      msg: "Validation error",
-      errors,
-    });
-  }
-
-  // const { name, email, password } = value;
-
-  // Connect to the database
-  await connectDB();
-
-  console.log("BODY DATA :", value);
-  const footer = new Footer(value);
-
-  await footer.save();
-
-  res.status(200).json({
-    status: "success",
-    message: "Footer data created successfully!",
-    footer,
-  });
-});
-
-// Update Header data
-export const updateFooter = catchAsync(async (req, res) => {
-  // Validate the request body
-  const { isValid, errors, value } = validate(footerSchema, req.body);
-  if (!isValid) {
-    return res.status(400).json({
-      msg: "Validation error",
-      errors,
-    });
-  }
-
-  // Connect to the database
-  await connectDB();
-
-  // console.log("BODY DATA :", value);
-  let footer = await Footer.findOne();
-  if (!footer) {
-    // Find the existing document or create a new one if it doesn't exist
-    footer = new Footer();
-  }
-  Object.assign(footer, value);
-  await footer.save();
-
-  res.status(200).json({
-    status: "success",
-    message: "Footer updated successfully!",
-    footer,
-  });
-});
