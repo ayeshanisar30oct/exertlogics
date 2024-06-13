@@ -11,7 +11,12 @@ import {
 const Settings = () => {
 
     const [data, setData] = useState([]);
-    const [footerData, setFooterData] = useState([]);
+    const [footerData, setFooterData] = useState(null); // Initialize as null to handle loading state
+    const [facebookURL, setFacebookURL] = useState();
+    const [twitterURL, setTwitterURL] = useState();
+    const [instagramURL, setInstagramURL] = useState();
+    const [linkedinURL, setLinkedinURL] = useState();
+    const [descriptionData, setDescriptionData] = useState();
     const [isEditing, setIsEditing] = useState(false);
     const [editedData, setEditedData] = useState({});
 
@@ -29,17 +34,54 @@ const Settings = () => {
 
 
 // GET FOOTER DATA
+useEffect(() => {
+  fetch("http://localhost:3001/api/footer")
+    .then((response) => response.json())
+    .then((data) => {
+      setFooterData(data); 
+      // console.log("footerData",footerData)
+      // console.log("data",data)
+         if (data && data.footer && data.footer[0].socialLinks) {
+           const facebookLink = data.footer[0].socialLinks.find(
+             (link) => link.type === "facebook"
+           );
+           const twitterLink = data.footer[0].socialLinks.find(
+             (link) => link.type === "twitter"
+           );
+           const instagramLink = data.footer[0].socialLinks.find(
+             (link) => link.type === "instagram"
+           );
+           const linkedinLink = data.footer[0].socialLinks.find(
+             (link) => link.type === "linkedin"
+           );
 
-     useEffect(() => {
-       fetch("http://localhost:3001/api/footer")
-         .then((response) => response.json())
-         .then((footerData) => {
-           setFooterData([footerData]);
-           console.log("footerData", footerData);
-         })
-         .catch((error) => console.error("Error fetching footerData:", error));
-     }, []);
+           if (facebookLink) {
+             setFacebookURL(facebookLink.url);
+           } 
+           if (twitterLink) {
+             setTwitterURL(twitterLink.url);
+           } 
+           if (instagramLink) {
+             setInstagramURL(instagramLink.url);
+           } 
+           if (linkedinLink) {
 
+             setLinkedinURL(linkedinLink.url);
+           } 
+         } 
+
+          if (data && data.footer && data.footer[0].subTitle) {
+             setDescriptionData(data.footer[0].subTitle);
+          }
+    })
+    .catch((error) => console.error("Error fetching footerData:", error));
+}, []);
+  
+    
+
+const handleInputChange = (e) => {
+  setSocialLinks(e.target.value);
+};
 
     //  EDIT HEADER MENU 
 
@@ -518,7 +560,7 @@ const Settings = () => {
                     <div className="w-full sm:w-1/2">
                       <label
                         className="mb-3 block text-sm font-medium text-black dark:text-white"
-                        htmlFor="facebook-url"
+                        htmlFor="facebook"
                       >
                         Facebook URL
                       </label>
@@ -526,9 +568,10 @@ const Settings = () => {
                         <input
                           className="w-full rounded border border-stroke bg-gray py-3 pl-5 pr-4.5 text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
                           type="text"
-                          name="facebook-url"
-                          id="facebook-url"
-                          Value="URL Value"
+                          name="facebook"
+                          id="facebook"
+                          value={facebookURL}
+                          onChange={handleInputChange}
                         />
                       </div>
                     </div>
@@ -536,16 +579,17 @@ const Settings = () => {
                     <div className="w-full sm:w-1/2">
                       <label
                         className="mb-3 block text-sm font-medium text-black dark:text-white"
-                        htmlFor="twitter-url"
+                        htmlFor="twitter"
                       >
                         Twitter URL
                       </label>
                       <input
                         className="w-full rounded border border-stroke bg-gray px-4.5 py-3 text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
                         type="text"
-                        name="twitter-url"
-                        id="twitter-url"
-                        Value="URL Value"
+                        name="twitter"
+                        id="twitter"
+                        value={twitterURL}
+                        onChange={handleInputChange}
                       />
                     </div>
                   </div>
@@ -553,7 +597,7 @@ const Settings = () => {
                     <div className="w-full sm:w-1/2">
                       <label
                         className="mb-3 block text-sm font-medium text-black dark:text-white"
-                        htmlFor="instagram-url"
+                        htmlFor="instagram"
                       >
                         instagram URL
                       </label>
@@ -561,9 +605,10 @@ const Settings = () => {
                         <input
                           className="w-full rounded border border-stroke bg-gray py-3 pl-5 pr-4.5 text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
                           type="text"
-                          name="instagram-url"
-                          id="instagram-url"
-                          Value="URL Value"
+                          name="instagram"
+                          id="instagram"
+                          value={instagramURL}
+                          onChange={handleInputChange}
                         />
                       </div>
                     </div>
@@ -571,16 +616,17 @@ const Settings = () => {
                     <div className="w-full sm:w-1/2">
                       <label
                         className="mb-3 block text-sm font-medium text-black dark:text-white"
-                        htmlFor="linkedIn-url"
+                        htmlFor="linkedIn"
                       >
                         LinkedIn URL
                       </label>
                       <input
                         className="w-full rounded border border-stroke bg-gray px-4.5 py-3 text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
                         type="text"
-                        name="linkedIn-url"
-                        id="linkedIn-url"
-                        Value="URL Value"
+                        name="linkedIn"
+                        id="linkedIn"
+                        value={linkedinURL}
+                        onChange={handleInputChange}
                       />
                     </div>
                   </div>
@@ -623,13 +669,12 @@ const Settings = () => {
                           </defs>
                         </svg>
                       </span>
-
                       <textarea
                         className="w-full rounded border border-stroke bg-gray py-3 pl-11.5 pr-4.5 text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
                         name="description"
                         id="description"
                         rows={4}
-                        Value="Description Value"
+                        defaultValue={descriptionData}
                       ></textarea>
                     </div>
                   </div>
@@ -645,7 +690,7 @@ const Settings = () => {
                       type="text"
                       name="copyright"
                       id="copyright"
-                      Value="Copyright Value"
+                      defaultValue="Copyright Vaklue"
                     />
                   </div>
                   <div className="flex justify-end gap-4.5">
