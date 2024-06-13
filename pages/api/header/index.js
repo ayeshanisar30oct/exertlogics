@@ -1,6 +1,5 @@
 import {
   getHeader,
-  createHeader,
   updateHeader,
 } from "../../../backend/controllers/header/headerController";
 
@@ -8,9 +7,6 @@ export default async function handler(req, res) {
   if (req.method === "GET") {
      getHeader(req, res);
   }
-  //   else if (req.method === "POST") {
-  //     await createHeader(req, res);
-  //   }
   else if (req.method === "PATCH") {
      updateHeader(req, res);
   } else {
