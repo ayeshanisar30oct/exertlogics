@@ -1,7 +1,7 @@
 
+import Settings from "./Settings";
 import DefaultLayout from "./components/Layouts/DefaultLayout";
-import Navbar from "./components/Navbar";
-import Settings from "./components/Settings";
+
 
 
 export const metadata = {
@@ -14,7 +14,6 @@ export default function Home() {
   return (
     <>
       <DefaultLayout>
-        {/* <Navbar/> */}
       <Settings/>
       </DefaultLayout>
     </>
