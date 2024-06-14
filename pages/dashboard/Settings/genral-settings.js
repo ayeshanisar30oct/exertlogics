@@ -3,6 +3,7 @@ import Breadcrumb from "../components/Breadcrumbs/Breadcrumb";
 import { useEffect, useState } from "react";
 import React from "react";
 import DefaultLayout from "../components/Layouts/DefaultLayout";
+import { toast } from 'react-toastify';
 
 const GeneralSettings = () => {
 
@@ -15,7 +16,6 @@ const GeneralSettings = () => {
     const [descriptionData, setDescriptionData] = useState();
     const [copyrightData, setCopyrightData] = useState();
     const [isLoading, setIsLoading] = useState(false);
-    const [error, setError] = useState(false);
 
 // GET FOOTER DATA
 useEffect(() => {
@@ -107,7 +107,6 @@ const copyrightInputHandler = (e) => {
 
 const formSubmitHandler = async (e) => {
   e.preventDefault();
-  setError(false); // Clear any previous errors
 
   // Basic validation
   if (
@@ -118,7 +117,7 @@ const formSubmitHandler = async (e) => {
     descriptionData.trim() === '' ||
     copyrightData.trim() === ''
   ) {
-    setError('Invalid data');
+    toast.error('Either of the fields can\'t be empty');
     return;
   }
 
@@ -150,9 +149,9 @@ const formSubmitHandler = async (e) => {
 
     const result = await response.json();
     console.log('Form submitted successfully:', result);
+    toast.success('Footer updated!');
   } catch (error) {
     console.error('Error submitting form:', error);
-    setError(true);
   } finally {
     setIsLoading(false); // Reset loading state
   }
@@ -166,7 +165,6 @@ const formSubmitHandler = async (e) => {
           <div className="col-span-5 xl:col-span-5">
             <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
               <div className="border-b border-stroke px-7 py-4 dark:border-strokedark">
-                {error && <p>Please provide valid data!</p>}
                 <h3 className="font-medium text-black dark:text-white">
                   Website Information
                 </h3>

@@ -2,6 +2,7 @@ import Breadcrumb from "../components/Breadcrumbs/Breadcrumb";
 import Image from "next/image";
 import React, { useState, useEffect } from "react";
 import DefaultLayout from "../components/Layouts/DefaultLayout";
+import { toast } from 'react-toastify';
 const Logos = () => {
   const [lightLogo, setLightLogo] = useState();
   const [darkLogo, setDarkLogo] = useState();
@@ -9,63 +10,81 @@ const Logos = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(false);
   const [file, setFile ] = useState(null);
+  const [fileName, setFileName ] = useState('');
+  const [respData,setRespData] = useState();
 
-  useEffect(async()=>{
+  const fetchLogos = async () => {
     try {
       setIsLoading(true);
       setError(false);
       const resp = await fetch('http://localhost:3001/api/logo');
       if (!resp.ok) {
-        throw new Error('Error occured fetching data!');
+        throw new Error('Error occurred fetching data!');
       }
-  
+
       const data = await resp.json();
-      console.log('Form submitted successfully:', data);
-      setLightLogo(data.logos[0].logoLightUrl)
-      setDarkLogo(data.logos[0].logoDarkUrl)
-      setFavicon(data.logos[0].faviconUrl)
+      console.log('Response Data :', data);
+      setLightLogo(data.logos[0].logoLightUrl);
+      setDarkLogo(data.logos[0].logoDarkUrl);
+      setFavicon(data.logos[0].faviconUrl);
     } catch (err) {
       console.error('Something went wrong:', err);
       setError(true);
     } finally {
-      setIsLoading(false); // Reset loading state
+      setIsLoading(false);
     }
+  };
 
-  },[])
+  useEffect(() => {
+    const fetchData = async () => {
+      await fetchLogos();
+    };
+    fetchData();
+  }, [respData]);
 
   const fileChangeHandler = (e) => {
     console.log("File is :",e.target.files[0],"Name is :",e.target.name)
     setFile(e.target.files[0]);
+    setFileName(e.target.name);
   };
 
   const handleSubmit = async (e) => {
-    console.log()
+    // console.log()
     e.preventDefault();
   
-    try {
-      setIsLoading(true)
-      const formData = new FormData();
-      formData.append('file', file);
-      console.log("FORM DATA OBJECT :",formData)
-      // formData.append('type', );
-  
-      const res = await fetch('http://localhost:3001/api/logo', {
-        method: 'PATCH',
-        body: formData,
-      });
-  
-      if (!res.ok) {
-        throw new Error('Network response was not ok');
+    if(file){
+
+      try {
+        setIsLoading(true)
+        const formData = new FormData();
+        formData.append('file', file);
+        console.log("FORM DATA OBJECT :",formData)
+        formData.append('type', fileName);
+    
+        const res = await fetch('http://localhost:3001/api/logo', {
+          method: 'PATCH',
+          body: formData,
+        });
+    
+        if (!res.ok) {
+          toast.error('Network response was not ok');
+          throw new Error('Network response was not ok');
+        }
+    
+        const data = await res.json();
+        console.log("Response is:", data);
+        await fetchLogos();
+        setIsLoading(false);
+        setFile(null);
+        toast.success('File uploaded successfully!');
+      } catch (error) {
+        console.error('Error during form submission:', error);
+        toast.error('Something went wrong');
+        setError(true);
+        setIsLoading(false);
       }
-  
-      const data = await res.json();
-      console.log("Response is:", data);
-      setIsLoading(false);
-    } catch (error) {
-      console.error('Error during form submission:', error);
-      setError(true);
-      setIsLoading(false);
     }
+    else toast.warn('Please select a file first!')
   };
   
 
@@ -184,6 +203,7 @@ const Logos = () => {
                       className="flex justify-center rounded bg-primary px-6 py-2 font-medium text-gray hover:bg-opacity-90"
                       type="button"
                       onClick={handleSubmit}
+                      
                     >
                       Save
                     </button>
@@ -285,6 +305,7 @@ const Logos = () => {
                       className="flex justify-center rounded bg-primary px-6 py-2 font-medium text-gray hover:bg-opacity-90"
                       type="button"
                       onClick={handleSubmit}
+                      
                     >
                       Save
                     </button>
@@ -386,6 +407,7 @@ const Logos = () => {
                       className="flex justify-center rounded bg-primary px-6 py-2 font-medium text-gray hover:bg-opacity-90"
                       type="button"
                       onClick={handleSubmit}
+                      
                     >
                       Save
                     </button>

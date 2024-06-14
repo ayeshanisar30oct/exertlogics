@@ -13,7 +13,9 @@ import LoadingBar from 'react-top-loading-bar';
 import { appWithTranslation } from 'next-i18next';
 import lngDetector from '../lib/languageDetector';
 import appTheme from '../theme/appTheme';
+import { ToastContainer } from 'react-toastify';
 /* import css vendors */
+import 'react-toastify/dist/ReactToastify.css';
 import 'dandelion-animated-slider/build/horizontal.css';
 import 'animate.css/animate.css';
 import 'react-18-image-lightbox/style.css';
@@ -146,6 +148,7 @@ function MyApp(props) {
             key={router.route}
           />
         </div>
+        <ToastContainer />
       </ThemeProvider>
     </CacheProvider>
   );

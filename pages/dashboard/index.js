@@ -1,7 +1,7 @@
 
 import Settings from "./settings";
 import DefaultLayout from "./components/Layouts/DefaultLayout";
-
+import RootLayout from "./layout";
 
 
 export const metadata = {
@@ -13,9 +13,9 @@ export const metadata = {
 export default function Home() {
   return (
     <>
-      <DefaultLayout>
+      {/* <> */}
       <Settings/>
-      </DefaultLayout>
+      {/* </> */}
     </>
   );
 }
