@@ -3,6 +3,7 @@ import Header from './Header';
 import Footer from './Footer';
 import Home from './Home';
 import Logo from './Logo';
+import About from './About';
 
 module.exports = {
   User,
@@ -10,4 +11,5 @@ module.exports = {
   Home,
   Footer,
   Logo,
+  About,
 };
