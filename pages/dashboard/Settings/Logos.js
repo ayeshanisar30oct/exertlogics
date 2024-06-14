@@ -1,25 +1,28 @@
 import Breadcrumb from "../components/Breadcrumbs/Breadcrumb";
 import Image from "next/image";
-import React, { useState, useEffect } from "react";
-import DefaultLayout from "../components/Layouts/DefaultLayout";
-import { toast } from 'react-toastify';
-const Logos = () => {
-  const [lightLogo, setLightLogo] = useState();
-  const [darkLogo, setDarkLogo] = useState();
-  const [favicon, setFavicon] = useState();
+import React, { useState } from "react";
+import { toast } from "react-toastify";
+
+const Logos = ({ initialLogosData }) => {
+  const [lightLogo, setLightLogo] = useState(
+    initialLogosData.logos[0].logoLightUrl
+  );
+  const [darkLogo, setDarkLogo] = useState(
+    initialLogosData.logos[0].logoDarkUrl
+  );
+  const [favicon, setFavicon] = useState(initialLogosData.logos[0].faviconUrl);
   const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState(false);
-  const [file, setFile ] = useState(null);
-  const [fileName, setFileName ] = useState('');
-  const [respData,setRespData] = useState();
+  // const [error, setError] = useState(false);
+  const [file, setFile] = useState(null);
+  const [fileName, setFileName] = useState("");
 
   const fetchLogos = async () => {
     try {
       setIsLoading(true);
       setError(false);
-      const resp = await fetch('http://localhost:3001/api/logo');
+      const resp = await fetch("http://localhost:3001/api/logo");
       if (!resp.ok) {
-        throw new Error('Error occurred fetching data!');
+        throw new Error("Error occurred fetching data!");
       }
 
       const data = await resp.json();
@@ -27,22 +30,15 @@ const Logos = () => {
       setDarkLogo(data.logos[0].logoDarkUrl);
       setFavicon(data.logos[0].faviconUrl);
     } catch (err) {
-      console.error('Something went wrong:', err);
+      console.error("Something went wrong:", err);
       setError(true);
     } finally {
       setIsLoading(false);
     }
   };
 
-  useEffect(() => {
-    const fetchData = async () => {
-      await fetchLogos();
-    };
-    fetchData();
-  }, [respData]);
-
   const fileChangeHandler = (e) => {
-    console.log("File is :",e.target.files[0],"Name is :",e.target.name)
+    console.log("File is :", e.target.files[0], "Name is :", e.target.name);
     setFile(e.target.files[0]);
     setFileName(e.target.name);
   };
@@ -50,55 +46,42 @@ const Logos = () => {
   const handleSubmit = async (e) => {
     // console.log()
     e.preventDefault();
-  
-    if(file){
 
+    if (file) {
       try {
-        setIsLoading(true)
+        setIsLoading(true);
         const formData = new FormData();
-        formData.append('file', file);
-        console.log("FORM DATA OBJECT :",formData)
-        formData.append('type', fileName);
-    
-        const res = await fetch('http://localhost:3001/api/logo', {
-          method: 'PATCH',
+        formData.append("file", file);
+        console.log("FORM DATA OBJECT :", formData);
+        formData.append("type", fileName);
+
+        const res = await fetch("http://localhost:3001/api/logo", {
+          method: "PATCH",
           body: formData,
         });
-    
+
         if (!res.ok) {
-          toast.error('Network response was not ok');
-          throw new Error('Network response was not ok');
+          toast.error("Network response was not ok");
+          throw new Error("Network response was not ok");
         }
-    
+
         const data = await res.json();
         console.log("Response is:", data);
         await fetchLogos();
-        setIsLoading(false);
-        setFile(null);
-        toast.success('File uploaded successfully!');
+        toast.success("File uploaded successfully!");
       } catch (error) {
-        console.error('Error during form submission:', error);
-        toast.error('Something went wrong');
+        console.error("Error during form submission:", error);
+        toast.error("Something went wrong");
         setError(true);
+      } finally {
+        setFile(null);
         setIsLoading(false);
       }
-    }
-    else toast.warn('Please select a file first!')
+    } else toast.warn("Please select a file first!");
   };
-  
-
-  // const logoLightHandler = () => {
-    
-  // }
-  // const logoDarkHandler = () => {
-
-  // }
-  // const faviconHandler = () => {
-
-  // }
 
   return (
-    <DefaultLayout>
+
       <div className="mx-auto">
         <Breadcrumb pageName="Logos" />
 
@@ -115,7 +98,7 @@ const Logos = () => {
                   <div className="mb-4 flex items-center gap-3">
                     <div className="h-14 w-14 rounded-full">
                       <Image
-                        src={lightLogo}
+
                         width={55}
                         height={55}
                         alt="Logo Light"
@@ -288,6 +271,7 @@ const Logos = () => {
                         alt="favicon"
                       />
                     </div>
+
                   </div>
 
                   <div
@@ -354,8 +338,21 @@ const Logos = () => {
           </div>
         </div>
       </div>
-    </DefaultLayout>
+
   );
 };
+
+export async function getStaticProps() {
+  const resp = await fetch("http://localhost:3001/api/logo");
+  const initialLogosData = await resp.json();
+
+  return {
+    props: {
+      initialLogosData,
+    },
+    // Re-generate the page at most once every 5 seconds if a request comes in
+    revalidate: 5,
+  };
+}
 
 export default Logos;

@@ -21,6 +21,15 @@ const homeSchema = Joi.object({
   videoUrl: Joi.string().uri().required(),
 });
 
+const aboutSchema = Joi.object({
+  subTitle: Joi.string().required(),
+  description: Joi.string().required(),
+  employeesCount: Joi.number().required(),
+  clientsCount: Joi.number().required(),
+  projectsCount: Joi.number().required(),
+  aboutBannerUrl: Joi.string().uri().required(),
+});
+
 const logoSchema = Joi.object({
   logoLightUrl: Joi.string().uri(),
   logoDarkUrl: Joi.string().uri(),
@@ -80,4 +89,4 @@ const headerSchema = Joi.object({
 });
 
 
-export { registerSchema, loginSchema, headerSchema, homeSchema, logoSchema, footerSchema };
+export { registerSchema, loginSchema, headerSchema, homeSchema, logoSchema, footerSchema, aboutSchema };

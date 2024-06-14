@@ -14,6 +14,7 @@ import { appWithTranslation } from 'next-i18next';
 import lngDetector from '../lib/languageDetector';
 import appTheme from '../theme/appTheme';
 import { ToastContainer } from 'react-toastify';
+import DashboardLayout from './dashboard/components/Layouts/DashboardLayout';
 /* import css vendors */
 import 'react-toastify/dist/ReactToastify.css';
 import 'dandelion-animated-slider/build/horizontal.css';
@@ -124,6 +125,7 @@ function MyApp(props) {
   };
 
   const muiTheme = createTheme(theme);
+  
   return (
     <CacheProvider value={theme.direction === 'rtl' ? cacheRTL : cacheLTR}>
       <Head>
@@ -141,12 +143,14 @@ function MyApp(props) {
           className="top-loading-bar"
         />
         <div id="main-wrap">
+          <DashboardLayout>
           <Component
             {...pageProps}
             onToggleDark={toggleDarkTheme}
             onToggleDir={toggleDirection}
             key={router.route}
-          />
+            />
+            </DashboardLayout>
         </div>
         <ToastContainer />
       </ThemeProvider>

@@ -2,160 +2,118 @@ import Breadcrumb from "../components/Breadcrumbs/Breadcrumb";
 import { useEffect, useState } from "react";
 import React from "react";
 import DefaultLayout from "../components/Layouts/DefaultLayout";
-import { toast } from 'react-toastify';
+import { toast } from "react-toastify";
 
 const GeneralSettings = () => {
+  const [data, setData] = useState();
+  const [footerData, setFooterData] = useState(null);
+  const [facebookURL, setFacebookURL] = useState();
+  const [twitterURL, setTwitterURL] = useState();
+  const [instagramURL, setInstagramURL] = useState();
+  const [linkedinURL, setLinkedinURL] = useState();
+  const [descriptionData, setDescriptionData] = useState();
+  const [copyrightData, setCopyrightData] = useState();
+  const [isLoading, setIsLoading] = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
 
-    const [data, setData] = useState();
-    const [footerData, setFooterData] = useState(null);
-    const [facebookURL, setFacebookURL] = useState();
-    const [twitterURL, setTwitterURL] = useState();
-    const [instagramURL, setInstagramURL] = useState();
-    const [linkedinURL, setLinkedinURL] = useState();
-    const [descriptionData, setDescriptionData] = useState();
-    const [copyrightData, setCopyrightData] = useState();
-    const [isLoading, setIsLoading] = useState(false);
+  // GET FOOTER DATA
+  useEffect(() => {
+    fetch("http://localhost:3001/api/footer")
+      .then((response) => response.json())
+      .then((data) => {
+        setFooterData(data);
+        // console.log("footerData",footerData)
+        // console.log("data",data)
+        if (data && data.footer && data.footer[0].socialLinks) {
+          const facebookLink = data.footer[0].socialLinks.find(
+            (link) => link.type === "facebook"
+          );
+          const twitterLink = data.footer[0].socialLinks.find(
+            (link) => link.type === "twitter"
+          );
+          const instagramLink = data.footer[0].socialLinks.find(
+            (link) => link.type === "instagram"
+          );
+          const linkedinLink = data.footer[0].socialLinks.find(
+            (link) => link.type === "linkedin"
+          );
 
-// GET FOOTER DATA
-useEffect(() => {
-  fetch("http://localhost:3001/api/footer")
-    .then((response) => response.json())
-    .then((data) => {
-      setFooterData(data); 
-      // console.log("footerData",footerData)
-      // console.log("data",data)
-         if (data && data.footer && data.footer[0].socialLinks) {
-           const facebookLink = data.footer[0].socialLinks.find(
-             (link) => link.type === "facebook"
-           );
-           const twitterLink = data.footer[0].socialLinks.find(
-             (link) => link.type === "twitter"
-           );
-           const instagramLink = data.footer[0].socialLinks.find(
-             (link) => link.type === "instagram"
-           );
-           const linkedinLink = data.footer[0].socialLinks.find(
-             (link) => link.type === "linkedin"
-           );
-
-           if (facebookLink) {
-             setFacebookURL(facebookLink.url);
-           } 
-           if (twitterLink) {
-             setTwitterURL(twitterLink.url);
-           } 
-           if (instagramLink) {
-             setInstagramURL(instagramLink.url);
-           } 
-           if (linkedinLink) {
-
-             setLinkedinURL(linkedinLink.url);
-           } 
-         } 
-
-          if (data && data.footer && data.footer[0].subTitle) {
-             setDescriptionData(data.footer[0].subTitle);
+          if (facebookLink) {
+            setFacebookURL(facebookLink.url);
           }
-
-          if (data && data.footer && data.footer[0].copyrightText) {
-            setCopyrightData(data.footer[0].copyrightText);
+          if (twitterLink) {
+            setTwitterURL(twitterLink.url);
           }
-    })
-    .catch((error) => console.error("Error fetching footerData:", error));
-}, []);
-  
-    
+          if (instagramLink) {
+            setInstagramURL(instagramLink.url);
+          }
+          if (linkedinLink) {
+            setLinkedinURL(linkedinLink.url);
+          }
+        }
 
-const handleInputChange = (e) => {
-  setSocialLinks(e.target.value);
-};
+        if (data && data.footer && data.footer[0].subTitle) {
+          setDescriptionData(data.footer[0].subTitle);
+        }
+
+        if (data && data.footer && data.footer[0].copyrightText) {
+          setCopyrightData(data.footer[0].copyrightText);
+        }
+      })
+      .catch((error) => console.error("Error fetching footerData:", error));
+  }, []);
+
+  const handleInputChange = (e) => {
+    setSocialLinks(e.target.value);
+  };
 
   // Handler function to update state
   const fbInputHandler = (e) => {
-    console.log("FB INPUT :",e.target.value)
+    console.log("FB INPUT :", e.target.value);
+    setIsEditing(true);
     setFacebookURL(e.target.value);
-
-  };
-const twtInputHandler = (e) => {
-  console.log("Twitter Value :",e.target.value)
-  setTwitterURL(e.target.value);
-  // setSocialLinks(e.target.value);
-};
-const instaInputHandler = (e) => {
-  console.log("Instagram Value :",e.target.value)
-  setInstagramURL(e.target.value);
-  // setSocialLinks(e.target.value);
-};
-const linkedinInputHandler = (e) => {
-  console.log("Twitter Value :",e.target.value)
-  setLinkedinURL(e.target.value);
-  // setSocialLinks(e.target.value);
-};
-const descInputHandler = (e) => {
-  console.log("Twitter Value :",e.target.value)
-  setDescriptionData(e.target.value);
-  // setSocialLinks(e.target.value);
-};
-const copyrightInputHandler = (e) => {
-  console.log("Twitter Value :",e.target.value)
-  setCopyrightData(e.target.value);
-  // setSocialLinks(e.target.value);
-};
-
-const formSubmitHandler = async (e) => {
-  e.preventDefault();
-
-  // Basic validation
-  if (
-    facebookURL.trim() === '' ||
-    twitterURL.trim() === '' ||
-    instagramURL.trim() === '' ||
-    linkedinURL.trim() === '' ||
-    descriptionData.trim() === '' ||
-    copyrightData.trim() === ''
-  ) {
-    toast.error('Either of the fields can\'t be empty');
-    return;
-  }
-
-  const bodyData = {
-    subTitle: descriptionData,
-    copyrightText: copyrightData,
-    socialLinks: [
-      { type: 'facebook', url: facebookURL },
-      { type: 'twitter', url: twitterURL },
-      { type: 'instagram', url: instagramURL },
-      { type: 'linkedin', url: linkedinURL },
-    ],
   };
 
-  setIsLoading(true); // Set loading state
 
-  try {
-    const response = await fetch('http://localhost:3001/api/footer', {
-      method: 'PATCH',
-      body: JSON.stringify(bodyData),
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
+    const bodyData = {
+      subTitle: descriptionData,
+      copyrightText: copyrightData,
+      socialLinks: [
+        { type: "facebook", url: facebookURL },
+        { type: "twitter", url: twitterURL },
+        { type: "instagram", url: instagramURL },
+        { type: "linkedin", url: linkedinURL },
+      ],
+    };
 
-    if (!response.ok) {
-      throw new Error('Network response was not ok');
+    setIsLoading(true); // Set loading state
+
+    try {
+      const response = await fetch("http://localhost:3001/api/footer", {
+        method: "PATCH",
+        body: JSON.stringify(bodyData),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+
+      const result = await response.json();
+      console.log("Form submitted successfully:", result);
+      toast.success("Footer updated!");
+    } catch (error) {
+      console.error("Error submitting form:", error);
+    } finally {
+      setIsEditing(false);
+      setIsLoading(false); // Reset loading state
     }
-
-    const result = await response.json();
-    console.log('Form submitted successfully:', result);
-    toast.success('Footer updated!');
-  } catch (error) {
-    console.error('Error submitting form:', error);
-  } finally {
-    setIsLoading(false); // Reset loading state
-  }
-};
+  };
 
   return (
-    <DefaultLayout>
+    <>
       <div className="mx-auto">
         <Breadcrumb pageName="Settings" />
         <div className="grid grid-cols-5 gap-8">
@@ -183,7 +141,7 @@ const formSubmitHandler = async (e) => {
                           name="facebook"
                           id="facebook"
                           value={facebookURL}
-                          onChange= {fbInputHandler}
+                          onChange={fbInputHandler}
                         />
                       </div>
                     </div>
@@ -201,7 +159,7 @@ const formSubmitHandler = async (e) => {
                         name="twitter"
                         id="twitter"
                         value={twitterURL}
-                        onChange= {twtInputHandler}
+                        onChange={twtInputHandler}
                       />
                     </div>
                   </div>
@@ -310,9 +268,11 @@ const formSubmitHandler = async (e) => {
                   <div className="flex justify-end gap-4.5">
                   
                     <button
-                      className="flex justify-center rounded bg-primary px-6 py-2 font-medium text-gray hover:bg-opacity-90"
+                      className={`flex justify-center rounded bg-primary px-6 py-2 font-medium text-gray hover:bg-opacity-90 ${
+                        !isEditing ? "opacity-50 cursor-not-allowed" : ""
+                      }`}
                       type="submit"
-                      disabled = {isLoading}
+                      disabled={!isEditing}
                     >
                       Save
                     </button>
@@ -323,7 +283,7 @@ const formSubmitHandler = async (e) => {
           </div>
         </div>
       </div>
-    </DefaultLayout>
+    </>
   );
 };
 
