@@ -245,12 +245,12 @@ input[type="search"]::-webkit-search-cancel-button {
 
 /* HEADER SECTION STARTS  */
 
-@media (min-width: 1200px) {
+/* @media (min-width: 1200px) {
 #header-nav li
 {
     margin: 0px 6px;
 }
-}
+} */
 
 /* HEADER SECTION ENDS  */
 

@@ -1,5 +1,4 @@
 import Breadcrumb from "../components/Breadcrumbs/Breadcrumb";
-
 import { useEffect, useState } from "react";
 import React from "react";
 import DefaultLayout from "../components/Layouts/DefaultLayout";
@@ -74,52 +73,7 @@ const GeneralSettings = () => {
     setIsEditing(true);
     setFacebookURL(e.target.value);
   };
-  const twtInputHandler = (e) => {
-    console.log("Twitter Value :", e.target.value);
-    setIsEditing(true);
-    setTwitterURL(e.target.value);
-    // setSocialLinks(e.target.value);
-  };
-  const instaInputHandler = (e) => {
-    console.log("Instagram Value :", e.target.value);
-    setIsEditing(true);
-    setInstagramURL(e.target.value);
-    // setSocialLinks(e.target.value);
-  };
-  const linkedinInputHandler = (e) => {
-    console.log("Twitter Value :", e.target.value);
-    setIsEditing(true);
-    setLinkedinURL(e.target.value);
-    // setSocialLinks(e.target.value);
-  };
-  const descInputHandler = (e) => {
-    console.log("Twitter Value :", e.target.value);
-    setIsEditing(true);
-    setDescriptionData(e.target.value);
-    // setSocialLinks(e.target.value);
-  };
-  const copyrightInputHandler = (e) => {
-    console.log("Twitter Value :", e.target.value);
-    setIsEditing(true);
-    setCopyrightData(e.target.value);
-    // setSocialLinks(e.target.value);
-  };
 
-  const formSubmitHandler = async (e) => {
-    e.preventDefault();
-
-    // Basic validation
-    if (
-      facebookURL.trim() === "" ||
-      twitterURL.trim() === "" ||
-      instagramURL.trim() === "" ||
-      linkedinURL.trim() === "" ||
-      descriptionData.trim() === "" ||
-      copyrightData.trim() === ""
-    ) {
-      toast.error("Either of the fields can't be empty");
-      return;
-    }
 
     const bodyData = {
       subTitle: descriptionData,
@@ -312,12 +266,7 @@ const GeneralSettings = () => {
                     />
                   </div>
                   <div className="flex justify-end gap-4.5">
-                    <button
-                      className="flex justify-center rounded border border-stroke px-6 py-2 font-medium text-black hover:shadow-1 dark:border-strokedark dark:text-white"
-                      type="submit"
-                    >
-                      Cancel
-                    </button>
+                  
                     <button
                       className={`flex justify-center rounded bg-primary px-6 py-2 font-medium text-gray hover:bg-opacity-90 ${
                         !isEditing ? "opacity-50 cursor-not-allowed" : ""

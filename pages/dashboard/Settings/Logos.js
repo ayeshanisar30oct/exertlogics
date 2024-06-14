@@ -26,8 +26,6 @@ const Logos = ({ initialLogosData }) => {
       }
 
       const data = await resp.json();
-      console.log("Response Data:", data);
-
       setLightLogo(data.logos[0].logoLightUrl);
       setDarkLogo(data.logos[0].logoDarkUrl);
       setFavicon(data.logos[0].faviconUrl);
@@ -83,7 +81,7 @@ const Logos = ({ initialLogosData }) => {
   };
 
   return (
-    <>
+
       <div className="mx-auto">
         <Breadcrumb pageName="Logos" />
 
@@ -100,19 +98,13 @@ const Logos = ({ initialLogosData }) => {
                   <div className="mb-4 flex items-center gap-3">
                     <div className="h-14 w-14 rounded-full">
                       <Image
-                        src={lightLogo ? lightLogo : "/images/user/user-03.png"}
+
                         width={55}
                         height={55}
-                        alt="Logi Light"
+                        alt="Logo Light"
                       />
                     </div>
-                    <div>
-                      <span className="mb-1.5 text-black dark:text-white">
-                        Edit logo
-                      </span>
-                    </div>
                   </div>
-
                   <div
                     id="FileUpload"
                     className="relative mb-5.5 block w-full cursor-pointer appearance-none rounded border border-dashed border-primary bg-gray px-4 py-4 dark:bg-meta-4 sm:py-7.5"
@@ -166,14 +158,7 @@ const Logos = ({ initialLogosData }) => {
                       <p>(max, 800 X 800px)</p>
                     </div>
                   </div>
-
                   <div className="flex justify-end gap-4.5">
-                    <button
-                      className="flex justify-center rounded border border-stroke px-6 py-2 font-medium text-black hover:shadow-1 dark:border-strokedark dark:text-white"
-                      type="button"
-                    >
-                      Cancel
-                    </button>
                     <button
                       className="flex justify-center rounded bg-primary px-6 py-2 font-medium text-gray hover:bg-opacity-90"
                       type="button"
@@ -198,16 +183,11 @@ const Logos = ({ initialLogosData }) => {
                   <div className="mb-4 flex items-center gap-3">
                     <div className="h-14 w-14 rounded-full">
                       <Image
-                        src={darkLogo ? darkLogo : "/images/user/user-03.png"}
+                        src={darkLogo}
                         width={55}
                         height={55}
-                        alt="User"
+                        alt="Dark Logo"
                       />
-                    </div>
-                    <div>
-                      <span className="mb-1.5 text-black dark:text-white">
-                        Edit Logo
-                      </span>
                     </div>
                   </div>
 
@@ -262,12 +242,6 @@ const Logos = ({ initialLogosData }) => {
 
                   <div className="flex justify-end gap-4.5">
                     <button
-                      className="flex justify-center rounded border border-stroke px-6 py-2 font-medium text-black hover:shadow-1 dark:border-strokedark dark:text-white"
-                      type="button"
-                    >
-                      Cancel
-                    </button>
-                    <button
                       className="flex justify-center rounded bg-primary px-6 py-2 font-medium text-gray hover:bg-opacity-90"
                       type="button"
                       onClick={handleSubmit}
@@ -291,17 +265,13 @@ const Logos = ({ initialLogosData }) => {
                   <div className="mb-4 flex items-center gap-3">
                     <div className="h-14 w-14 rounded-full">
                       <Image
-                        src={favicon ? favicon : "/images/user/user-03.png"}
+                        src={favicon}
                         width={55}
                         height={55}
-                        alt="User"
+                        alt="favicon"
                       />
                     </div>
-                    <div>
-                      <span className="mb-1.5 text-black dark:text-white">
-                        Edit Favicon
-                      </span>
-                    </div>
+
                   </div>
 
                   <div
@@ -355,12 +325,6 @@ const Logos = ({ initialLogosData }) => {
 
                   <div className="flex justify-end gap-4.5">
                     <button
-                      className="flex justify-center rounded border border-stroke px-6 py-2 font-medium text-black hover:shadow-1 dark:border-strokedark dark:text-white"
-                      type="button"
-                    >
-                      Cancel
-                    </button>
-                    <button
                       className="flex justify-center rounded bg-primary px-6 py-2 font-medium text-gray hover:bg-opacity-90"
                       type="button"
                       onClick={handleSubmit}
@@ -374,7 +338,7 @@ const Logos = ({ initialLogosData }) => {
           </div>
         </div>
       </div>
-    </>
+
   );
 };
 

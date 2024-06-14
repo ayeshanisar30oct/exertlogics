@@ -60,6 +60,7 @@ const footerSchema = Joi.object({
 
 
 const linkSchema = Joi.object({
+  _id: Joi.string(),
   title: Joi.string().required().messages({
     'string.base': '"title" should be a type of text',
     'string.empty': '"title" cannot be an empty field',
