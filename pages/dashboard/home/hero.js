@@ -43,12 +43,12 @@ const Hero = () => {
 
   const subTitleInputHandler = (e) => {
     console.log("Title Data :", e.target.value);
-    setTitle(e.target.value);
+    setSubTitle(e.target.value);
   };
 
   const videoUrlInputHandler = (e) => {
     console.log("Title Data :", e.target.value);
-    setTitle(e.target.value);
+    setVideoUrl(e.target.value);
   };
 
 const formSubmitHandler = async (e) => {
@@ -96,7 +96,6 @@ const formSubmitHandler = async (e) => {
 };
 
   return (
-    <DefaultLayout>
       <div className="mx-auto">
         <Breadcrumb pageName="Hero" />
         <div className="grid grid-cols-5 gap-8">
@@ -173,7 +172,6 @@ const formSubmitHandler = async (e) => {
           </div>
         </div>
       </div>
-    </DefaultLayout>
   );
 };
 

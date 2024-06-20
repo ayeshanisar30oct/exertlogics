@@ -155,7 +155,6 @@ const formSubmitHandler = async (e) => {
 };
 
   return (
-    <DefaultLayout>
       <div className="mx-auto">
         <Breadcrumb pageName="Settings" />
         <div className="grid grid-cols-5 gap-8">
@@ -323,7 +322,6 @@ const formSubmitHandler = async (e) => {
           </div>
         </div>
       </div>
-    </DefaultLayout>
   );
 };
 

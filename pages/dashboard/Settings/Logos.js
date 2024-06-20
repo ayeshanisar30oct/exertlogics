@@ -98,7 +98,6 @@ const Logos = () => {
   // }
 
   return (
-    <DefaultLayout>
       <div className="mx-auto">
         <Breadcrumb pageName="Logos" />
 
@@ -354,7 +353,6 @@ const Logos = () => {
           </div>
         </div>
       </div>
-    </DefaultLayout>
   );
 };
 
