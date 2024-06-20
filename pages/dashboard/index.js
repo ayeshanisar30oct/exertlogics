@@ -14,7 +14,7 @@ export default function Home() {
   return (
     <>
       {/* <> */}
-      <Settings/>
+      {/* <Settings/> */}
       {/* </> */}
     </>
   );
