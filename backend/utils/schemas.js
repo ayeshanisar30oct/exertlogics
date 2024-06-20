@@ -18,7 +18,7 @@ const loginSchema = Joi.object({
 const homeSchema = Joi.object({
   title: Joi.string().required(),
   subTitle: Joi.string().required(),
-  videoUrl: Joi.string().uri().required(),
+  videoUrl: Joi.string().required(),
 });
 
 const aboutSchema = Joi.object({

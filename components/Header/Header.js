@@ -1,46 +1,32 @@
-import React, { useState, useEffect, Fragment } from 'react';
-import PropTypes from 'prop-types';
-import useMediaQuery from '@mui/material/useMediaQuery';
-import { useTheme } from '@mui/material/styles';
-import AppBar from '@mui/material/AppBar';
-import Button from '@mui/material/Button';
-import IconButton from '@mui/material/IconButton';
-import Container from '@mui/material/Container';
-import AnchorLink from 'react-anchor-link-smooth-scroll';
-import Scrollspy from 'react-scrollspy';
-import { useTranslation } from 'next-i18next';
-import logo from 'public/images/el-logo.png';
-import brand from 'public/text/brand';
-import routeLink from 'public/text/link';
-import Link from '../Link';
-import MobileMenu from './MobileMenu';
-import Settings from './Settings';
-import useStyles from './header-style';
-import navMenu from './menu';
+import React, { useState, useEffect, Fragment } from "react";
+import PropTypes from "prop-types";
+import useMediaQuery from "@mui/material/useMediaQuery";
+import { useTheme } from "@mui/material/styles";
+import AppBar from "@mui/material/AppBar";
+import Button from "@mui/material/Button";
+import IconButton from "@mui/material/IconButton";
+import Container from "@mui/material/Container";
+import AnchorLink from "react-anchor-link-smooth-scroll";
+import Scrollspy from "react-scrollspy";
+import logoPlaceholder from 'public/images/el-logo.png'; // Placeholder in case of a failed fetch
 
-let counter = 0;
-function createData(name, url, offset) {
-  counter += 1;
-  return {
-    id: counter,
-    name,
-    url,
-    offset,
-  };
-}
+// import logo from "public/images/el-logo.png";
+import brand from "public/text/brand";
+import routeLink from "public/text/link";
+import Link from "../Link";
+import MobileMenu from "./MobileMenu";
+import Settings from "./Settings";
+import useStyles from "./header-style";
 
-const LinkBtn = React.forwardRef(function LinkBtn(props, ref) { // eslint-disable-line
-  return <AnchorLink to={props.to} {...props} />; // eslint-disable-line
+const LinkBtn = React.forwardRef(function LinkBtn(props, ref) {
+  return <AnchorLink to={props.href.replace("#", "")} {...props} />;
 });
 
 function Header(props) {
   // Theme breakpoints
   const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
-  const isDesktop = useMediaQuery(theme.breakpoints.up('md'));
-
-  // Translation
-  const { t } = useTranslation('common');
+  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
+  const isDesktop = useMediaQuery(theme.breakpoints.up("md"));
 
   // Scroll and Fixed Menu
   const [fixed, setFixed] = useState(false);
@@ -48,7 +34,7 @@ function Header(props) {
   const handleScroll = () => {
     const doc = document.documentElement;
     const scroll = (window.pageYOffset || doc.scrollTop) - (doc.clientTop || 0);
-    const newFlagFixed = (scroll > 80);
+    const newFlagFixed = scroll > 80;
     if (flagFixed !== newFlagFixed) {
       setFixed(newFlagFixed);
       flagFixed = newFlagFixed;
@@ -56,23 +42,58 @@ function Header(props) {
   };
 
   useEffect(() => {
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
   }, []);
 
-  const { classes, cx } = useStyles();
-  const {
-    onToggleDark,
-    onToggleDir,
-    invert,
-  } = props;
+  // Fetch menu data from API
+  const [menuList, setMenuList] = useState([]);
+  const [logoUrl, setLogoUrl] = useState(logoPlaceholder);
 
-  const [menuList] = useState([
-    createData(navMenu[0], '#' + navMenu[0], 200),
-    createData(navMenu[1], '#' + navMenu[1], 200),
-    createData(navMenu[2], '#' + navMenu[2], 200),
-    createData(navMenu[3], '#' + navMenu[3], 200),
-    createData(navMenu[4], '#' + navMenu[4], 200),
-  ]);
+  useEffect(() => {
+    const fetchMenu = async () => {
+      try {
+        const response = await fetch("http://localhost:3001/api/header/");
+        const data = await response.json();
+        if (data.status === "success" && data.header.length > 0) {
+          const links = data.header[0].links.map((link) => ({
+            name: link.title,
+            url: link.url,
+            offset: 200,
+          }));
+          setMenuList(links);
+        }
+      } catch (error) {
+        console.error("Error fetching menu:", error);
+      }
+    };
+
+    fetchMenu();
+  }, []);
+
+
+   useEffect(() => {
+     async function fetchLogoData() {
+       try {
+         const logoResponse = await fetch("http://localhost:3001/api/logo/");
+         const logoData = await logoResponse.json();
+         if (logoData.status === "success" && logoData.logos.length > 0) {
+           setLogoUrl(logoData.logos[0].logoLightUrl);
+         }
+       } catch (error) {
+         console.error("Error fetching logo:", error);
+       }
+     }
+     fetchLogoData();
+   }, []);
+
+
+
+  const { classes, cx } = useStyles();
+  const { onToggleDark, onToggleDir, invert } = props;
+
   const [openDrawer, setOpenDrawer] = useState(false);
   const handleOpenDrawer = () => {
     setOpenDrawer(!openDrawer);
@@ -100,58 +121,57 @@ function Header(props) {
                 <IconButton
                   onClick={handleOpenDrawer}
                   className={cx(
-                    'hamburger hamburger--spin',
+                    "hamburger hamburger--spin",
                     classes.mobileMenu,
-                    openDrawer && 'is-active'
+                    openDrawer && "is-active"
                   )}
                   size="large"
                 >
                   <span className="hamburger-box">
-                    <span className={cx(classes.bar, 'hamburger-inner')} />
+                    <span className={cx(classes.bar, "hamburger-inner")} />
                   </span>
                 </IconButton>
               )}
               <div className={classes.logo}>
                 {invert ? (
-                  <Link href={routeLink.agency.home}>
-                    <img src={logo} alt="logo" />
+                  <Link className="site-name" href={routeLink.agency.home}>
+                    <img src={logoUrl} alt="logo" />
                     {brand.agency.name}
                   </Link>
                 ) : (
-                  <AnchorLink href="#home">
-                    <img src={logo} alt="logo" />
+                  <AnchorLink className="site-name" href="#home">
+                    <img src={logoUrl} alt="logo" />
                     {brand.agency.name}
                   </AnchorLink>
                 )}
               </div>
             </nav>
-            <nav id="header-nav" className={cx(classes.navMenu, invert && classes.invert)}>
+            <nav
+              id="header-nav"
+              className={cx(classes.navMenu, invert && classes.invert)}
+            >
               {isDesktop && (
-                <Scrollspy items={navMenu} currentClassName="active">
-                  {menuList.map((item) => (
-                    <li key={item.id.toString()}>
+                <Scrollspy
+                  items={menuList.map((item) => item.name)}
+                  currentClassName="active"
+                >
+                  {menuList.map((item, index) => (
+                    <li key={index}>
                       {invert ? (
-                        // eslint-disable-next-line
-                        <Button component={Link} href={"/" + item.url}>
-                          {t('agency-landing.header_' + item.name)}
+                        <Button component={Link} href={item.url}>
+                          {item.name}
                         </Button>
                       ) : (
-                        // eslint-disable-next-line
                         <Button
                           component={LinkBtn}
-                          offset={item.offset || 0}
                           href={item.url}
+                          offset={item.offset}
                         >
-                          {t('agency-landing.header_' + item.name)}
+                          {item.name}
                         </Button>
                       )}
                     </li>
                   ))}
-                  {/* <li>
-                    <Button target="blank" component={Link} to={routeLink.agency.login}>
-                      {t('agency-landing.header_login')}
-                    </Button>
-                  </li> */}
                 </Scrollspy>
               )}
               <Settings
@@ -174,7 +194,7 @@ Header.propTypes = {
 };
 
 Header.defaultProps = {
-  invert: false
+  invert: false,
 };
 
 export default Header;

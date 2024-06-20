@@ -19,6 +19,31 @@ import useStyles from './banner-style';
 import Link from '../Link';
 
 function VideoBanner() {
+
+  const [title, setTitle] = useState("");
+  const [subTitle, setSubTitle] = useState("");
+  const [videoUrl, setVideoUrl] = useState("");
+
+  useEffect(() => {
+    async function fetchHomeData() {
+      try {
+        const response = await fetch("http://localhost:3001/api/home");
+        const data = await response.json();
+        if (data.status === "success" && data.home.length > 0) {
+          const homeData = data.home[0];
+          setTitle(capitalizeFirstLetterOfEachWord(homeData.title));
+          setSubTitle(homeData.subTitle);
+          setVideoUrl(homeData.videoUrl);
+        }
+      } catch (error) {
+        console.error("Error fetching home data:", error);
+      }
+    }
+
+    fetchHomeData();
+  }, []);
+
+
   // Theme breakpoints
   const theme = useTheme();
   const { classes: text } = useText();
@@ -88,6 +113,10 @@ function VideoBanner() {
     }
   };
 
+  function capitalizeFirstLetterOfEachWord(text) {
+    return text.replace(/\b\w/g, (char) => char.toUpperCase());
+  }
+
   return (
     <div className={classes.heroContent}>
       {isMobile && (
@@ -104,14 +133,14 @@ function VideoBanner() {
                   variant="h3"
                   className={cx(classes.textHelper, text.title)}
                 >
-                  {t("agency-landing.banner_title")}
+                  {title}
                 </Typography>
               </div>
               <Typography
                 className={cx(classes.subtitle, text.subtitle)}
                 variant="h5"
               >
-                {t("agency-landing.banner_subtitle")}
+                {subTitle}
               </Typography>
 
               <Button
@@ -150,7 +179,7 @@ function VideoBanner() {
                       <div className={classes.video}>
                         {isDesktop && (
                           <YouTube
-                            videoId="rX2T9jH0OxA"
+                            videoId={videoUrl}
                             opts={opts}
                             onReady={_onReady}
                             onEnd={_onEnd}
