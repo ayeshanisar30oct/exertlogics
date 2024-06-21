@@ -100,27 +100,17 @@ const Logos = ({ initialLogosData }) => {
                   <div className="mb-4 flex items-center gap-3">
                     <div className="h-14 w-14 rounded-full">
                       <Image
-                        src={lightLogo ? lightLogo : "/images/user/user-03.png"}
+                        src={lightLogo}
                         width={55}
                         height={55}
-                        alt="Logi Light"
+                        alt="Logo Light"
                       />
-                    </div>
-                    <div>
-                      <span className="mb-1.5 text-black dark:text-white">
-                        Edit logo
-                      </span>
                     </div>
                   </div>
 
                   <div
                     id="FileUpload"
                     className="relative mb-5.5 block w-full cursor-pointer appearance-none rounded border border-dashed border-primary bg-gray px-4 py-4 dark:bg-meta-4 sm:py-7.5"
-                    style={{
-                      backgroundImage: "url('/public/images/user/user-03')",
-                      backgroundSize: "cover",
-                      backgroundPosition: "center",
-                    }}
                   >
                     <input
                       type="file"
@@ -198,16 +188,11 @@ const Logos = ({ initialLogosData }) => {
                   <div className="mb-4 flex items-center gap-3">
                     <div className="h-14 w-14 rounded-full">
                       <Image
-                        src={darkLogo ? darkLogo : "/images/user/user-03.png"}
+                        src={darkLogo}
                         width={55}
                         height={55}
-                        alt="User"
+                        alt="darkLogo"
                       />
-                    </div>
-                    <div>
-                      <span className="mb-1.5 text-black dark:text-white">
-                        Edit Logo
-                      </span>
                     </div>
                   </div>
 
@@ -291,16 +276,11 @@ const Logos = ({ initialLogosData }) => {
                   <div className="mb-4 flex items-center gap-3">
                     <div className="h-14 w-14 rounded-full">
                       <Image
-                        src={favicon ? favicon : "/images/user/user-03.png"}
+                        src={favicon}
                         width={55}
                         height={55}
-                        alt="User"
+                        alt="favicon"
                       />
-                    </div>
-                    <div>
-                      <span className="mb-1.5 text-black dark:text-white">
-                        Edit Favicon
-                      </span>
                     </div>
                   </div>
 

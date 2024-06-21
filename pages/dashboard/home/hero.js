@@ -1,8 +1,6 @@
 import Breadcrumb from "../components/Breadcrumbs/Breadcrumb";
 import React from "react";
 import { useEffect, useState } from "react";
-import DefaultLayout from "../components/Layouts/DefaultLayout";
-import Image from "next/image";
 import { toast } from "react-toastify";
 
 
