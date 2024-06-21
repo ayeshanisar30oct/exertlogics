@@ -3,13 +3,6 @@ import {
   updateAbout,
 } from "../../../backend/controllers/about/aboutController";
 
-// Ensure Next.js parses the request body as multipart/form-data
-export const config = {
-    api: {
-      bodyParser: false,
-    },
-  };
-
 export default async function handler(req, res) {
   if (req.method === "GET") {
     getAbout(req, res);

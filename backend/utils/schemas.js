@@ -22,18 +22,18 @@ const homeSchema = Joi.object({
 });
 
 const aboutSchema = Joi.object({
-  subTitle: Joi.string().required(),
-  description: Joi.string().required(),
-  employeesCount: Joi.number().required(),
-  clientsCount: Joi.number().required(),
-  projectsCount: Joi.number().required(),
-  aboutBannerUrl: Joi.string().uri().required(),
+  subTitle: Joi.string(),
+  description: Joi.string(),
+  employeesCount: Joi.number(),
+  clientsCount: Joi.number(),
+  projectsCount: Joi.number(),
+  aboutBannerUrl: Joi.string(),
 });
 
 const logoSchema = Joi.object({
-  logoLightUrl: Joi.string().uri(),
-  logoDarkUrl: Joi.string().uri(),
-  faviconUrl: Joi.string().uri(),
+  logoLightUrl: Joi.string(),
+  logoDarkUrl: Joi.string(),
+  faviconUrl: Joi.string(),
 });
 
 const socialLinksSchema = Joi.object({

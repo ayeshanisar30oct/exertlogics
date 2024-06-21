@@ -5,12 +5,14 @@ const aboutSchema = new Schema({
   subTitle: {
     type: String,
     lowercase : true,
-    required: true,
+    default : null
+    // required: true,
   },
   description: {
     type: String,
     lowercase : true,
-    required: true,
+    default : null
+    // required: true,
   },
   employeesCount: {
     type: Number,
@@ -27,7 +29,7 @@ const aboutSchema = new Schema({
 
   aboutBannerUrl: {
     type: String,
-    required: true,
+    // required: true,
   },
 });
 
