@@ -1,7 +1,7 @@
 import Breadcrumb from "../components/Breadcrumbs/Breadcrumb";
 import { useEffect, useState } from "react";
-import React from "react";
 import classNames from "classnames";
+import { toast } from "react-toastify";
 import {
   PencilSquareIcon,
   BookmarkSquareIcon,
@@ -9,79 +9,75 @@ import {
 import DefaultLayout from "../components/Layouts/DefaultLayout";
 
 const Menu = () => {
-  const [data, setData] = useState();
-  const [isEditing, setIsEditing] = useState(false);
-  const [editedData, setEditedData] = useState({});
-  const [editingNavId, setEditingNavId] = useState(null);
+  const [data, setData] = useState(null);
+  const [editingLinkId, setEditingLinkId] = useState(null);
 
-  // GET HEADER MENU
-
+  // Fetch header menu
   useEffect(() => {
     fetch("http://localhost:3001/api/header")
       .then((response) => response.json())
-      .then((resp) => {
-        setData(resp);
-        console.log("data", resp);
-      })
-      .catch((error) => console.error("Error fetching data:", error));
+      .then(setData)
+      .catch(console.error);
   }, []);
 
-  //  EDIT HEADER MENU
-
-  const handleEdit = (link) => {
-    setEditingNavId(link._id); // Assume _id uniquely identifies each nav item
-    setIsEditing(true);
-    setEditedData(link);
-    console.log("nav", link);
-    console.log("edited data", editedData);
+  const handleEdit = (linkId) => {
+    setEditingLinkId(linkId);
   };
 
-  const handleUpdate = (e, linkIdx = null) => {
-    const { name, value } = e.target;
-    const [field, index] = name.split("_").slice(-2);
-    setEditedData((prevState) => {
-      const updatedLinks = [...prevState.links];
-      updatedLinks[parseInt(index, 10)] = {
-        ...updatedLinks[parseInt(index, 10)],
-        [field]: value,
-      };
-
+  const handleChange = (linkId, field, value) => {
+    setData((prevData) => {
+      const updatedLinks = prevData.header[0].links.map((link) =>
+        link._id === linkId ? { ...link, [field]: value } : link
+      );
       return {
-        ...prevState,
-        header: {
-          ...prevState.header,
-          links: updatedLinks,
-        },
+        ...prevData,
+        header: [{ ...prevData.header[0], links: updatedLinks }],
       };
     });
   };
-  console.log("edited data State", editedData);
 
-  const handleUpdateNav = () => {
-    fetch(`http://localhost:3001/api/header/${editedData.id}`, {
+  const handleSave = () => {
+    const linkToSave = data.header[0].links.find(
+      (link) => link._id === editingLinkId
+    );
+    const updatedLinks = data.header[0].links.map((link) =>
+      link._id === linkToSave._id ? linkToSave : link
+    );
+     let bodyData = {
+       siteTitle: "ExertLogics",
+       links: updatedLinks,
+     };
+    fetch(`http://localhost:3001/api/header/`, {
       method: "PATCH",
+      body: JSON.stringify(bodyData),
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(editedData),
     })
       .then((response) => response.json())
-      .then((updatedNav) => {
-        if (updatedNav.error) {
-          console.error("Error updating data:", updatedNav.error);
-        } else {
-          setData((prevData) =>
-            prevData.map((nav) => (nav.id === updatedNav.id ? updatedNav : nav))
+      .then((updatedLink) => {
+        setData((prevData) => {
+          const updatedLinks = prevData.header[0].links.map((link) =>
+            link._id === updatedLink._id ? updatedLink : link
           );
-          setIsEditing(false);
-          alert("Nav data edited successfully");
-        }
+          return {
+            ...prevData,
+            header: [{ ...prevData.header[0], links: updatedLinks }],
+          };
+        });
+        setEditingLinkId(null);
+            toast.success("Menu Item Has Been Updated.");
+
       })
       .catch((error) => {
         console.error("Error updating data:", error);
         alert("Error updating data. Please try again later.");
       });
   };
+
+  // if (!data) {
+  //   return;
+  // }
 
   return (
     <>
@@ -104,77 +100,69 @@ const Menu = () => {
                 </tr>
               </thead>
               <tbody>
-                {/* {data && */}
-                {/* data.header.map((nav, navIdx) => ( */}
-                <React.Fragment>
-                  {data &&
-                    data.header[0].links.map((link, linkIdx) => (
-                      <tr key={linkIdx}>
-                        <td
-                          className={classNames(
-                            linkIdx !== data.length - 1
-                              ? "border-b border-gray-500"
-                              : "",
-                            "border-b border-[#eee] px-4 py-5 pl-9 dark:border-strokedark xl:pl-11"
-                          )}
+                {data?.header[0]?.links.map((link, linkIdx) => (
+                  <tr key={link._id}>
+                    <td
+                      className={classNames(
+                        linkIdx !== data.header[0].links.length - 1
+                          ? "border-b border-gray-500"
+                          : "",
+                        "border-b border-[#eee] px-4 py-5 pl-9 dark:border-strokedark xl:pl-11"
+                      )}
+                    >
+                      {editingLinkId === link._id ? (
+                        <input
+                          type="text"
+                          value={link.title || ""}
+                          onChange={(e) =>
+                            handleChange(link._id, "title", e.target.value)
+                          }
+                        />
+                      ) : (
+                        link.title
+                      )}
+                    </td>
+                    <td
+                      className={classNames(
+                        linkIdx !== data.header[0].links.length - 1
+                          ? "border-b border-gray-500"
+                          : "",
+                        "border-b border-[#eee] px-4 py-5 dark:border-strokedark"
+                      )}
+                    >
+                      {editingLinkId === link._id ? (
+                        <input
+                          type="text"
+                          value={link.url || ""}
+                          onChange={(e) =>
+                            handleChange(link._id, "url", e.target.value)
+                          }
+                        />
+                      ) : (
+                        link.url
+                      )}
+                    </td>
+                    <td className="border-b border-[#eee] px-4 py-5 dark:border-strokedark">
+                      {editingLinkId === link._id ? (
+                        <button
+                          className="flex justify-center rounded bg-primary px-6 py-2 font-medium text-gray hover:bg-opacity-90"
+                          type="button"
+                          onClick={handleSave}
                         >
-                          {editingNavId === link._id ? (
-                            <input
-                              type="text"
-                              name={`menu_item_title_${linkIdx}`}
-                              value={link.title || ""}
-                              onChange={(e) => handleUpdate(e, linkIdx)}
-                            />
-                          ) : (
-                            link.title || ""
-                          )}
-                        </td>
-                        <td
-                          className={classNames(
-                            linkIdx !== data.length - 1
-                              ? "border-b border-gray-500"
-                              : "",
-                            "border-b border-[#eee] px-4 py-5 dark:border-strokedark"
-                          )}
+                          Save
+                        </button>
+                      ) : (
+                        <button
+                          className="flex justify-center rounded bg-primary px-6 py-2 font-medium text-gray hover:bg-opacity-90"
+                          type="button"
+                          onClick={() => handleEdit(link._id)}
                         >
-                          {editingNavId === link._id ? (
-                            <input
-                              type="text"
-                              name={`menu_item_url_${linkIdx}`}
-                              value={link.url || ""}
-                              onChange={(e) => handleUpdate(e, linkIdx)}
-                            />
-                          ) : (
-                            link.url || ""
-                          )}
-                        </td>
-                        <td className="border-b border-[#eee] px-4 py-5 dark:border-strokedark">
-                          {editingNavId === link._id ? (
-                            <button
-                              className="hover:text-black px-1"
-                              onClick={handleUpdateNav}
-                            >
-                              <BookmarkSquareIcon
-                                className="h-5 w-5"
-                                aria-hidden="true"
-                              />
-                            </button>
-                          ) : (
-                            <button
-                              className="hover:text-black px-1"
-                              onClick={() => handleEdit(link)}
-                            >
-                              <PencilSquareIcon
-                                className="h-5 w-5"
-                                aria-hidden="true"
-                              />
-                            </button>
-                          )}
-                        </td>
-                      </tr>
-                    ))}
-                </React.Fragment>
-                {/* ))} */}
+                          Edit
+                        </button>
+                      )}
+                    </td>
+                  </tr>
+                ))}
               </tbody>
             </table>
           </div>

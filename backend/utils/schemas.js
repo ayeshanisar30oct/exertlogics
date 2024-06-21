@@ -18,7 +18,7 @@ const loginSchema = Joi.object({
 const homeSchema = Joi.object({
   title: Joi.string().required(),
   subTitle: Joi.string().required(),
-  videoUrl: Joi.string().uri().required(),
+  videoUrl: Joi.string().required(),
 });
 
 const aboutSchema = Joi.object({
@@ -60,6 +60,7 @@ const footerSchema = Joi.object({
 
 
 const linkSchema = Joi.object({
+  _id: Joi.string(),
   title: Joi.string().required().messages({
     'string.base': '"title" should be a type of text',
     'string.empty': '"title" cannot be an empty field',

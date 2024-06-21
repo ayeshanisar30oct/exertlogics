@@ -19,7 +19,7 @@ const Logos = ({ initialLogosData }) => {
   const fetchLogos = async () => {
     try {
       setIsLoading(true);
-      setError(false);
+      // setError(false);
       const resp = await fetch("http://localhost:3001/api/logo");
       if (!resp.ok) {
         throw new Error("Error occurred fetching data!");
@@ -33,7 +33,7 @@ const Logos = ({ initialLogosData }) => {
       setFavicon(data.logos[0].faviconUrl);
     } catch (err) {
       console.error("Something went wrong:", err);
-      setError(true);
+      // setError(true);
     } finally {
       setIsLoading(false);
     }
@@ -74,7 +74,7 @@ const Logos = ({ initialLogosData }) => {
       } catch (error) {
         console.error("Error during form submission:", error);
         toast.error("Something went wrong");
-        setError(true);
+        // setError(true);
       } finally {
         setFile(null);
         setIsLoading(false);
