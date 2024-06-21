@@ -15,7 +15,7 @@ export const updateLogo = catchAsync(async (req, res) => {
   console.log("API HIT=====")
 
   const { fileUrl, err } = await fileUpload(req, res);
-  if(err) return res.status(500).json({status:'fail',message:''})
+  if(err) return res.status(500).json({status:'fail',message:'File upload failed!'})
 
   // Connect to the database
   await connectDB();

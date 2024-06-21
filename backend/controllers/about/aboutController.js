@@ -11,7 +11,7 @@ export const getAbout = getFactory(About);
 // Create or update About data
 export const updateAboutBanner = catchAsync(async (req, res) => {
   const { fileUrl, err } = await fileUpload(req, res);
-  if(err) return res.status(500).json({status:'fail',message:''})
+  if(err) return res.status(500).json({status:'fail',message:'File upload failed!'})
 
   // Connect to the database
   await connectDB();
