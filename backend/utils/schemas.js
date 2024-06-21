@@ -30,6 +30,12 @@ const aboutSchema = Joi.object({
   aboutBannerUrl: Joi.string(),
 });
 
+const serviceSchema = Joi.object({
+  title: Joi.string(),
+  description: Joi.string(),
+  serviceBannerUrl: Joi.string(),
+});
+
 const logoSchema = Joi.object({
   logoLightUrl: Joi.string(),
   logoDarkUrl: Joi.string(),
@@ -89,4 +95,4 @@ const headerSchema = Joi.object({
 });
 
 
-export { registerSchema, loginSchema, headerSchema, homeSchema, logoSchema, footerSchema, aboutSchema };
+export { registerSchema, loginSchema, headerSchema, homeSchema, logoSchema, footerSchema, aboutSchema, serviceSchema };

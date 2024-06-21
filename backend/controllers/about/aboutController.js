@@ -23,7 +23,7 @@ export const updateAboutBanner = catchAsync(async (req, res) => {
     Object.assign(about, fileUrl);
     await about.save();
   }
-  res.status(200).json({ message: "File uploaded successfully", path: fileUrl, about });
+  res.status(200).json({ status: 'success', message: "File uploaded successfully", path: fileUrl });
 });
 
 // Create or update about data

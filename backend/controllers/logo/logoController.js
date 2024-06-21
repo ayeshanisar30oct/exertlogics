@@ -27,5 +27,5 @@ export const updateLogo = catchAsync(async (req, res) => {
     Object.assign(logo, fileUrl);
     await logo.save();
   }
-  res.status(200).json({ message: "File uploaded successfully", path: fileUrl });
+  res.status(200).json({ status : 'success', message: "File uploaded successfully", path: fileUrl });
 });

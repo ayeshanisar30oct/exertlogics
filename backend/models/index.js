@@ -4,6 +4,7 @@ import Footer from './Footer';
 import Home from './Home';
 import Logo from './Logo';
 import About from './About';
+import Service from './Service';
 
 module.exports = {
   User,
@@ -12,4 +13,5 @@ module.exports = {
   Footer,
   Logo,
   About,
+  Service,
 };
