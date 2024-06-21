@@ -13,6 +13,10 @@ const About = () => {
     const [projectsCount, setProjectsCount] = useState("");
     const [clientsCount, setClientsCount] = useState("");
      const [isLoading, setIsLoading] = useState(false);
+       const [file, setFile] = useState(null);
+         const [fileName, setFileName] = useState("");
+
+
 
   // GET ABOUT  DATA
   useEffect(() => {
@@ -103,6 +107,49 @@ const About = () => {
       setIsLoading(false); // Reset loading state
     }
   };
+
+  const fileChangeHandler = (e) => {
+    console.log("File is :", e.target.files[0], "Name is :", e.target.name);
+    setFile(e.target.files[0]);
+    setFileName(e.target.name);
+  };
+
+ const handleSubmit = async (e) => {
+   // console.log()
+   e.preventDefault();
+
+   if (file) {
+     try {
+       setIsLoading(true);
+       const formData = new FormData();
+       formData.append("file", file);
+       console.log("FORM DATA OBJECT :", formData);
+       formData.append("type", 'aboutBanner');
+
+       const res = await fetch("http://localhost:3001/api/about/about-banner", {
+         method: "PATCH",
+         body: formData,
+       });
+
+       if (!res.ok) {
+         toast.error("Network response was not ok");
+         throw new Error("Network response was not ok");
+       }
+
+       const data = await res.json();
+       console.log("Response is:", data);
+       await fetchAboutData();
+       toast.success("File uploaded successfully!");
+     } catch (error) {
+       console.error("Error during form submission:", error);
+       toast.error("Something went wrong");
+       // setError(true);
+     } finally {
+       setFile(null);
+       setIsLoading(false);
+     }
+   } else toast.warn("Please select a file first!");
+ };
 
    function capitalizeFirstLetter(text) {
      if (!text) return text;
@@ -277,16 +324,11 @@ const About = () => {
                         <div
                           id="FileUpload"
                           className="relative mb-5.5 block w-1/2 cursor-pointer appearance-none rounded border border-dashed border-primary bg-gray px-4 py-4 dark:bg-meta-4 sm:py-7.5"
-                          // style={{
-                          //   backgroundImage:
-                          //     "url('/public/images/user/user-03')",
-                          //   backgroundSize: "cover",
-                          //   backgroundPosition: "center",
-                          // }}
+                       
                         >
                           <input
                             type="file"
-                            // onChange={fileChangeHandler}
+                            onChange={fileChangeHandler}
                             name="about-photo"
                             accept="image/*"
                             className="absolute inset-0 z-50 m-0 h-full w-full cursor-pointer p-0 opacity-0 outline-none"
@@ -342,7 +384,7 @@ const About = () => {
                         <button
                           className="flex justify-center rounded bg-primary px-6 py-2 font-medium text-gray hover:bg-opacity-90"
                           type="button"
-                          // onClick={handleSubmit}
+                          onClick={handleSubmit}
                         >
                           Save
                         </button>
