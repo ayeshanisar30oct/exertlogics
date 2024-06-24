@@ -1,15 +1,16 @@
-import connectDB from "../../db/connectDB"; // Assume you have a module for connecting to your database
-import { validate } from "../validation"; // Assume you have a module for validation
-import catchAsync from "../catchAsync"; // Assume you have a utility function for handling async errors
+import connectDB from "../../db/connectDB"; 
+import { validate } from "../validation"; 
+import catchAsync from "../catchAsync"; 
+import { isEmptyObject } from "../helpers";
 
-export const getFactory = (model) =>
+export const getFactory = (model,pop = '') =>
   catchAsync(async (req, res) => {
     const id = req.query?.id;
     let filter = id ? { _id: id } : {};
     // Connect to the database
     await connectDB();
 
-    const docs = await model.find(filter).select("-__v");
+    const docs = await model.find(filter).populate(pop).select("-__v");
     if (!docs.length) {
       return res
         .status(200)
@@ -49,7 +50,7 @@ const updateFactory = (model, schema, isMultiple = false) =>
         document = await model.findById(filter);
       } else {
         // If isMultiple is true and filter is empty
-        document = document = new model();
+        document = new model();
       }
     } else {
         document = await model.findOne(filter);
@@ -74,7 +75,3 @@ const updateFactory = (model, schema, isMultiple = false) =>
   });
 
 export default updateFactory;
-
-const isEmptyObject = (obj) => {
-  return Object.keys(obj).length === 0;
-};

@@ -4,6 +4,7 @@ import updateFactory, { getFactory } from "backend/utils/factory/updateFactory";
 import { fileUpload } from "../../utils/fileUpload";
 import catchAsync from "backend/utils/catchAsync";
 import connectDB from "../../../backend/db/connectDB";
+import { isEmptyObject } from "backend/utils/helpers";
 
 // Get About data
 export const getService = getFactory(Service);
@@ -41,7 +42,3 @@ export const updateServiceBanner = catchAsync(async (req, res) => {
 
 // Create or update Service data
 export const updateService = updateFactory(Service, serviceSchema,true);
-
-const isEmptyObject = (obj) => {
-  return Object.keys(obj).length === 0;
-};
