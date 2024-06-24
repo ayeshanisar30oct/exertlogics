@@ -40,7 +40,6 @@ const Logos = ({ initialLogosData }) => {
   };
 
   const fileChangeHandler = (e) => {
-    console.log("File is :", e.target.files[0], "Name is :", e.target.name);
     setFile(e.target.files[0]);
     setFileName(e.target.name);
   };

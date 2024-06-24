@@ -19,42 +19,43 @@ const About = () => {
 
 
   // GET ABOUT  DATA
-  useEffect(() => {
-    async function fetchAboutData() {
-      try {
-        const response = await fetch("http://localhost:3001/api/about");
-        const data = await response.json();
-        if (data.status === "success" && data.about.length > 0) {
-          const aboutData = data.about[0];
-          setSubTitle(capitalizeFirstLetter(aboutData.subTitle));
-          setDescription(capitalizeFirstLetter(aboutData.description));
-          setBackgroundImageUrl(data.about[0].aboutBannerUrl);
-             setEmployeesCount(aboutData.employeesCount.toString());
-             setProjectsCount(aboutData.projectsCount.toString());
-             setClientsCount(aboutData.clientsCount.toString());
-        }
-      } catch (error) {
-        console.error("Error fetching home data:", error);
+  const fetchAboutData = async () => {
+    try {
+      const response = await fetch("http://localhost:3001/api/about");
+      const data = await response.json();
+      if (data.status === "success" && data.about.length > 0) {
+        const aboutData = data.about[0];
+        setSubTitle(capitalizeFirstLetter(aboutData.subTitle));
+        setDescription(capitalizeFirstLetter(aboutData.description));
+        setBackgroundImageUrl(data.about[0].aboutBannerUrl);
+        setEmployeesCount(aboutData.employeesCount.toString());
+        setProjectsCount(aboutData.projectsCount.toString());
+        setClientsCount(aboutData.clientsCount.toString());
       }
+    } catch (error) {
+      console.error("Error fetching about data:", error);
     }
+  };
 
+  useEffect(() => {
     fetchAboutData();
   }, []);
 
- const subTitleInputHandler = (e) => {
-   setSubTitle(e.target.value);
- };
+  const subTitleInputHandler = (e) => {
+    setSubTitle(e.target.value);
+  };
 
- const employeesInputHandler = (e) => {
-   setEmployeesCount(e.target.value);
- };
+  const employeesInputHandler = (e) => {
+    setEmployeesCount(e.target.value);
+  };
 
- const projectsInputHandler = (e) => {
-   setProjectsCount(e.target.value);
- };
- const clientsInputHandler = (e) => {
-   setClientsCount(e.target.value);
- };
+  const projectsInputHandler = (e) => {
+    setProjectsCount(e.target.value);
+  };
+
+  const clientsInputHandler = (e) => {
+    setClientsCount(e.target.value);
+  };
 
   const descriptionInputHandler = (e) => {
     setDescription(e.target.value);
@@ -99,7 +100,6 @@ const About = () => {
       }
 
       const result = await response.json();
-      console.log("Form submitted successfully:", result);
       toast.success("About Data Updated Successfully");
     } catch (error) {
       console.error("Error submitting form:", error);
@@ -109,47 +109,48 @@ const About = () => {
   };
 
   const fileChangeHandler = (e) => {
-    console.log("File is :", e.target.files[0], "Name is :", e.target.name);
     setFile(e.target.files[0]);
     setFileName(e.target.name);
   };
 
- const handleSubmit = async (e) => {
-   // console.log()
-   e.preventDefault();
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
-   if (file) {
-     try {
-       setIsLoading(true);
-       const formData = new FormData();
-       formData.append("file", file);
-       console.log("FORM DATA OBJECT :", formData);
-       formData.append("type", 'aboutBanner');
+    if (file) {
+      try {
+        setIsLoading(true);
+        const formData = new FormData();
+        formData.append("file", file);
+        formData.append("type", "aboutBanner");
 
-       const res = await fetch("http://localhost:3001/api/about/about-banner", {
-         method: "PATCH",
-         body: formData,
-       });
+        const res = await fetch(
+          "http://localhost:3001/api/about/about-banner",
+          {
+            method: "PATCH",
+            body: formData,
+          }
+        );
 
-       if (!res.ok) {
-         toast.error("Network response was not ok");
-         throw new Error("Network response was not ok");
-       }
+        if (!res.ok) {
+          toast.error("Network response was not ok");
+          throw new Error("Network response was not ok");
+        }
 
-       const data = await res.json();
-       console.log("Response is:", data);
-       await fetchAboutData();
-       toast.success("File uploaded successfully!");
-     } catch (error) {
-       console.error("Error during form submission:", error);
-       toast.error("Something went wrong");
-       // setError(true);
-     } finally {
-       setFile(null);
-       setIsLoading(false);
-     }
-   } else toast.warn("Please select a file first!");
- };
+        const data = await res.json();
+        await fetchAboutData();
+        toast.success("File uploaded successfully!");
+      } catch (error) {
+        console.error("Error during form submission:", error);
+        toast.error("Something went wrong");
+      } finally {
+        setFile(null);
+        setIsLoading(false);
+      }
+    } else {
+      toast.warn("Please select a file first!");
+    }
+  };
+
 
    function capitalizeFirstLetter(text) {
      if (!text) return text;
@@ -375,12 +376,7 @@ const About = () => {
                       </div>
 
                       <div className="flex justify-end gap-4.5">
-                        <button
-                          className="flex justify-center rounded border border-stroke px-6 py-2 font-medium text-black hover:shadow-1 dark:border-strokedark dark:text-white"
-                          type="button"
-                        >
-                          Cancel
-                        </button>
+                     
                         <button
                           className="flex justify-center rounded bg-primary px-6 py-2 font-medium text-gray hover:bg-opacity-90"
                           type="button"
