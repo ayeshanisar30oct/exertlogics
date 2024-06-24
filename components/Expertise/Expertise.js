@@ -32,6 +32,41 @@ const trans3 = (x, y) => `translate3d(${x / 6 - 250}px,${y / 6 - 200}px,0)`;
 
 function Expertise() {
   const [loaded, setLoaded] = useState(false);
+  const [subTitle, setSubTitle] = useState("");
+  const [description, setDescription] = useState("");
+    const [expertiseList, setExpertiseList] = useState([]);
+
+     const capitalizeFirstLetter = (str) => {
+       return str.charAt(0).toUpperCase() + str.slice(1);
+     };
+
+  useEffect(() => {
+    async function fetchExpertiseData() {
+      try {
+        const response = await fetch("http://localhost:3001/api/expertise");
+        const data = await response.json();
+        if (data.status === "success" && data.expertise.length > 0) {
+          const expertiseData = data.expertise[0];
+         setSubTitle(capitalizeFirstLetter(expertiseData.subTitle));
+         setDescription(capitalizeFirstLetter(expertiseData.description));
+           const transformedExpertiseList = [];
+           for (let i = 0; i < expertiseData.expertise.length; i += 3) {
+             transformedExpertiseList.push(
+               expertiseData.expertise.slice(i, i + 3)
+             );
+           }
+                     setExpertiseList(transformedExpertiseList);
+
+          // setExpertiseList(expertiseData.expertise);
+        }
+      } catch (error) {
+        console.error("Error fetching expertise data:", error);
+      }
+    }
+
+    fetchExpertiseData();
+  }, []);
+
   // Theme breakpoints
   const theme = useTheme();
   const { classes: text } = useText();
@@ -72,11 +107,14 @@ function Expertise() {
         <use xlinkHref="/images/decoration/square-deco-primary.svg#square" />
       </svg>
       <div className={classes.root}>
-        <Container fixed onMouseMove={({ clientX: x, clientY: y }) => setPosition({ xy: calc(x, y) })}>
+        <Container
+          fixed
+          onMouseMove={({ clientX: x, clientY: y }) =>
+            setPosition({ xy: calc(x, y) })
+          }
+        >
           <Grid container spacing={6}>
-            {isDesktop && (
-              <Grid item lg={1} />
-            )}
+            {isDesktop && <Grid item lg={1} />}
             <Grid item md={4} xs={12}>
               <div className={classes.titleDeco}>
                 {isDesktop && (
@@ -89,7 +127,7 @@ function Expertise() {
                     <use xlinkHref="/images/agency/wave_decoration.svg#main" />
                   </svg>
                 )}
-                <TitleDeco text={t('agency-landing.expertise_title')} />
+                <TitleDeco text={t("agency-landing.expertise_title")} />
                 {loaded && isDesktop && (
                   <ScrollAnimation
                     animateOnce
@@ -99,13 +137,19 @@ function Expertise() {
                     duration={0.6}
                   >
                     <div className={classes.parallaxWrap}>
-                      <animated.div style={{ transform: position.xy.interpolate(trans1) }}>
+                      <animated.div
+                        style={{ transform: position.xy.interpolate(trans1) }}
+                      >
                         <span className={classes.iconGreen} />
                       </animated.div>
-                      <animated.div style={{ transform: position.xy.interpolate(trans2) }}>
+                      <animated.div
+                        style={{ transform: position.xy.interpolate(trans2) }}
+                      >
                         <span className={classes.iconViolet} />
                       </animated.div>
-                      <animated.div style={{ transform: position.xy.interpolate(trans3) }}>
+                      <animated.div
+                        style={{ transform: position.xy.interpolate(trans3) }}
+                      >
                         <span className={classes.iconBlue} />
                       </animated.div>
                     </div>
@@ -114,19 +158,30 @@ function Expertise() {
               </div>
             </Grid>
             <Grid item lg={7} md={8} xs={12}>
-              <Typography className={cx(title.default, text.subtitle)} variant="h4">
-                {t('agency-landing.expertise_subtitle')}
+              <Typography
+                className={cx(title.default, text.subtitle)}
+                variant="h4"
+              >
+                {subTitle}
               </Typography>
               <Typography className={cx(classes.desc, text.paragraph)}>
-                {t('agency-landing.expertise_paragraph')}
+                {description}
               </Typography>
               {!isTablet && (
                 <div className={classes.runningTag}>
                   <Carousel {...settings}>
                     {expertiseList.map((group, indexGroup) => (
-                      <div className={classes.tagGroup} key={indexGroup.toString()}>
+                      <div
+                        className={classes.tagGroup}
+                        key={indexGroup.toString()}
+                      >
                         {group.map((item, indexChild) => (
-                          <span className={classes.tagItem} key={indexChild.toString()}>{item}</span>
+                          <span
+                            className={classes.tagItem}
+                            key={indexChild.toString()}
+                          >
+                            {item}
+                          </span>
                         ))}
                       </div>
                     ))}
@@ -136,7 +191,6 @@ function Expertise() {
             </Grid>
           </Grid>
         </Container>
-        
       </div>
     </Fragment>
   );

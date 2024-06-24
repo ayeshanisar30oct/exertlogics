@@ -391,6 +391,28 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
                           </li>
                           <li>
                             <Link
+                              href="/dashboard/home/services"
+                              className={`group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white ${
+                                pathname === "/dashboard/home/services/" &&
+                                "text-white"
+                              }`}
+                            >
+                              Services
+                            </Link>
+                          </li>
+                          <li>
+                            <Link
+                              href="/dashboard/home/expertise"
+                              className={`group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white ${
+                                pathname === "/dashboard/home/expertise/" &&
+                                "text-white"
+                              }`}
+                            >
+                              Expertise
+                            </Link>
+                          </li>
+                          <li>
+                            <Link
                               href="/dashboard/home/about"
                               className={`group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white ${
                                 pathname === "/dashboard/home/about/" &&
