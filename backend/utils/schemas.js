@@ -20,18 +20,27 @@ const homeSchema = Joi.object({
   videoUrl: Joi.string().required(),
 });
 
+const contactSchema = Joi.object({
+  phone: Joi.string(),
+  email: Joi.string(),
+  address: Joi.string(),
+});
+
 const expertiseSchema = Joi.object({
   subTitle: Joi.string(),
   description: Joi.string(),
   expertise: Joi.array().items(Joi.string()),
 });
 const categorySchema = Joi.object({
-  name: Joi.string(),
+  title: Joi.string(),
+  projectId : Joi.string()
 });
 const projectSchema = Joi.object({
+  categoryId : Joi.string().required(),
   title: Joi.string(),
   description: Joi.string(),
   logo: Joi.string(),
+  background : Joi.string(),
 });
 
 const aboutSchema = Joi.object({
@@ -117,4 +126,5 @@ export {
   expertiseSchema,
   categorySchema,
   projectSchema,
+  contactSchema,
 };

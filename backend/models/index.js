@@ -7,6 +7,8 @@ import About from './About';
 import Service from './Service';
 import Expertise from './Expertise';
 import Category from './Category';
+import Project from './Project';
+import Contact from './Contact';
 
 module.exports = {
   User,
@@ -17,5 +19,7 @@ module.exports = {
   About,
   Service,
   Expertise,
-  Category
+  Category,
+  Project,
+  Contact,
 };

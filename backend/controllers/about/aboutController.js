@@ -8,7 +8,7 @@ import connectDB from "../../../backend/db/connectDB";
 // Get About data
 export const getAbout = getFactory(About);
 
-// Create or update About data
+// Create or update About banner
 export const updateAboutBanner = catchAsync(async (req, res) => {
   const { fileUrl, err } = await fileUpload(req, res);
   if(err) return res.status(500).json({status:'fail',message:'File upload failed!'})

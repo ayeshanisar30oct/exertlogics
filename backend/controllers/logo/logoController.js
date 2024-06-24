@@ -12,7 +12,6 @@ export const getLogo = catchAsync(async (req, res) => {
 });
 
 export const updateLogo = catchAsync(async (req, res) => {
-  console.log("API HIT=====")
 
   const { fileUrl, err } = await fileUpload(req, res);
   if(err) return res.status(500).json({status:'fail',message:'File upload failed!'})
