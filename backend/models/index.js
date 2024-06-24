@@ -5,6 +5,8 @@ import Home from './Home';
 import Logo from './Logo';
 import About from './About';
 import Service from './Service';
+import Expertise from './Expertise';
+import Category from './Category';
 
 module.exports = {
   User,
@@ -14,4 +16,6 @@ module.exports = {
   Logo,
   About,
   Service,
+  Expertise,
+  Category
 };
