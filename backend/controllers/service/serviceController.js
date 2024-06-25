@@ -7,7 +7,7 @@ import connectDB from "../../../backend/db/connectDB";
 import { isEmptyObject } from "backend/utils/helpers";
 
 // Get About data
-export const getService = getFactory(Service);
+export const getService = () => getFactory(Service);
 
 // Create or update Service data
 export const updateServiceBanner = catchAsync(async (req, res) => {

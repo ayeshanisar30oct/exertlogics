@@ -4,7 +4,7 @@ import updateFactory,{getFactory} from "backend/utils/factory/updateFactory";
 
 
 // Get Header data
-export const getHeader = getFactory(Header);
+export const getHeader = () => getFactory(Header);
 
 // Create or update Header data
 export const updateHeader = updateFactory(Header,headerSchema)

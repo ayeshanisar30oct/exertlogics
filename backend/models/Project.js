@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 const { Schema } = mongoose;
 
 const projectSchema = new Schema({
-  categoryId: { type: mongoose.Schema.Types.ObjectId },
+  categoryId: { type: mongoose.Schema.Types.ObjectId, ref : 'User' },
   title: {
     type: String,
     // lowercase: true,

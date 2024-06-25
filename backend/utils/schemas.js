@@ -39,8 +39,8 @@ const projectSchema = Joi.object({
   categoryId : Joi.string().required(),
   title: Joi.string(),
   description: Joi.string(),
-  logo: Joi.string(),
-  background : Joi.string(),
+  logoUrl: Joi.string(),
+  backgroundUrl : Joi.string(),
 });
 
 const aboutSchema = Joi.object({

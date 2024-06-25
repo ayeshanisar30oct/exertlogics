@@ -6,7 +6,7 @@ import catchAsync from "backend/utils/catchAsync";
 import connectDB from "../../../backend/db/connectDB";
 
 // Get About data
-export const getAbout = getFactory(About);
+export const getAbout = () => getFactory(About);
 
 // Create or update About banner
 export const updateAboutBanner = catchAsync(async (req, res) => {

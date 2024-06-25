@@ -1,12 +1,19 @@
-import connectDB from "../../db/connectDB"; 
-import { validate } from "../validation"; 
-import catchAsync from "../catchAsync"; 
-import { isEmptyObject } from "../helpers";
+import connectDB from "../../db/connectDB";
+import { validate } from "../validation";
+import catchAsync from "../catchAsync";
+import { isEmptyObject, hasReferencedPath } from "../helpers";
 
-export const getFactory = (model,pop = '') =>
+export const getFactory = (model, pop = "", isRefrenced = false) =>
   catchAsync(async (req, res) => {
     const id = req.query?.id;
-    let filter = id ? { _id: id } : {};
+    let filter = {};
+
+    console.log("FUNCTION TRIGGERED :",pop,isRefrenced)
+
+    // If the collection has a reference, dynamically build the filter
+    filter = isRefrenced ? await hasReferencedPath(model, id) : id ? { _id: id } : {};
+    console.log("FILTER OBJECT IS :",filter,id)
+
     // Connect to the database
     await connectDB();
 
@@ -40,7 +47,6 @@ const updateFactory = (model, schema, isMultiple = false) =>
 
     // Connect to the database
     await connectDB();
-    // let document = !isFilterEmpty ? isMultiple ? document = await model.findById(filter) : await model.findOne(filter) : document = new model();
 
     let document;
 
@@ -53,11 +59,11 @@ const updateFactory = (model, schema, isMultiple = false) =>
         document = new model();
       }
     } else {
-        document = await model.findOne(filter);
-        if (!document) {
-          document = new model();
-        }
+      document = await model.findOne(filter);
+      if (!document) {
+        document = new model();
       }
+    }
 
     if (!document) {
       throw new Error("No document found with the given ID.");
