@@ -39,7 +39,7 @@ MapContainer.propTypes = {
 };
 
 const MapWithAMarker = GoogleApiWrapper({ apiKey: null })(MapContainer);
-
+function MapAdress({contactData}) {
   // Theme breakpoints
   const theme = useTheme();
   const isDesktop = useMediaQuery(theme.breakpoints.up("lg"));
@@ -126,5 +126,4 @@ const MapWithAMarker = GoogleApiWrapper({ apiKey: null })(MapContainer);
     </div>
   );
 }
-
 export default MapAdress;
