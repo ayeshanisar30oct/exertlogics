@@ -391,6 +391,17 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
                           </li>
                           <li>
                             <Link
+                              href="/dashboard/home/about"
+                              className={`group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white ${
+                                pathname === "/dashboard/home/about/" &&
+                                "text-white"
+                              }`}
+                            >
+                              About
+                            </Link>
+                          </li>
+                          <li>
+                            <Link
                               href="/dashboard/home/services"
                               className={`group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white ${
                                 pathname === "/dashboard/home/services/" &&
@@ -422,15 +433,17 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
                               Projects
                             </Link>
                           </li>
+
                           <li>
                             <Link
-                              href="/dashboard/home/about"
+                              href="/dashboard/home/contact-details"
                               className={`group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white ${
-                                pathname === "/dashboard/home/about/" &&
+                                pathname ===
+                                  "/dashboard/home/contact-details/" &&
                                 "text-white"
                               }`}
                             >
-                              About
+                              Contact Details
                             </Link>
                           </li>
                         </ul>

@@ -4,16 +4,20 @@ const { Schema } = mongoose;
 const contactSchema = new Schema({
   phone: {
     type: String,
-    default : null
+    default: null,
   },
   email: {
     type: String,
-    lowercase : true,
-    default : null
+    lowercase: true,
+    default: null,
   },
   address: {
     type: String,
-    default : null
+    default: null,
+  },
+  map: {
+    type: String,
+    default: null,
   },
 });
 
