@@ -13,38 +13,7 @@ import TitleIcon from '../Title/WithIcon';
 import Card from '../Cards/Default';
 import DotsParallax from '../Parallax/Dots';
 
-function Services() {
-
-  const [servicesList, setServicesList] = useState([]);
-useEffect(() => {
-  async function fetchServicesData() {
-    try {
-      const response = await fetch("http://localhost:3001/api/service/");
-      const data = await response.json();
-      if (data.status === "success") {
-        const services = data.service.map((service) => ({
-          title: capitalizeFirstLetterOfEachWord(service.title),
-          desc: capitalizeFirstLetter(service.description),
-          img: service.serviceBannerUrl,
-        }));
-        setServicesList(services);
-      }
-    } catch (error) {
-      console.error("Error fetching services data:", error);
-    }
-  }
-
-  fetchServicesData();
-}, []);
-
-const capitalizeFirstLetterOfEachWord = (str) => {
-  return str.replace(/\b\w/g, (char) => char.toUpperCase());
-};
-
- const capitalizeFirstLetter = (str) => {
-   return str.charAt(0).toUpperCase() + str.slice(1);
- };
-
+function Services({serviceData}) {
 
   const { t } = useTranslation('common');
   const theme = useTheme();
@@ -80,7 +49,7 @@ const capitalizeFirstLetterOfEachWord = (str) => {
   useEffect(() => {
     if (theme.direction === 'ltr' && window.innerWidth > 1200) {
       const limit = window.innerWidth > 1400 ? 3 : 2;
-      const lastSlide = Math.floor(servicesList.length - limit);
+      const lastSlide = Math.floor(serviceData.length - limit);
       slider.current.slickGoTo(lastSlide);
     }
   }, []);
@@ -98,7 +67,7 @@ const capitalizeFirstLetterOfEachWord = (str) => {
                 </div>
               </div>
             )}
-            {servicesList.map((item, index) => (
+            {serviceData.map((item, index) => (
               <div className={classes.item} key={index.toString()}>
                 <Card
                   title={item.title}

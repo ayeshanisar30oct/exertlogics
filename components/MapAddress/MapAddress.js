@@ -39,7 +39,6 @@ MapContainer.propTypes = {
 };
 
 const MapWithAMarker = GoogleApiWrapper({ apiKey: null })(MapContainer);
-
 function MapAdress({contactData}) {
   // Theme breakpoints
   const theme = useTheme();
@@ -129,5 +128,4 @@ function MapAdress({contactData}) {
     </div>
   );
 }
-
 export default MapAdress;

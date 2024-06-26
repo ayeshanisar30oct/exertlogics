@@ -18,31 +18,9 @@ import routeLink from 'public/text/link';
 import useStyles from './banner-style';
 import Link from '../Link';
 
-function VideoBanner() {
+function VideoBanner({homeData}) {
 
-  const [title, setTitle] = useState("");
-  const [subTitle, setSubTitle] = useState("");
-  const [videoUrl, setVideoUrl] = useState("");
-
-  useEffect(() => {
-    async function fetchHomeData() {
-      try {
-        const response = await fetch("http://localhost:3001/api/home");
-        const data = await response.json();
-        if (data.status === "success" && data.home.length > 0) {
-          const homeData = data.home[0];
-          setTitle(capitalizeFirstLetterOfEachWord(homeData.title));
-          setSubTitle(homeData.subTitle);
-          setVideoUrl(homeData.videoUrl);
-        }
-      } catch (error) {
-        console.error("Error fetching home data:", error);
-      }
-    }
-
-    fetchHomeData();
-  }, []);
-
+  const { title, subTitle, videoUrl } = homeData;
 
   // Theme breakpoints
   const theme = useTheme();
@@ -133,7 +111,7 @@ function VideoBanner() {
                   variant="h3"
                   className={cx(classes.textHelper, text.title)}
                 >
-                  {title}
+                  {capitalizeFirstLetterOfEachWord(title)}
                 </Typography>
               </div>
               <Typography
@@ -179,8 +157,8 @@ function VideoBanner() {
                       <div className={classes.video}>
                         {isDesktop && (
                           <YouTube
-                            videoId="rX2T9jH0OxA"
-                            // videoId={videoUrl}
+                            // videoId="rX2T9jH0OxA"
+                            videoId={videoUrl}
                             opts={opts}
                             onReady={_onReady}
                             onEnd={_onEnd}

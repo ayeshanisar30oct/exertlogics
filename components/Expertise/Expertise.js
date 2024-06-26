@@ -30,42 +30,9 @@ const trans1 = (x, y) => `translate3d(${x / 10}px,${y / 10}px,0)`;
 const trans2 = (x, y) => `translate3d(${x / 8 + 35}px,${y / 8 - 230}px,0)`;
 const trans3 = (x, y) => `translate3d(${x / 6 - 250}px,${y / 6 - 200}px,0)`;
 
-function Expertise() {
+function Expertise({expertiseData}) {
   const [loaded, setLoaded] = useState(false);
-  const [subTitle, setSubTitle] = useState("");
-  const [description, setDescription] = useState("");
-    const [expertiseList, setExpertiseList] = useState([]);
-
-     const capitalizeFirstLetter = (str) => {
-       return str.charAt(0).toUpperCase() + str.slice(1);
-     };
-
-  useEffect(() => {
-    async function fetchExpertiseData() {
-      try {
-        const response = await fetch("http://localhost:3001/api/expertise");
-        const data = await response.json();
-        if (data.status === "success" && data.expertise.length > 0) {
-          const expertiseData = data.expertise[0];
-         setSubTitle(capitalizeFirstLetter(expertiseData.subTitle));
-         setDescription(capitalizeFirstLetter(expertiseData.description));
-           const transformedExpertiseList = [];
-           for (let i = 0; i < expertiseData.expertise.length; i += 3) {
-             transformedExpertiseList.push(
-               expertiseData.expertise.slice(i, i + 3)
-             );
-           }
-                     setExpertiseList(transformedExpertiseList);
-
-          // setExpertiseList(expertiseData.expertise);
-        }
-      } catch (error) {
-        console.error("Error fetching expertise data:", error);
-      }
-    }
-
-    fetchExpertiseData();
-  }, []);
+  const { subTitle, description, expertiseList } = expertiseData;
 
   // Theme breakpoints
   const theme = useTheme();
