@@ -26,7 +26,7 @@ const useStyles = makeStyles({ uniqId: 'map' })((theme) => ({
     color: theme.palette.primary.main,
     marginRight: theme.spacing(),
     marginTop: theme.spacing(2),
-    top: theme.spacing(),
+    top: theme.spacing(-1),
     position: 'relative'
   },
   map: {
