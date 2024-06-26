@@ -11,8 +11,9 @@ import useStyles from "./about-style";
 import useTitle from "../Title/title-style";
 import Counter from "../Counter";
 
-function About(props) {
-const { subTitle, description, backgroundImageUrl } = props;
+function About({aboutData}) {
+  const { subTitle, description, backgroundImageUrl } = aboutData;
+  console.log("about data", aboutData);
 
   // Theme breakpoints
   const theme = useTheme();
@@ -24,10 +25,10 @@ const { subTitle, description, backgroundImageUrl } = props;
   const { classes, cx } = useStyles({ backgroundImageUrl });
   const { classes: title } = useTitle();
 
- function capitalizeFirstLetter(text) {
-   if (!text) return text;
-   return text.charAt(0).toUpperCase() + text.slice(1);
- }
+  function capitalizeFirstLetter(text) {
+    if (!text) return text;
+    return text.charAt(0).toUpperCase() + text.slice(1);
+  }
 
   return (
     <div className={classes.root}>
