@@ -11,9 +11,16 @@ import useStyles from "./about-style";
 import useTitle from "../Title/title-style";
 import Counter from "../Counter";
 
-function About(props) {
-const { subTitle, description, backgroundImageUrl } = props;
-
+function About({ aboutData }) {
+  const {
+    subTitle,
+    description,
+    aboutBannerUrl,
+    employeesCount,
+    projectsCount,
+    clientsCount,
+  } = aboutData;
+console.log("ABOUT DATA :",aboutData)
   // Theme breakpoints
   const theme = useTheme();
   const { classes: text } = useText();
@@ -21,13 +28,13 @@ const { subTitle, description, backgroundImageUrl } = props;
 
   // Translation function
   const { t } = useTranslation("common");
-  const { classes, cx } = useStyles({ backgroundImageUrl });
+  const { classes, cx } = useStyles({ aboutBannerUrl });
   const { classes: title } = useTitle();
 
- function capitalizeFirstLetter(text) {
-   if (!text) return text;
-   return text.charAt(0).toUpperCase() + text.slice(1);
- }
+  function capitalizeFirstLetter(text) {
+    if (!text) return text;
+    return text.charAt(0).toUpperCase() + text.slice(1);
+  }
 
   return (
     <div className={classes.root}>
@@ -58,7 +65,11 @@ const { subTitle, description, backgroundImageUrl } = props;
             >
               {subTitle}
             </Typography>
-            <Counter />
+            <Counter
+              employeesCount={employeesCount}
+              projectsCount={projectsCount}
+              clientsCount={clientsCount}
+            />
             <blockquote>{description}</blockquote>
           </Grid>
         </Grid>

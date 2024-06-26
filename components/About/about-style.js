@@ -1,7 +1,7 @@
 import { makeStyles } from 'tss-react/mui';
 // import imgApi from 'public/images/imgAPI';
 
-const useStyles = makeStyles({ uniqId: "about" })( (theme, { backgroundImageUrl } = {}) => ({
+const useStyles = makeStyles({ uniqId: "about" })( (theme, { aboutBannerUrl } = {}) => ({
     root: {
       "& blockquote": {
         fontSize: 28,
@@ -42,7 +42,7 @@ const useStyles = makeStyles({ uniqId: "about" })( (theme, { backgroundImageUrl 
         background: "#dedede",
       },
       "& span": {
-        background: `url(${backgroundImageUrl}) no-repeat fixed`,
+        background: `url(${aboutBannerUrl}) no-repeat fixed`,
         backgroundSize: "auto 800px",
         transform: "rotate(-45deg)",
         width: 560,

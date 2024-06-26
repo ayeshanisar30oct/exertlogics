@@ -113,6 +113,56 @@ export const fetchExpertiseData = async() => {
   return { expertiseData : null }
 }
 
+// Load categories and projects
+export const fetchCategories = async () => {
+  try {
+    const response = await fetch("http://localhost:3001/api/category");
+    const data = await response.json();
+    if (data.status === "success" && data.category.length > 0) {
+        return { categoriesData : data.category }
+
+    }
+  } catch (error) {
+    console.error("Error fetching about data:", error);
+  }
+  return { categoriesData : null }
+};
+
+export const fetchFooterData = async() => {
+    try {
+      const response = await fetch("http://localhost:3001/api/footer");
+      const data = await response.json();
+      if (data.status === "success" && data.footer.length > 0) {
+        return {footerData : data.footer[0]}
+
+        // setSubTitle(footerData.subTitle);
+        // setCopyrightText(footerData.copyrightText);
+
+        // footerData.socialLinks.forEach((link) => {
+        //   switch (link.type) {
+        //     case "facebook":
+        //       setFacebookUrl(link.url);
+        //       break;
+        //     case "twitter":
+        //       setTwitterUrl(link.url);
+        //       break;
+        //     case "instagram":
+        //       setInstagramUrl(link.url);
+        //       break;
+        //     case "linkedin":
+        //       setLinkedinUrl(link.url);
+        //       break;
+        //     default:
+        //       break;
+        //   }
+        // });
+      }
+    } catch (error) {
+      console.error("Error fetching footer data:", error);
+    }
+    return {footerData : null};
+  }
+
 // helpers to capitalize
 const capitalizeFirstLetterOfEachWord = (str) => {
   return str.replace(/\b\w/g, (char) => char.toUpperCase());

@@ -31,7 +31,7 @@ function MainContainer(props) {
   const { classes } = useStyles();
   const {
     onToggleDark, onToggleDir,
-    children, invert, menuList, logoUrl
+    children, invert, menuList, logoUrl,footerData
   } = props;
 
   return (
@@ -46,7 +46,7 @@ function MainContainer(props) {
         />
         {children}
         <section className={classes.spaceTopShort}>
-          <Footer toggleDir={onToggleDir} />
+          <Footer toggleDir={onToggleDir} logoUrl = { logoUrl } footerData = {footerData} />
         </section>
       </div>
     </Fragment>
