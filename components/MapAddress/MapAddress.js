@@ -40,33 +40,6 @@ MapContainer.propTypes = {
 
 const MapWithAMarker = GoogleApiWrapper({ apiKey: null })(MapContainer);
 
-function MapAdress() {
-
-   const [phoneData, setPhoneData] = useState("");
-   const [emailData, setEmailData] = useState("");
-   const [addressData, setAddressData] = useState("");
-
-
-     const fetchContactData = async () => {
-       try {
-         const response = await fetch("http://localhost:3001/api/contact");
-         const data = await response.json();
-         if (data.status === "success" && data.contact.length > 0) {
-           const contactData = data.contact[0];
-           setPhoneData(contactData.phone);
-           setEmailData(contactData.email);
-           setAddressData(contactData.address);
-         }
-       } catch (error) {
-         console.error("Error fetching contact data:", error);
-       }
-     }
-
-     useEffect(() => {
-       fetchContactData();
-     }, []);
-
-
   // Theme breakpoints
   const theme = useTheme();
   const isDesktop = useMediaQuery(theme.breakpoints.up("lg"));
@@ -96,15 +69,7 @@ function MapAdress() {
                   <Grid container>
                     <Grid item sm={6} xs={12}>
                       <PhoneIcon className={classes.icon} />
-                      {phoneData}
-                    </Grid>
-                    <Grid item sm={6} xs={12}>
-                      <EmailIcon className={classes.icon} />
-                      {emailData}
-                    </Grid>
-                    <Grid item xs={12}>
-                      <LocationIcon className={classes.icon} />
-                      {addressData}
+
                     </Grid>
                   </Grid>
                 </Paper>

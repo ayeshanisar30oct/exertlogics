@@ -4,33 +4,36 @@ import classNames from "classnames";
 import Image from "next/image";
 import Breadcrumb from "../components/Breadcrumbs/Breadcrumb";
 import SelectGroupTwo from "../components/SelectGroup/SelectGroupTwo";
+import useApi from "../hooks/useApi";
 
 const Projects = () => {
+  const { request , loading, error } = useApi();
   const [categories, setCategories] = useState([]);
   const [projects, setProjects] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState("");
   const [editingProjectId, setEditingProjectId] = useState(null);
   const [selectedFile, setSelectedFile] = useState({});
 
+// Load categories
+const fetchCategoriesData = async (getProject = false) => {
+  try {
+    const endpoint = getProject 
+      ? `http://localhost:3001/api/project/category/${selectedCategory}`
+      : 'http://localhost:3001/api/category';
 
- const fetchCategoriesData = async (getProject = false) => {
-   try {
-    let query = "http://localhost:3001/api";
-    query = getProject ? query + `/project/category/${selectedCategory}` : query + '/category';
-     const response = await fetch(query);
-     const data = await response.json();
-     if (data.status === "success") {
-      if(getProject){
+    const data = await request(endpoint);
+
+    if (data.status === 'success') {
+      if (getProject) {
         setProjects(data.project);
-      }
-      else {
+      } else {
         setCategories(data.category);
       }
-     }
-   } catch (error) {
-     console.error("Error fetching about data:", error);
-   }
- };
+    }
+  } catch (error) {
+    console.error('Error fetching data:', error);
+  }
+};
 
  useEffect(() => {
    fetchCategoriesData();
@@ -63,81 +66,57 @@ const Projects = () => {
 
   };
 
+  // Save updated project
   const handleSave = async (proId) => {
     const serviceToSave = projects.find((pro) => pro._id === proId);
     const { _id, ...serviceData } = serviceToSave;
 
-      try {
-        const response = await fetch(
-          `http://localhost:3001/api/project/${proId}/`,
-          {
-            method: "PATCH",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify(serviceData),
-          }
-        );
+    try {
+      const data = await request(`http://localhost:3001/api/project/${proId}/`, 'PATCH', serviceData);
 
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
-
-        const data = await response.json();
-        setProjects((prevPro) =>
-          prevPro.map((pro) =>
-            pro._id === data._id ? data : pro
-          )
-        );
-        setEditingProjectId(null);
-        toast.success("Service updated successfully");
-      } catch (error) {
-        console.error("Error updating service:", error);
-        toast.error("Failed to update service");
-      }
+      setProjects((prevPro) =>
+        prevPro.map((pro) => (pro._id === data._id ? data : pro))
+      );
+      setEditingProjectId(null);
+      toast.success('Service updated successfully');
+    } catch (error) {
+      console.error('Error updating service:', error);
+      toast.error('Failed to update service');
+    }
   };
 
+  // Media upload for a project
   const imageUpload = async (proId) => {
-    const project = projects.find((pro) => pro._id === proId);
-    const { _id, ...serviceData } = project;
 
     if (selectedFile) {
       const formData = new FormData();
-      formData.append("file", selectedFile.file);
-      formData.append("type", selectedFile.type);
-      console.log("FORM DATA IS :",selectedFile, formData)
+      formData.append('file', selectedFile.file);
+      formData.append('type', selectedFile.type);
+
       try {
-        const response = await fetch(
+        const updatedProject = await request(
           `http://localhost:3001/api/project/project-logo/${proId}`,
-          {
-            method: "PATCH",
-            body: formData,
-          }
+          'PATCH',
+          formData,
+          true
         );
 
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
-
-        const updatedProject = await response.json();
         setProjects((prevProjects) =>
-         prevProjects.map((project) =>
+          prevProjects.map((project) =>
             project._id === proId
-              ? { ...project, [selectedFile.type+'Url']: updatedProject.path[selectedFile.type+'Url'] }
+              ? { ...project, [selectedFile.type + 'Url']: updatedProject.path[selectedFile.type + 'Url'] }
               : project
           )
-         
         );
         setEditingProjectId(null);
         setSelectedFile(null);
-        toast.success("Service updated successfully");
-        // fetchCategoriesData();
+        toast.success('Service updated successfully');
       } catch (error) {
-        toast.error("Failed to update service");
+        console.error('Error uploading image:', error);
+        toast.error('Failed to update service');
       }
     }
   };
-  console.log("SELECTED FILE STATE :",selectedFile)
 
   return (
     <div className="mx-auto">
@@ -145,9 +124,7 @@ const Projects = () => {
       <div className="rounded-sm border border-stroke bg-white px-5 pb-2.5 pt-6 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
         <div className="flex justify-between mb-4">
         <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
-            {/* <div className="flex flex-col gap-5.5 p-6.5"> */}
               <SelectGroupTwo categories = { categories } setCategory = {setSelectedCategory}/>
-            {/* </div> */}
           </div>
           <button
             className="rounded bg-primary px-6 py-2 font-medium text-gray hover:bg-opacity-90"
@@ -227,13 +204,12 @@ const Projects = () => {
                             </svg>
                           </span>
                           <p>
-                            <span className="text-primary">
+                            <span className="text-primary text-center">
                               Click to upload
                             </span>{" "}
-                            or drag and drop
                           </p>
-                          <p className="mt-1.5">SVG, PNG, JPG or GIF</p>
-                          <p>(max, 800 X 800px)</p>
+                          {/* <p className="mt-1.5">SVG, PNG, JPG or GIF</p>
+                          <p>(max, 800 X 800px)</p> */}
                         </div>
                       </div>
                     ) : (
@@ -294,10 +270,9 @@ const Projects = () => {
                             <span className="text-primary">
                               Click to upload
                             </span>{" "}
-                            or drag and drop
                           </p>
-                          <p className="mt-1.5">SVG, PNG, JPG or GIF</p>
-                          <p>(max, 800 X 800px)</p>
+                          {/* <p className="mt-1.5">SVG, PNG, JPG or GIF</p>
+                          <p>(max, 800 X 800px)</p> */}
                         </div>
                       </div>
                     ) : (
