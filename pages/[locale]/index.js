@@ -209,8 +209,7 @@ function Landing(props) {
   const theme = useTheme();
   const isTablet = useMediaQuery(theme.breakpoints.down('lg'));
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
-  const { onToggleDark, onToggleDir, contactData } = props;
-
+  const { onToggleDark, onToggleDir, contactData, menuList, logoUrl, homeData, aboutData, serviceData, expertiseData } = props;
   return (
     <React.Fragment>
       <Head>
@@ -222,21 +221,23 @@ function Landing(props) {
       <MainContainer
         onToggleDark={onToggleDark}
         onToggleDir={onToggleDir}
+        menuList = { menuList }
+        logoUrl = { logoUrl }
       >
         <Fragment>
           <main className={classes.containerWrap}>
             <SquareParallax />
             <section id="home">
-              <VideoBanner />
+              <VideoBanner homeData = { homeData } />
             </section>
             <section className={isTablet ? classes.spaceTopShort : classes.spaceTop} id="about">
-              <About />
+              <About aboutData = {aboutData} />
             </section>
             <section className={classes.spaceTop} id="services">
-              <Services />
+              <Services serviceData = {serviceData}/>
             </section>
             <section className={isTablet ? classes.spaceTopShort : classes.spaceTop} id="our-expertise">
-              <Expertise />
+              <Expertise  expertiseData = {expertiseData} />
             </section>
             <section className={isMobile ? classes.spaceTopShort : classes.spaceTop} id="testimonials">
               <Testimonials />
@@ -267,6 +268,11 @@ Landing.propTypes = {
   onToggleDark: PropTypes.func.isRequired,
   onToggleDir: PropTypes.func.isRequired,
   contactData: PropTypes.object,
+  menuList: PropTypes.object,
+  logoUrl: PropTypes.object,
+  aboutData: PropTypes.object,
+  serviceData: PropTypes.object,
+  expertiseData: PropTypes.object,
 };
 
 export default Landing;

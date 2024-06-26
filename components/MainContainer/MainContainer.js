@@ -31,7 +31,7 @@ function MainContainer(props) {
   const { classes } = useStyles();
   const {
     onToggleDark, onToggleDir,
-    children, invert
+    children, invert, menuList, logoUrl
   } = props;
 
   return (
@@ -41,6 +41,8 @@ function MainContainer(props) {
           onToggleDark={onToggleDark}
           onToggleDir={onToggleDir}
           invert={invert}
+          menuList = { menuList}
+          logoUrl = { logoUrl }
         />
         {children}
         <section className={classes.spaceTopShort}>

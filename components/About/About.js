@@ -11,30 +11,8 @@ import useStyles from "./about-style";
 import useTitle from "../Title/title-style";
 import Counter from "../Counter";
 
-function About() {
-  const [subTitle, setSubTitle] = useState("");
-  const [description, setDescription] = useState("");
-    const [backgroundImageUrl, setBackgroundImageUrl] = useState("");
-
-
-   useEffect(() => {
-     async function fetchAboutData() {
-       try {
-         const response = await fetch("http://localhost:3001/api/about");
-         const data = await response.json();
-         if (data.status === "success" && data.about.length > 0) {
-           const aboutData = data.about[0];
-           setSubTitle(capitalizeFirstLetter(aboutData.subTitle));
-           setDescription(capitalizeFirstLetter(aboutData.description));
-                     setBackgroundImageUrl(data.about[0].aboutBannerUrl);
-         }
-       } catch (error) {
-         console.error("Error fetching home data:", error);
-       }
-     }
-
-     fetchAboutData();
-   }, []);
+function About(props) {
+const { subTitle, description, backgroundImageUrl } = props;
 
   // Theme breakpoints
   const theme = useTheme();

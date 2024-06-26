@@ -72,15 +72,15 @@ function MapAdress({contactData}) {
                   <Grid container>
                     <Grid item sm={6} xs={12}>
                       <PhoneIcon className={classes.icon} />
-                      {contactData.phone}
+                      {contactData?.phone}
                     </Grid>
                     <Grid item sm={6} xs={12}>
                       <EmailIcon className={classes.icon} />
-                      {contactData.email}
+                      {contactData?.email}
                     </Grid>
                     <Grid item xs={12}>
                       <LocationIcon className={classes.icon} />
-                      {contactData.address}
+                      {contactData?.address}
                     </Grid>
                   </Grid>
                 </Paper>

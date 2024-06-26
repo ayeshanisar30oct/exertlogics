@@ -23,6 +23,7 @@ const LinkBtn = React.forwardRef(function LinkBtn(props, ref) {
 });
 
 function Header(props) {
+  const { menuList, logoUrl } = props;
   // Theme breakpoints
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
@@ -47,49 +48,6 @@ function Header(props) {
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);
-
-  // Fetch menu data from API
-  const [menuList, setMenuList] = useState([]);
-  const [logoUrl, setLogoUrl] = useState(logoPlaceholder);
-
-  useEffect(() => {
-    const fetchMenu = async () => {
-      try {
-        const response = await fetch("http://localhost:3001/api/header/");
-        const data = await response.json();
-        if (data.status === "success" && data.header.length > 0) {
-          const links = data.header[0].links.map((link) => ({
-            name: link.title,
-            url: link.url,
-            offset: 200,
-          }));
-          setMenuList(links);
-        }
-      } catch (error) {
-        console.error("Error fetching menu:", error);
-      }
-    };
-
-    fetchMenu();
-  }, []);
-
-
-   useEffect(() => {
-     async function fetchLogoData() {
-       try {
-         const logoResponse = await fetch("http://localhost:3001/api/logo/");
-         const logoData = await logoResponse.json();
-         if (logoData.status === "success" && logoData.logos.length > 0) {
-           setLogoUrl(logoData.logos[0].logoLightUrl);
-         }
-       } catch (error) {
-         console.error("Error fetching logo:", error);
-       }
-     }
-     fetchLogoData();
-   }, []);
-
-
 
   const { classes, cx } = useStyles();
   const { onToggleDark, onToggleDir, invert } = props;
