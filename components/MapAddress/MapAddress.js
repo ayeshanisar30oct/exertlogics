@@ -40,7 +40,7 @@ MapContainer.propTypes = {
 
 const MapWithAMarker = GoogleApiWrapper({ apiKey: null })(MapContainer);
 
-function MapAdress() {
+function MapAdress({contactData}) {
   // Theme breakpoints
   const theme = useTheme();
   const isDesktop = useMediaQuery(theme.breakpoints.up('lg'));
@@ -72,15 +72,15 @@ function MapAdress() {
                   <Grid container>
                     <Grid item sm={6} xs={12}>
                       <PhoneIcon className={classes.icon} />
-                      +92-326-0363688
+                      {contactData.phone}
                     </Grid>
                     <Grid item sm={6} xs={12}>
                       <EmailIcon className={classes.icon} />
-                      info@exertlogics.com
+                      {contactData.email}
                     </Grid>
                     <Grid item xs={12}>
                       <LocationIcon className={classes.icon} />
-                      Building C-21, 16 Lake City Main Blvd, Block M 1 Block, CCD, Lahore, Pakistan
+                      {contactData.address}
                     </Grid>
                   </Grid>
                 </Paper>
