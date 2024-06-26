@@ -153,7 +153,10 @@ const Services = () => {
                 <tr key={service._id}>
                   <td
                     className={classNames(
-                      "border-b border-gray-500 px-4 py-5 dark:border-strokedark"
+                      "px-4 py-5 dark:border-strokedark ", // default classes
+                      serviceIdx !== services.length - 1
+                        ? "border-b border-gray-500"
+                        : ""
                     )}
                   >
                     {editingServiceId === service._id ? (
@@ -217,10 +220,10 @@ const Services = () => {
                   </td>
                   <td
                     className={classNames(
+                      "px-4 py-5 pl-9 dark:border-strokedark xl:pl-11", // default classes
                       serviceIdx !== services.length - 1
                         ? "border-b border-gray-500"
-                        : "",
-                      "border-b border-[#eee] px-4 py-5 pl-9 dark:border-strokedark xl:pl-11"
+                        : ""
                     )}
                   >
                     {editingServiceId === service._id ? (
@@ -237,10 +240,10 @@ const Services = () => {
                   </td>
                   <td
                     className={classNames(
+                      "px-4 py-5 pl-9 dark:border-strokedark xl:pl-11", // default classes
                       serviceIdx !== services.length - 1
                         ? "border-b border-gray-500"
-                        : "",
-                      "border-b border-[#eee] px-4 py-5 dark:border-strokedark"
+                        : ""
                     )}
                   >
                     {editingServiceId === service._id ? (
@@ -261,7 +264,14 @@ const Services = () => {
                     )}
                   </td>
 
-                  <td className="border-b border-[#eee] px-4 py-5 dark:border-strokedark">
+                  <td
+                    className={classNames(
+                      "px-4 py-5 pl-9 dark:border-strokedark xl:pl-11", // default classes
+                      serviceIdx !== services.length - 1
+                        ? "border-b border-gray-500"
+                        : ""
+                    )}
+                  >
                     {editingServiceId === service._id ? (
                       <button
                         className="flex justify-center rounded bg-primary px-6 py-2 font-medium text-gray hover:bg-opacity-90"
