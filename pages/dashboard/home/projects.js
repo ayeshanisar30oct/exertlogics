@@ -5,6 +5,7 @@ import Image from "next/image";
 import Breadcrumb from "../components/Breadcrumbs/Breadcrumb";
 import SelectGroupTwo from "../components/SelectGroup/SelectGroupTwo";
 import useApi from "../hooks/useApi";
+import ProjectModal from "../modals/ProjectModal";
 
 const Projects = () => {
   const { request , loading, error } = useApi();
@@ -13,6 +14,8 @@ const Projects = () => {
   const [selectedCategory, setSelectedCategory] = useState("");
   const [editingProjectId, setEditingProjectId] = useState(null);
   const [selectedFile, setSelectedFile] = useState({});
+      const [isModalOpen, setIsModalOpen] = useState(false);
+
 
 // Load categories
 const fetchCategoriesData = async (getProject = false) => {
@@ -123,11 +126,22 @@ const fetchCategoriesData = async (getProject = false) => {
       }
     }
   };
-console.log("FILE data",selectedFile)
+
+     const openModal = () => {
+       setIsModalOpen(true);
+     };
+
+     const closeModal = () => {
+       setIsModalOpen(false);
+     };
+
   return (
     <div className="mx-auto">
       <Breadcrumb pageName="Our Projects" />
       <div className="rounded-sm border border-stroke bg-white px-5 pb-2.5 pt-6 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
+        <div className="flex justify-end mb-4">
+          <ProjectModal isOpen={openModal} onRequestClose={closeModal} />
+        </div>
         <div className="flex justify-between mb-4">
           <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
             <SelectGroupTwo
@@ -135,12 +149,6 @@ console.log("FILE data",selectedFile)
               setCategory={setSelectedCategory}
             />
           </div>
-          <button
-            className="rounded bg-primary px-6 py-2 font-medium text-gray hover:bg-opacity-90"
-            type="button"
-          >
-            + Add Project
-          </button>
         </div>
         <div className="max-w-full overflow-x-auto">
           <table className="w-full table-auto">

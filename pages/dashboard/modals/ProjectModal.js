@@ -7,9 +7,9 @@ import { Modal as BaseModal } from "@mui/base/Modal";
 import { Button } from "@mui/base/Button";
 import Image from "next/image";
 
-export default function ServiceModal() {
+export default function ProjectModal() {
   const [open, setOpen] = React.useState(false);
-  
+
   const handleOpen = () => {
     setOpen(true);
   };
@@ -17,14 +17,13 @@ export default function ServiceModal() {
     setOpen(false);
   };
 
-
   return (
     <div>
       <TriggerButton
         className="rounded bg-primary px-6 py-2 font-medium text-gray hover:bg-opacity-90 hover:bg-primary hover:text-gray"
         onClick={handleOpen}
       >
-        Add Service
+        Add Project
       </TriggerButton>
       <Modal
         open={open}
@@ -39,9 +38,25 @@ export default function ServiceModal() {
               <div className="mb-5.5">
                 <label
                   className="mb-3 block text-sm font-medium text-black dark:text-white"
+                  htmlFor="Category"
+                >
+                  Project Category
+                </label>
+                <input
+                  className="w-full rounded border border-stroke bg-gray px-4.5 py-3 text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
+                  type="text"
+                  name="category"
+                  id="category"
+                  value=""
+                  // onChange={subTitleInputHandler}
+                />
+              </div>
+              <div className="mb-5.5">
+                <label
+                  className="mb-3 block text-sm font-medium text-black dark:text-white"
                   htmlFor="Title"
                 >
-                  Service Title
+                  Project Title
                 </label>
                 <input
                   className="w-full rounded border border-stroke bg-gray px-4.5 py-3 text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
@@ -114,19 +129,18 @@ export default function ServiceModal() {
             </form>
             <form className="pt-7 col-span-4 xl:col-span-2">
               <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
-                <div className="border-b border-stroke px-7 py-4 dark:border-strokedark">
-                  <h3 className="font-medium text-black dark:text-white">
-                    Photo
-                  </h3>
-                </div>
                 <div className="p-7">
                   <div action="#">
-                    <div className="lg:flex">
-
+                    <div className="lg:flex gap-1">
                       <div
                         id="FileUpload"
-                        className="relative mb-5.5 block w-full cursor-pointer appearance-none rounded border border-dashed border-primary bg-gray px-4 py-4 dark:bg-meta-4 sm:py-7.5"
+                        className="relative mb-5.5 block w-1/2 cursor-pointer appearance-none rounded border border-dashed border-primary bg-gray px-4 py-4 dark:bg-meta-4 sm:py-7.5"
                       >
+                        <div className="border-b border-stroke px-7 py-4 dark:border-strokedark">
+                          <h3 className="font-medium text-black dark:text-white text-center">
+                            Background
+                          </h3>
+                        </div>
                         <input
                           type="file"
                           // onChange={fileChangeHandler}
@@ -166,11 +180,61 @@ export default function ServiceModal() {
                           <p>
                             <span className="text-primary">
                               Click to upload
-                            </span>{" "}
-                            or drag and drop
+                            </span>
                           </p>
-                          <p className="mt-1.5">SVG, PNG, JPG or GIF</p>
-                          <p>(max, 800 X 800px)</p>
+                        </div>
+                      </div>
+
+                      <div
+                        id="FileUpload"
+                        className="relative mb-5.5 block w-1/2 cursor-pointer appearance-none rounded border border-dashed border-primary bg-gray px-4 py-4 dark:bg-meta-4 sm:py-7.5"
+                      >
+                        <div className="border-b border-stroke px-7 py-4 dark:border-strokedark">
+                          <h3 className="font-medium text-black dark:text-white text-center">
+                            Logo
+                          </h3>
+                        </div>
+                        <input
+                          type="file"
+                          // onChange={fileChangeHandler}
+                          name="about-photo"
+                          accept="image/*"
+                          className="absolute inset-0 z-50 m-0 h-full w-full cursor-pointer p-0 opacity-0 outline-none"
+                        />
+                        <div className="flex flex-col items-center justify-center space-y-3">
+                          <span className="flex h-10 w-10 items-center justify-center rounded-full border border-stroke bg-white dark:border-strokedark dark:bg-boxdark">
+                            <svg
+                              width="16"
+                              height="16"
+                              viewBox="0 0 16 16"
+                              fill="none"
+                              xmlns="http://www.w3.org/2000/svg"
+                            >
+                              <path
+                                fillRule="evenodd"
+                                clipRule="evenodd"
+                                d="M1.99967 9.33337C2.36786 9.33337 2.66634 9.63185 2.66634 10V12.6667C2.66634 12.8435 2.73658 13.0131 2.8616 13.1381C2.98663 13.2631 3.1562 13.3334 3.33301 13.3334H12.6663C12.8431 13.3334 13.0127 13.2631 13.1377 13.1381C13.2628 13.0131 13.333 12.8435 13.333 12.6667V10C13.333 9.63185 13.6315 9.33337 13.9997 9.33337C14.3679 9.33337 14.6663 9.63185 14.6663 10V12.6667C14.6663 13.1971 14.4556 13.7058 14.0806 14.0809C13.7055 14.456 13.1968 14.6667 12.6663 14.6667H3.33301C2.80257 14.6667 2.29387 14.456 1.91879 14.0809C1.54372 13.7058 1.33301 13.1971 1.33301 12.6667V10C1.33301 9.63185 1.63148 9.33337 1.99967 9.33337Z"
+                                fill="#3C50E0"
+                              />
+                              <path
+                                fillRule="evenodd"
+                                clipRule="evenodd"
+                                d="M7.5286 1.52864C7.78894 1.26829 8.21106 1.26829 8.4714 1.52864L11.8047 4.86197C12.0651 5.12232 12.0651 5.54443 11.8047 5.80478C11.5444 6.06513 11.1223 6.06513 10.8619 5.80478L8 2.94285L5.13807 5.80478C4.87772 6.06513 4.45561 6.06513 4.19526 5.80478C3.93491 5.54443 3.93491 5.12232 4.19526 4.86197L7.5286 1.52864Z"
+                                fill="#3C50E0"
+                              />
+                              <path
+                                fillRule="evenodd"
+                                clipRule="evenodd"
+                                d="M7.99967 1.33337C8.36786 1.33337 8.66634 1.63185 8.66634 2.00004V10C8.66634 10.3682 8.36786 10.6667 7.99967 10.6667C7.63148 10.6667 7.33301 10.3682 7.33301 10V2.00004C7.33301 1.63185 7.63148 1.33337 7.99967 1.33337Z"
+                                fill="#3C50E0"
+                              />
+                            </svg>
+                          </span>
+                          <p>
+                            <span className="text-primary">
+                              Click to upload
+                            </span>
+                          </p>
                         </div>
                       </div>
                     </div>
@@ -194,7 +258,6 @@ export default function ServiceModal() {
     </div>
   );
 }
-
 
 const Backdrop = React.forwardRef((props, ref) => {
   const { open, className, ...other } = props;
