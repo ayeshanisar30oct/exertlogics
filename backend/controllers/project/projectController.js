@@ -8,7 +8,7 @@ import connectDB from 'backend/db/connectDB';
 
 
 // Get home data
-export const getProject = (isRef=false) => getFactory(Project, "", isRef);
+export const getProject = (isRef=false,limit,page) => getFactory(Project, "", isRef,limit,page);
 
 // Create or update Project data
 export const updateProjectLogos = catchAsync(async (req, res) => {

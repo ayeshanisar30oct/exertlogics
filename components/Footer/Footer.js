@@ -19,7 +19,7 @@ import logoPlaceholder from "public/images/el-logo.png"; // Placeholder in case 
 import brand from "public/text/brand";
 import { useTextAlign } from "theme/common";
 import useStyles from "./footer-style";
-import SelectLang from "../LangSwitch/Select";
+// import SelectLang from "../LangSwitch/Select";
 
 function Copyright() {
   return (
@@ -198,12 +198,12 @@ function Footer(props) {
               </a>
             </IconButton> */}
           </div>
-          <SelectLang toggleDir={toggleDir} />
+          {/* <SelectLang toggleDir={toggleDir} /> */}
         </Grid>
       </Grid>
       {isMobile && (
         <div className={`${align.textCenter} ${classes.copyrightText}`}>
-          <Box p={4}>{copyrightText}</Box>
+          <Box p={4}>{footerData.copyrightText}</Box>
         </div>
       )}
     </Container>
