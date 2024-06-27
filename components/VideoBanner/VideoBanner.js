@@ -111,7 +111,7 @@ function VideoBanner({homeData}) {
                   variant="h3"
                   className={cx(classes.textHelper, text.title)}
                 >
-                  {homeData?.title}
+                  {homeData?.title.charAt(0).toUpperCase()+homeData.title.slice(1)}
                 </Typography>
               </div>
               <Typography

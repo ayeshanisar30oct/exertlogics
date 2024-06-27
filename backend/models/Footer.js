@@ -16,7 +16,7 @@ const socialLinksSchema = new Schema({
 const footerSchema = new Schema({
   subTitle: {
     type: String,
-    lowercase : true,
+    // lowercase : true,
     required: true,
   },
   copyrightText: {
