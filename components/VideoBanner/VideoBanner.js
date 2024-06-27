@@ -20,7 +20,7 @@ import Link from '../Link';
 
 function VideoBanner({homeData}) {
 
-  const { title, subTitle, videoUrl } = homeData;
+  // const { title, subTitle, videoUrl } = homeData;
 
   // Theme breakpoints
   const theme = useTheme();
@@ -91,9 +91,9 @@ function VideoBanner({homeData}) {
     }
   };
 
-  function capitalizeFirstLetterOfEachWord(text) {
-    return text.replace(/\b\w/g, (char) => char.toUpperCase());
-  }
+  // function capitalizeFirstLetterOfEachWord(text) {
+  //   return text.replace(/\b\w/g, (char) => char.toUpperCase());
+  // }
 
   return (
     <div className={classes.heroContent}>
@@ -111,14 +111,14 @@ function VideoBanner({homeData}) {
                   variant="h3"
                   className={cx(classes.textHelper, text.title)}
                 >
-                  {capitalizeFirstLetterOfEachWord(title)}
+                  {homeData?.title}
                 </Typography>
               </div>
               <Typography
                 className={cx(classes.subtitle, text.subtitle)}
                 variant="h5"
               >
-                {subTitle}
+                {homeData?.subTitle}
               </Typography>
 
               <Button
@@ -158,7 +158,7 @@ function VideoBanner({homeData}) {
                         {isDesktop && (
                           <YouTube
                             // videoId="rX2T9jH0OxA"
-                            videoId={videoUrl}
+                            videoId={homeData?.videoUrl}
                             opts={opts}
                             onReady={_onReady}
                             onEnd={_onEnd}

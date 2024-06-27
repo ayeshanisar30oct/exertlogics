@@ -1,7 +1,11 @@
 import { makeStyles } from 'tss-react/mui';
 // import imgApi from 'public/images/imgAPI';
 
-const useStyles = makeStyles({ uniqId: "about" })( (theme, { aboutBannerUrl } = {}) => ({
+
+const useStyles = makeStyles({ uniqId: "about" })(
+  (theme, { aboutBannerUrl } = {}) => ({
+
+
     root: {
       "& blockquote": {
         fontSize: 28,

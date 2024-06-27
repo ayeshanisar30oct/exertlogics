@@ -67,7 +67,7 @@ function Services({serviceData}) {
                 </div>
               </div>
             )}
-            {serviceData.map((item, index) => (
+            {serviceData && serviceData.map((item, index) => (
               <div className={classes.item} key={index.toString()}>
                 <Card
                   title={item.title}

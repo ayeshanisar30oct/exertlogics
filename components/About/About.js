@@ -21,6 +21,7 @@ function About({ aboutData }) {
     clientsCount,
   } = aboutData;
 // console.log("ABOUT DATA :",aboutData)
+
   // Theme breakpoints
   const theme = useTheme();
   const { classes: text } = useText();

@@ -24,6 +24,7 @@ const contactSchema = Joi.object({
   phone: Joi.string(),
   email: Joi.string(),
   address: Joi.string(),
+  map: Joi.string(),
 });
 
 const expertiseSchema = Joi.object({

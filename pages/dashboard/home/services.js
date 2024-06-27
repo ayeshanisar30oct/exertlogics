@@ -1,13 +1,17 @@
 import { useEffect, useState } from "react";
+import Modal from "react-modal";
 import { toast } from "react-toastify";
 import classNames from "classnames";
 import Image from "next/image";
 import Breadcrumb from "../components/Breadcrumbs/Breadcrumb";
+import ServiceModal from "../modals/ServiceModal";
 
 const Services = () => {
   const [services, setServices] = useState([]);
   const [editingServiceId, setEditingServiceId] = useState(null);
   const [selectedFile, setSelectedFile] = useState(null);
+    const [isModalOpen, setIsModalOpen] = useState(false);
+
 
 
  const fetchServicesData = async () => {
@@ -118,17 +122,20 @@ const Services = () => {
     }
   };
 
+    const openModal = () => {
+      setIsModalOpen(true);
+    };
+
+    const closeModal = () => {
+      setIsModalOpen(false);
+    };
+
   return (
     <div className="mx-auto">
       <Breadcrumb pageName="Services" />
       <div className="rounded-sm border border-stroke bg-white px-5 pb-2.5 pt-6 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
         <div className="flex justify-end mb-4">
-          <button
-            className="rounded bg-primary px-6 py-2 font-medium text-gray hover:bg-opacity-90"
-            type="button"
-          >
-            Add Service
-          </button>
+          <ServiceModal isOpen={openModal} onRequestClose={closeModal} />
         </div>
         <div className="max-w-full overflow-x-auto">
           <table className="w-full table-auto">
