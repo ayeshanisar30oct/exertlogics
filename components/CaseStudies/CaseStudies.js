@@ -10,10 +10,10 @@ import ListItemText from "@mui/material/ListItemText";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { useTranslation } from "next-i18next";
-import imgApi from "public/images/imgAPI";
 import CaseCard from "../Cards/Case";
 import useStyles from "./case-study-style";
 import useTitle from "../Title/title-style";
+import { transfromProjects } from "public/projects";
 
 const categories = [
   "corporate",
@@ -22,69 +22,25 @@ const categories = [
   "government",
   "creative",
 ];
-const caseData = [
-  {
-    bg: imgApi.agency[5],
-    logo: "/images/logos/mobile.png",
-    title: "Donec commodo convallis ligula",
-    desc: "Vestibulum consequat hendrerit",
-    size: "small",
-  },
-  {
-    logo: "/images/logos/coin.png",
-    title: "Donec commodo convallis ligula",
-    desc: "Vestibulum consequat hendrerit",
-    size: "small",
-    simple: true,
-  },
-  {
-    logo: "/images/logos/starter.png",
-    title: "Donec commodo convallis ligula",
-    desc: "Vestibulum consequat hendrerit",
-    size: "medium",
-    simple: true,
-  },
-  {
-    bg: imgApi.agency[6],
-    logo: "/images/logos/profile.png",
-    title: "Donec commodo convallis ligula",
-    desc: "Vestibulum consequat hendrerit",
-    size: "medium",
-  },
-  {
-    bg: imgApi.agency[7],
-    logo: "/images/logos/architect.png",
-    title: "Donec commodo convallis ligula",
-    desc: "Vestibulum consequat hendrerit",
-    size: "medium",
-  },
-  {
-    bg: imgApi.agency[8],
-    logo: "/images/logos/fashion.png",
-    title: "Donec commodo convallis ligula",
-    desc: "Vestibulum consequat hendrerit",
-    size: "big",
-  },
-  {
-    bg: imgApi.agency[9],
-    logo: "/images/logos/cloud.png",
-    title: "Donec commodo convallis ligula",
-    desc: "Vestibulum consequat hendrerit",
-    size: "big",
-  },
-];
 
-function CaseStudies() {
-  const [categoriesData, setCategoriesData] = useState([]);
+function CaseStudies({categoriesData}) {
+  // const [categoriesData, setCategoriesData] = useState([]);
+    const [selectedCatgoryId, setSelectedCategoryId] = useState(categoriesData[0]?._id);
     const [selectedIndex, setSelectedIndex] = useState(null);
+    const [caseData, setCaseData] = useState(null);
 
-
-  const fetchCategories = async () => {
+  const fetchProjects = async () => {
     try {
-      const response = await fetch("http://localhost:3001/api/category");
+      console.log("SELECTED CATE ID :",selectedCatgoryId)
+      const response = await fetch(`http://localhost:3001/api/project/category/${selectedCatgoryId}`);
       const data = await response.json();
-      if (data.status === "success" && data.category.length > 0) {
-               setCategoriesData(data.category);
+      console.log("FETCHING PROJECTS :",data)
+      if (data.status === "success" && data.project.length > 0) {
+              const projectCards = transfromProjects(data.project);
+              if(projectCards.length>0){
+
+                setCaseData(projectCards);
+              }
 
       }
     } catch (error) {
@@ -93,8 +49,11 @@ function CaseStudies() {
   };
 
   useEffect(() => {
-    fetchCategories();
-  }, []);
+    fetchProjects();
+  }, [selectedCatgoryId]);
+
+  console.log("LOADED PROJECTS ARE :",caseData)
+
   // Theme breakpoints
   const theme = useTheme();
   const isDesktop = useMediaQuery(theme.breakpoints.up("lg"));
@@ -111,7 +70,7 @@ function CaseStudies() {
   // const [selectedIndex, setSelectedIndex] = useState("corporate");
 
   function handleListItemClick(event, index) {
-    console.log(index);
+    console.log("SELECTED CATEGORY :",index);
     setSelectedIndex(index);
   }
 
@@ -200,7 +159,7 @@ function CaseStudies() {
                     duration={0.4}
                   >
                     <div>
-                      {caseData.map((item, index) => {
+                      {caseData && caseData.map((item, index) => {
                         if (item.size === "small") {
                           return renderCard(item, index);
                         }
@@ -218,7 +177,7 @@ function CaseStudies() {
                     duration={0.4}
                   >
                     <div>
-                      {caseData.map((item, index) => {
+                      {caseData && caseData.map((item, index) => {
                         if (item.size === "medium") {
                           return renderCard(item, index);
                         }
@@ -236,7 +195,7 @@ function CaseStudies() {
                     duration={0.4}
                   >
                     <div>
-                      {caseData.map((item, index) => {
+                      {caseData && caseData.map((item, index) => {
                         if (item.size === "big") {
                           return renderCard(item, index);
                         }

@@ -59,67 +59,10 @@ const footers = [
 ];
 
 function Footer(props) {
-  const [subTitle, setSubTitle] = useState("");
-  const [copyrightText, setCopyrightText] = useState("");
-  const [facebookUrl, setFacebookUrl] = useState("");
-  const [twitterUrl, setTwitterUrl] = useState("");
-  const [instagramUrl, setInstagramUrl] = useState("");
-  const [linkedinUrl, setLinkedinUrl] = useState("");
+
   const [logoUrl, setLogoUrl] = useState(logoPlaceholder);
-
-  useEffect(() => {
-    async function fetchLogoData() {
-      try {
-        const logoResponse = await fetch("http://localhost:3001/api/logo/");
-        const logoData = await logoResponse.json();
-        if (logoData.status === "success" && logoData.logos.length > 0) {
-          setLogoUrl(logoData.logos[0].logoLightUrl);
-        }
-      } catch (error) {
-        console.error("Error fetching logo:", error);
-      }
-    }
-    fetchLogoData();
-  }, []);
-
-  useEffect(() => {
-    async function fetchFooterData() {
-      try {
-        const response = await fetch("http://localhost:3001/api/footer");
-        const data = await response.json();
-        if (data.status === "success" && data.footer.length > 0) {
-          const footerData = data.footer[0];
-          setSubTitle(footerData.subTitle);
-          setCopyrightText(footerData.copyrightText);
-
-          footerData.socialLinks.forEach((link) => {
-            switch (link.type) {
-              case "facebook":
-                setFacebookUrl(link.url);
-                break;
-              case "twitter":
-                setTwitterUrl(link.url);
-                break;
-              case "instagram":
-                setInstagramUrl(link.url);
-                break;
-              case "linkedin":
-                setLinkedinUrl(link.url);
-                break;
-              default:
-                break;
-            }
-          });
-        }
-      } catch (error) {
-        console.error("Error fetching footer data:", error);
-      }
-    }
-
-    fetchFooterData();
-  }, []);
-
-  const { toggleDir } = props;
+  const { toggleDir, footerData } = props;
+  
   // Theme breakpoints
   const theme = useTheme();
   const isDesktop = useMediaQuery(theme.breakpoints.up("md"));
@@ -146,11 +89,11 @@ function Footer(props) {
             className={classes.footerDesc}
             gutterBottom
           >
-            {subTitle}
+            {footerData?.subTitle}
           </Typography>
           {isDesktop && (
             <Typography className={classes.copyrightText}>
-              {copyrightText}
+              {footerData?.copyrightText}
             </Typography>
           )}
         </Grid>
@@ -231,12 +174,15 @@ function Footer(props) {
         </Grid>
         <Grid item xs={12} md={3}>
           <div className={classes.socmed}>
-            <IconButton aria-label="FB" className={classes.margin} size="small">
-              <a href={facebookUrl} target="_blank" rel="noopener noreferrer">
-                <i className="ion-logo-facebook" />
+            {footerData.socialLinks.map(item => (
+
+            <IconButton aria-label={item.type.toUpperCase()} className={classes.margin} size="small">
+              <a href={item.url} target="_blank" rel="noopener noreferrer">
+                <i className={`ion-logo-${item.type}`} />
               </a>
             </IconButton>
-            <IconButton aria-label="TW" className={classes.margin} size="small">
+            ))}
+            {/* <IconButton aria-label="TW" className={classes.margin} size="small">
               <a href={twitterUrl} target="_blank" rel="noopener noreferrer">
                 <i className="ion-logo-twitter" />
               </a>
@@ -250,7 +196,7 @@ function Footer(props) {
               <a href={linkedinUrl} target="_blank" rel="noopener noreferrer">
                 <i className="ion-logo-linkedin" />
               </a>
-            </IconButton>
+            </IconButton> */}
           </div>
           <SelectLang toggleDir={toggleDir} />
         </Grid>

@@ -22,7 +22,7 @@ function About({aboutData}) {
 
   // Translation function
   const { t } = useTranslation("common");
-  const { classes, cx } = useStyles({ backgroundImageUrl });
+  const { classes, cx } = useStyles({ aboutBannerUrl });
   const { classes: title } = useTitle();
 
   function capitalizeFirstLetter(text) {
@@ -59,7 +59,11 @@ function About({aboutData}) {
             >
               {subTitle}
             </Typography>
-            <Counter />
+            <Counter
+              employeesCount={employeesCount}
+              projectsCount={projectsCount}
+              clientsCount={clientsCount}
+            />
             <blockquote>{description}</blockquote>
           </Grid>
         </Grid>

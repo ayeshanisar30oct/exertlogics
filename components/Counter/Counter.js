@@ -6,30 +6,7 @@ import { useTranslation } from "next-i18next";
 import { useText } from "theme/common";
 import useStyles from "./counter-style";
 
-function Counter() {
-
-    const [employeesCount, setEmployeesCount] = useState("");
-    const [projectsCount, setProjectsCount] = useState("");
-    const [clientsCount, setClientsCount] = useState("");
-
-     useEffect(() => {
-       async function fetchAboutData() {
-         try {
-           const response = await fetch("http://localhost:3001/api/about");
-           const data = await response.json();
-           if (data.status === "success" && data.about.length > 0) {
-             const aboutData = data.about[0];
-             setEmployeesCount(aboutData.employeesCount);
-             setProjectsCount(aboutData.projectsCount);
-             setClientsCount(aboutData.clientsCount);
-           }
-         } catch (error) {
-           console.error("Error fetching home data:", error);
-         }
-       }
-
-       fetchAboutData();
-     }, []);
+function Counter({employeesCount, projectsCount, clientsCount}) {
 
   const { t } = useTranslation("common");
   const { classes } = useStyles();
