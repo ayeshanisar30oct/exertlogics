@@ -113,7 +113,7 @@ function Header(props) {
                   items={menuList.map((item) => item.name)}
                   currentClassName="active"
                 >
-                  {menuList.map((item, index) => (
+                  {menuList && menuList.map((item, index) => (
                     <li key={index}>
                       {invert ? (
                         <Button component={Link} href={item.url}>

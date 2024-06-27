@@ -174,7 +174,7 @@ function Footer(props) {
         </Grid>
         <Grid item xs={12} md={3}>
           <div className={classes.socmed}>
-            {footerData.socialLinks.map((item,i) => (
+            {footerData && footerData.socialLinks.map((item,i) => (
 
             <IconButton key = {i} aria-label={item.type.toUpperCase()} className={classes.margin} size="small">
               <a href={item.url} target="_blank" rel="noopener noreferrer">

@@ -34,7 +34,7 @@ export async function signup(req, res) {
       });
   
       await user.save();
-      console.log("USER ID :",user.id)
+      //console.log("USER ID :",user.id)
       const token = await generateAccessToken({id : user.id});
 
   

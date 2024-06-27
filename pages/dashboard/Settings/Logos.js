@@ -26,7 +26,7 @@ const Logos = ({ initialLogosData }) => {
       }
 
       const data = await resp.json();
-      console.log("Response Data:", data);
+      //console.log("Response Data:", data);
 
       setLightLogo(data.logos[0].logoLightUrl);
       setDarkLogo(data.logos[0].logoDarkUrl);
@@ -45,7 +45,7 @@ const Logos = ({ initialLogosData }) => {
   };
 
   const handleSubmit = async (e) => {
-    // console.log()
+    // //console.log()
     e.preventDefault();
 
     if (file) {
@@ -53,7 +53,7 @@ const Logos = ({ initialLogosData }) => {
         setIsLoading(true);
         const formData = new FormData();
         formData.append("file", file);
-        console.log("FORM DATA OBJECT :", formData);
+        //console.log("FORM DATA OBJECT :", formData);
         formData.append("type", fileName);
 
         const res = await fetch("http://localhost:3001/api/logo", {
@@ -67,7 +67,7 @@ const Logos = ({ initialLogosData }) => {
         }
 
         const data = await res.json();
-        console.log("Response is:", data);
+        //console.log("Response is:", data);
         await fetchLogos();
         toast.success("File uploaded successfully!");
       } catch (error) {

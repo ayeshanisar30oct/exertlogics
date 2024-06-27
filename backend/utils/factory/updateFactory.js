@@ -12,11 +12,11 @@ export const getFactory = (model, pop = "", isRefrenced = false,limit = 0,page =
 
     let filter = {};
 
-    console.log("FUNCTION TRIGGERED :",pop,isRefrenced)
+    //console.log("FUNCTION TRIGGERED :",pop,isRefrenced)
 
     // If the collection has a reference, dynamically build the filter
     filter = isRefrenced ? await hasReferencedPath(model, id) : id ? { _id: id } : {};
-    console.log("FILTER OBJECT IS :",filter,id)
+    //console.log("FILTER OBJECT IS :",filter,id)
 
     // Connect to the database
     await connectDB();
@@ -35,7 +35,7 @@ const updateFactory = (model, schema, isMultiple = false) =>
   catchAsync(async (req, res) => {
     const id = req.query?.id;
     let filter = id ? { _id: id } : {};
-    console.log("Filter and Query :", id, filter);
+    //console.log("Filter and Query :", id, filter);
 
     // Validate the request body
     const { isValid, errors, value } = validate(schema, req.body);

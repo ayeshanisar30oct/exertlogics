@@ -40,7 +40,7 @@ export default async function handler(req, res) {
       `, // html body
     });
 
-    console.log('Message sent: %s', info.messageId);
+    //console.log('Message sent: %s', info.messageId);
 
     res.status(200).json({ message: 'Message sent successfully' });
   } catch (error) {

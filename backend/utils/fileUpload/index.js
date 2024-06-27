@@ -19,7 +19,7 @@ export const fileUpload = async (req, res) => {
   });
 
   try {
-    console.log("FILE UPLOAD UTILITY ");
+    //console.log("FILE UPLOAD UTILITY ");
     const { fields, files } = await new Promise((resolve, reject) => {
       form.parse(req, (err, fields, files) => {
         if (err) {

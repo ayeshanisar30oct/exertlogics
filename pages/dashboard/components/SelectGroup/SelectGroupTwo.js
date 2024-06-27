@@ -9,13 +9,13 @@ const SelectGroupTwo = ({ categories, setCategory }) => {
     setIsOptionSelected(true);
   };
   const changeHandler = (e) => {
-    console.log("SELECTED VALUE : ",e.target.value)
+    //console.log("SELECTED VALUE : ",e.target.value)
     setSelectedOption(e.target.value)
     setCategory(e.target.value);
     changeTextColor();
   }
-  console.log("CATEGORIES :",categories)
-  console.log("SELECTED OPTION VAL :",selectedOption)
+  //console.log("CATEGORIES :",categories)
+  //console.log("SELECTED OPTION VAL :",selectedOption)
   return (
     <div>
       <div className="relative z-20 bg-white dark:bg-form-input">
