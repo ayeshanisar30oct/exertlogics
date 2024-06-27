@@ -128,12 +128,12 @@ Landing.propTypes = {
   onToggleDark: PropTypes.func.isRequired,
   onToggleDir: PropTypes.func.isRequired,
   contactData: PropTypes.object,
-  menuList: PropTypes.object,
-  logoUrl: PropTypes.object,
+  menuList: PropTypes.array,
+  logoUrl: PropTypes.string,
   aboutData: PropTypes.object,
-  serviceData: PropTypes.object,
+  serviceData: PropTypes.array,
   expertiseData: PropTypes.object,
-  categoriesDataData: PropTypes.object,
+  categoriesData: PropTypes.array,
 };
 
 export default Landing;

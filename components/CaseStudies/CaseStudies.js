@@ -31,10 +31,9 @@ function CaseStudies({categoriesData}) {
 
   const fetchProjects = async () => {
     try {
-      console.log("SELECTED CATE ID :",selectedCatgoryId)
+      // console.log("SELECTED CATE ID :",selectedCatgoryId)
       const response = await fetch(`http://localhost:3001/api/project/category/${selectedCatgoryId}`);
       const data = await response.json();
-      console.log("FETCHING PROJECTS :",data)
       if (data.status === "success" && data.project.length > 0) {
               const projectCards = transfromProjects(data.project);
               if(projectCards.length>0){
@@ -52,7 +51,7 @@ function CaseStudies({categoriesData}) {
     fetchProjects();
   }, [selectedCatgoryId]);
 
-  console.log("LOADED PROJECTS ARE :",caseData)
+  // console.log("LOADED PROJECTS ARE :",caseData)
 
   // Theme breakpoints
   const theme = useTheme();
@@ -70,7 +69,7 @@ function CaseStudies({categoriesData}) {
   // const [selectedIndex, setSelectedIndex] = useState("corporate");
 
   function handleListItemClick(event, index) {
-    console.log("SELECTED CATEGORY :",index);
+    // console.log("SELECTED CATEGORY :",index);
     setSelectedIndex(index);
   }
 
@@ -91,7 +90,7 @@ function CaseStudies({categoriesData}) {
     <CaseCard
       key={index.toString()}
       bg={item.bg || ""}
-      logo={item.logo}
+      logo={item.logo || ""}
       title={item.title}
       desc={item.desc}
       size={item.size}
