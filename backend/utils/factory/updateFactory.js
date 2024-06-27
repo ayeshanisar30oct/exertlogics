@@ -3,9 +3,13 @@ import { validate } from "../validation";
 import catchAsync from "../catchAsync";
 import { isEmptyObject, hasReferencedPath } from "../helpers";
 
-export const getFactory = (model, pop = "", isRefrenced = false) =>
+export const getFactory = (model, pop = "", isRefrenced = false,limit = 0,page = 1,) =>
   catchAsync(async (req, res) => {
     const id = req.query?.id;
+    // const page = parseInt(req.query?.page) || 1;
+    // const limit = parseInt(req.query?.limit) ;
+    const skip = (page - 1) * limit;
+
     let filter = {};
 
     console.log("FUNCTION TRIGGERED :",pop,isRefrenced)
@@ -17,7 +21,7 @@ export const getFactory = (model, pop = "", isRefrenced = false) =>
     // Connect to the database
     await connectDB();
 
-    const docs = await model.find(filter).populate(pop).select("-__v");
+    const docs = await model.find(filter).populate(pop).skip(skip).limit(limit).select("-__v");
     if (!docs.length) {
       return res
         .status(200)

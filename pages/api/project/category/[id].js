@@ -2,7 +2,7 @@ import { getProject } from "backend/controllers/project/projectController";
 
 export default async function (req, res) {
     if(req.method === 'GET'){
-         getProject(true)(req, res);
+         getProject(true,7,1)(req, res);
     }
     else {
         res.setHeader("Allow", "GET");

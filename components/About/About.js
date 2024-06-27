@@ -11,9 +11,16 @@ import useStyles from "./about-style";
 import useTitle from "../Title/title-style";
 import Counter from "../Counter";
 
-function About({aboutData}) {
-  const { subTitle, description, backgroundImageUrl } = aboutData;
-  console.log("about data", aboutData);
+function About({ aboutData }) {
+  const {
+    subTitle,
+    description,
+    aboutBannerUrl,
+    employeesCount,
+    projectsCount,
+    clientsCount,
+  } = aboutData;
+// console.log("ABOUT DATA :",aboutData)
 
   // Theme breakpoints
   const theme = useTheme();
