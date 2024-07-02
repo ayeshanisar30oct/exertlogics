@@ -14,7 +14,6 @@ const controllers = {
 export default async function handler(req, res) {
   const { method, url } = req;
   const endpoint = url.split("/")[2]; // Get the endpoint name from URL
-console.log("SECOND GEN-HANDLER")
   if (!controllers[endpoint]) {
     res.status(404).json({ status: "fail", message: "Endpoint not found" });
     return;
@@ -35,13 +34,10 @@ console.log("SECOND GEN-HANDLER")
 
   try {
     if (method === "GET") {
-      console.log("GET IFF BLOCK");
       const methodName = method.toLowerCase() + endpoint.charAt(0).toUpperCase() + endpoint.slice(1);
       const methodToExecute = controller[methodName];
-      console.log("GET IFF METHOD NAME",methodName,methodToExecute);
   
       if (methodToExecute && typeof methodToExecute === "function") {
-        console.log("METHOD TO EXECUTE BLOCK")
         await methodToExecute()(req, res);
       }
     } else if (method === "PATCH") {

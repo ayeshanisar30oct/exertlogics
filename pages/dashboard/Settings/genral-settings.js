@@ -22,8 +22,6 @@ useEffect(() => {
     .then((response) => response.json())
     .then((data) => {
       setFooterData(data); 
-      // console.log("footerData",footerData)
-      // console.log("data",data)
          if (data && data.footer && data.footer[0].socialLinks) {
            const facebookLink = data.footer[0].socialLinks.find(
              (link) => link.type === "facebook"
@@ -72,34 +70,23 @@ const handleInputChange = (e) => {
 
   // Handler function to update state
   const fbInputHandler = (e) => {
-    console.log("FB INPUT :",e.target.value)
     setFacebookURL(e.target.value);
 
   };
 const twtInputHandler = (e) => {
-  console.log("Twitter Value :",e.target.value)
   setTwitterURL(e.target.value);
-  // setSocialLinks(e.target.value);
 };
 const instaInputHandler = (e) => {
-  console.log("Instagram Value :",e.target.value)
   setInstagramURL(e.target.value);
-  // setSocialLinks(e.target.value);
 };
 const linkedinInputHandler = (e) => {
-  console.log("Twitter Value :",e.target.value)
   setLinkedinURL(e.target.value);
-  // setSocialLinks(e.target.value);
 };
 const descInputHandler = (e) => {
-  console.log("Twitter Value :",e.target.value)
   setDescriptionData(e.target.value);
-  // setSocialLinks(e.target.value);
 };
 const copyrightInputHandler = (e) => {
-  console.log("Twitter Value :",e.target.value)
   setCopyrightData(e.target.value);
-  // setSocialLinks(e.target.value);
 };
 
 const formSubmitHandler = async (e) => {
@@ -145,7 +132,6 @@ const formSubmitHandler = async (e) => {
     }
 
     const result = await response.json();
-    console.log('Form submitted successfully:', result);
     toast.success('Footer updated!');
   } catch (error) {
     console.error('Error submitting form:', error);
