@@ -12,7 +12,8 @@ const HeadComponent = () => (
       content={brand.agency.desc}
     />
     {/* Favicon */}
-    <link rel="icon" href="/favicons/favicon.ico" />
+    <link rel="icon" href="/favicons/favicon-el.png" />
+    {/* <link rel="icon" href="/favicons/favicon.ico" />
     <link rel="apple-touch-icon" sizes="57x57" href="/favicons/apple-icon-57x57.png" />
     <link rel="apple-touch-icon" sizes="60x60" href="/favicons/apple-icon-60x60.png" />
     <link rel="apple-touch-icon" sizes="72x72" href="/favicons/apple-icon-72x72.png" />
@@ -25,7 +26,7 @@ const HeadComponent = () => (
     <link rel="icon" type="image/png" sizes="192x192" href="/favicons/android-icon-192x192.png" />
     <link rel="icon" type="image/png" sizes="32x32" href="/favicons/favicon-32x32.png" />
     <link rel="icon" type="image/png" sizes="96x96" href="/favicons/favicon-96x96.png" />
-    <link rel="icon" type="image/png" sizes="16x16" href="/favicons/favicon-16x16.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicons/favicon-16x16.png" /> */}
     <link rel="manifest" href="/favicons/manifest.json" />
     <meta name="msapplication-TileColor" content="#ffffff" />
     <meta name="msapplication-TileImage" content="/favicons/ms-icon-144x144.png" />
