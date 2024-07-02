@@ -18,7 +18,7 @@ const GeneralSettings = () => {
 
 // GET FOOTER DATA
 useEffect(() => {
-  fetch("http://localhost:3001/api/footer")
+  fetch("https://exertlogics.vercel.app/api/footer")
     .then((response) => response.json())
     .then((data) => {
       setFooterData(data); 
@@ -126,7 +126,7 @@ const formSubmitHandler = async (e) => {
   setIsLoading(true); // Set loading state
 
   try {
-    const response = await fetch('http://localhost:3001/api/footer', {
+    const response = await fetch('https://exertlogics.vercel.app/api/footer', {
       method: 'PATCH',
       body: JSON.stringify(bodyData),
       headers: {

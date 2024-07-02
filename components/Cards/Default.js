@@ -7,22 +7,25 @@ import useStyles from './cards-style';
 
 function Services(props) {
   const { classes } = useStyles();
-  const {
-    img,
-    title,
-    desc,
-    button
-  } = props;
+  const { img, title, desc, button, onButtonClick } = props;
   return (
     <Paper className={classes.defaultCard}>
       <figure>
         <img src={img} alt="img" />
       </figure>
       <div className={classes.text}>
-        <Typography display="block" variant="h6">{title}</Typography>
+        <Typography display="block" variant="h6">
+          {title}
+        </Typography>
         <Typography component="p">{desc}</Typography>
       </div>
-      <Button variant="outlined" fullWidth color="primary" className={classes.button}>
+      <Button
+        onClick={onButtonClick}
+        variant="outlined"
+        fullWidth
+        color="primary"
+        className={classes.button}
+      >
         {button}
       </Button>
     </Paper>

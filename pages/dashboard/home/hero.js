@@ -13,7 +13,7 @@ const Hero = () => {
 
 
   useEffect(() => {
-    fetch("http://localhost:3001/api/home")
+    fetch("https://exertlogics.vercel.app/api/home")
       .then((response) => response.json())
       .then((data) => {
         setHeroData(data);
@@ -70,7 +70,7 @@ const formSubmitHandler = async (e) => {
   setIsLoading(true); // Set loading state
 
   try {
-    const response = await fetch("http://localhost:3001/api/home", {
+    const response = await fetch("https://exertlogics.vercel.app/api/home", {
       method: "PATCH",
       body: JSON.stringify(bodyData),
       headers: {

@@ -32,7 +32,7 @@ function CaseStudies({categoriesData}) {
   const fetchProjects = async () => {
     try {
 
-      const response = await fetch(`http://localhost:3001/api/project/category/${selectedCatgoryId}`);
+      const response = await fetch(`https://exertlogics.vercel.app/api/project/category/${selectedCatgoryId}`);
       const data = await response.json();
       if (data.status === "success" && data.project.length > 0) {
               const projectCards = transfromProjects(data.project);

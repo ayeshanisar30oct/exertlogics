@@ -21,7 +21,7 @@ const About = () => {
   // GET ABOUT  DATA
   const fetchAboutData = async () => {
     try {
-      const response = await fetch("http://localhost:3001/api/about");
+      const response = await fetch("https://exertlogics.vercel.app/api/about");
       const data = await response.json();
       if (data.status === "success" && data.about.length > 0) {
         const aboutData = data.about[0];
@@ -87,7 +87,7 @@ const About = () => {
     setIsLoading(true); // Set loading state
 
     try {
-      const response = await fetch("http://localhost:3001/api/about", {
+      const response = await fetch("https://exertlogics.vercel.app/api/about", {
         method: "PATCH",
         body: JSON.stringify(bodyData),
         headers: {
@@ -124,7 +124,7 @@ const About = () => {
         formData.append("type", "aboutBanner");
 
         const res = await fetch(
-          "http://localhost:3001/api/about/about-banner",
+          "https://exertlogics.vercel.app/api/about/about-banner",
           {
             method: "PATCH",
             body: formData,

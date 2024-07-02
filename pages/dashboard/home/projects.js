@@ -24,9 +24,9 @@ const fetchCategoriesData = async (getProject = false) => {
     //   {
   const endpoint = getProject
     ? selectedCategory
-      ? `http://localhost:3001/api/project/category/${selectedCategory}`
-      : "http://localhost:3001/api/category"
-    : "http://localhost:3001/api/category";
+      ? `https://exertlogics.vercel.app/api/project/category/${selectedCategory}`
+      : "https://exertlogics.vercel.app/api/category"
+    : "https://exertlogics.vercel.app/api/category";
 
    const data = await request(endpoint);
 
@@ -81,7 +81,7 @@ const fetchCategoriesData = async (getProject = false) => {
     const { _id, ...serviceData } = serviceToSave;
 
     try {
-      const data = await request(`http://localhost:3001/api/project/${proId}/`, 'PATCH', serviceData);
+      const data = await request(`https://exertlogics.vercel.app/api/project/${proId}/`, 'PATCH', serviceData);
 
       setProjects((prevPro) =>
         prevPro.map((pro) => (pro._id === data._id ? data : pro))
@@ -104,7 +104,7 @@ const fetchCategoriesData = async (getProject = false) => {
 
       try {
         const updatedProject = await request(
-          `http://localhost:3001/api/project/project-logo/${proId}`,
+          `https://exertlogics.vercel.app/api/project/project-logo/${proId}`,
           'PATCH',
           formData,
           true

@@ -11,7 +11,7 @@ const Expertise = () => {
 
   const fetchExpertiseData = async () => {
     try {
-      const response = await fetch("http://localhost:3001/api/expertise");
+      const response = await fetch("https://exertlogics.vercel.app/api/expertise");
       const data = await response.json();
       if (data.status === "success" && data.expertise.length > 0) {
         const expertiseData = data.expertise[0];
@@ -62,7 +62,7 @@ const Expertise = () => {
      setIsLoading(true); // Set loading state
 
      try {
-       const response = await fetch("http://localhost:3001/api/expertise", {
+       const response = await fetch("https://exertlogics.vercel.app/api/expertise", {
          method: "PATCH",
          body: JSON.stringify(bodyData),
          headers: {

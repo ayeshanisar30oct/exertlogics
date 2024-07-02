@@ -2,7 +2,7 @@ import expertise from "pages/api/expertise";
 
 export const fetchContactData = async () => {
   try {
-    const response = await fetch("http://localhost:3001/api/contact");
+    const response = await fetch("https://exertlogics.vercel.app/api/contact");
     const data = await response.json();
     if (data.status === "success" && data.contact.length > 0) {
       return { contactData: data.contact[0] };
@@ -16,7 +16,7 @@ export const fetchContactData = async () => {
 // load Navebar menu links
 export const fetchMenus = async () => {
   try {
-    const response = await fetch("http://localhost:3001/api/header/");
+    const response = await fetch("https://exertlogics.vercel.app/api/header/");
     const data = await response.json();
     if (data.status === "success" && data.header.length > 0) {
       const menuList = data.header[0].links.map((link) => ({
@@ -35,7 +35,7 @@ export const fetchMenus = async () => {
 // Load Navabar logo
 export const fetchLogoData = async () => {
   try {
-    const logoResponse = await fetch("http://localhost:3001/api/logo/");
+    const logoResponse = await fetch("https://exertlogics.vercel.app/api/logo/");
     const logoData = await logoResponse.json();
     if (logoData.status === "success" && logoData.logos.length > 0) {
       return { logoUrl: logoData.logos[0].logoLightUrl };
@@ -49,7 +49,7 @@ export const fetchLogoData = async () => {
 // Load Hero section data
 export const fetchHomeData = async() => {
   try {
-    const response = await fetch("http://localhost:3001/api/home");
+    const response = await fetch("https://exertlogics.vercel.app/api/home");
     const data = await response.json();
     if (data.status === "success" && data.home.length > 0) {
       return { homeData : data.home[0] };
@@ -63,7 +63,7 @@ export const fetchHomeData = async() => {
 // Load About data 
 export const fetchAboutData = async () => {
   try {
-    const response = await fetch("http://localhost:3001/api/about");
+    const response = await fetch("https://exertlogics.vercel.app/api/about");
     const data = await response.json();
     if (data.status === "success" && data.about.length > 0) {
       return { aboutData : data.about[0]};
@@ -76,7 +76,7 @@ export const fetchAboutData = async () => {
 
 export const fetchServicesData = async() => {
     try {
-      const response = await fetch("http://localhost:3001/api/service/");
+      const response = await fetch("https://exertlogics.vercel.app/api/service/");
       const data = await response.json();
       if (data.status === "success") {
         const services = data.service.map((service) => ({
@@ -95,7 +95,7 @@ export const fetchServicesData = async() => {
 // Load expertise data
 export const fetchExpertiseData = async() => {
     try {
-      const response = await fetch("http://localhost:3001/api/expertise");
+      const response = await fetch("https://exertlogics.vercel.app/api/expertise");
       const data = await response.json();
       if (data.status === "success" && data.expertise.length > 0) {
         const exps = data.expertise[0];
@@ -116,7 +116,7 @@ export const fetchExpertiseData = async() => {
 // Load categories and projects
 export const fetchCategories = async () => {
   try {
-    const response = await fetch("http://localhost:3001/api/category");
+    const response = await fetch("https://exertlogics.vercel.app/api/category");
     const data = await response.json();
     if (data.status === "success" && data.category.length > 0) {
         return { categoriesData : data.category }
@@ -130,7 +130,7 @@ export const fetchCategories = async () => {
 
 export const fetchFooterData = async() => {
     try {
-      const response = await fetch("http://localhost:3001/api/footer");
+      const response = await fetch("https://exertlogics.vercel.app/api/footer");
       const data = await response.json();
       if (data.status === "success" && data.footer.length > 0) {
         return {footerData : data.footer[0]}

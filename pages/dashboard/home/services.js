@@ -16,7 +16,7 @@ const Services = () => {
 
  const fetchServicesData = async () => {
    try {
-     const response = await fetch("http://localhost:3001/api/service");
+     const response = await fetch("https://exertlogics.vercel.app/api/service");
      const data = await response.json();
      if (data.status === "success") {
           setServices(data.service);
@@ -54,7 +54,7 @@ const Services = () => {
 
       try {
         const response = await fetch(
-          `http://localhost:3001/api/service/${serviceId}/`,
+          `https://exertlogics.vercel.app/api/service/${serviceId}/`,
           {
             method: "PATCH",
             headers: {
@@ -94,7 +94,7 @@ const Services = () => {
 
       try {
         const response = await fetch(
-          `http://localhost:3001/api/service/service-banner/${serviceId}`,
+          `https://exertlogics.vercel.app/api/service/service-banner/${serviceId}`,
           {
             method: "PATCH",
             body: formData,

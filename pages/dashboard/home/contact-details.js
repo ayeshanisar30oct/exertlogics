@@ -12,7 +12,7 @@ const ContactDetails = () => {
 
   const fetchContactData = async () => {
     try {
-      const response = await fetch("http://localhost:3001/api/contact");
+      const response = await fetch("https://exertlogics.vercel.app/api/contact");
       const data = await response.json();
       if (data.status === "success" && data.contact.length > 0) {
         const contactData = data.contact[0];
@@ -69,7 +69,7 @@ const ContactDetails = () => {
     setIsLoading(true); // Set loading state
 
     try {
-      const response = await fetch("http://localhost:3001/api/contact", {
+      const response = await fetch("https://exertlogics.vercel.app/api/contact", {
         method: "PATCH",
         body: JSON.stringify(bodyData),
         headers: {

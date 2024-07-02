@@ -14,7 +14,7 @@ const Menu = () => {
 
   // Fetch header menu
   useEffect(() => {
-    fetch("http://localhost:3001/api/header")
+    fetch("https://exertlogics.vercel.app/api/header")
       .then((response) => response.json())
       .then(setData)
       .catch(console.error);
@@ -47,7 +47,7 @@ const Menu = () => {
        siteTitle: "ExertLogics",
        links: updatedLinks,
      };
-    fetch(`http://localhost:3001/api/header/`, {
+    fetch(`https://exertlogics.vercel.app/api/header/`, {
       method: "PATCH",
       body: JSON.stringify(bodyData),
       headers: {
