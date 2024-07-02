@@ -63,7 +63,8 @@ export default async function handler(req, res) {
       res.setHeader("Allow", methodNames);
       res.status(405).json({ status: "fail", message: `Method ${method} Not Allowed` });
     }
-  } catch (error) {
+  }
+ } catch (error) {
     console.error(error);
     return res.status(500).json({ status: "error", message: "Internal Server Error" });
   }

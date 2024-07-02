@@ -1,10 +1,4 @@
 
-import { Redirect } from '../lib/redirect';
-export default Redirect;
-
-// import { Redirect } from '../lib/redirect';
-// export default Redirect;
-
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { useTheme } from '@mui/material/styles';
