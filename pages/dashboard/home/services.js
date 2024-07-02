@@ -5,6 +5,7 @@ import classNames from "classnames";
 import Image from "next/image";
 import Breadcrumb from "../components/Breadcrumbs/Breadcrumb";
 import ServiceModal from "../modals/ServiceModal";
+import apiUrl from "config";
 
 const Services = () => {
   const [services, setServices] = useState([]);
@@ -16,7 +17,7 @@ const Services = () => {
 
  const fetchServicesData = async () => {
    try {
-     const response = await fetch("https://exertlogics.vercel.app/api/service");
+     const response = await fetch(`${apiUrl}/service`);
      const data = await response.json();
      if (data.status === "success") {
           setServices(data.service);
@@ -54,7 +55,7 @@ const Services = () => {
 
       try {
         const response = await fetch(
-          `https://exertlogics.vercel.app/api/service/${serviceId}/`,
+          `${apiUrl}/service/${serviceId}/`,
           {
             method: "PATCH",
             headers: {
@@ -94,7 +95,7 @@ const Services = () => {
 
       try {
         const response = await fetch(
-          `https://exertlogics.vercel.app/api/service/service-banner/${serviceId}`,
+          `${apiUrl}/service/service-banner/${serviceId}`,
           {
             method: "PATCH",
             body: formData,

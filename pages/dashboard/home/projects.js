@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import classNames from "classnames";
-import Image from "next/image";
 import Breadcrumb from "../components/Breadcrumbs/Breadcrumb";
 import SelectGroupTwo from "../components/SelectGroup/SelectGroupTwo";
 import useApi from "../hooks/useApi";
 import ProjectModal from "../modals/ProjectModal";
+import apiUrl from "config";
 
 const Projects = () => {
   const { request , loading, error } = useApi();
@@ -22,23 +22,22 @@ const fetchCategoriesData = async (getProject = false) => {
   try {
     // if()
     //   {
-  const endpoint = getProject
-    ? selectedCategory
-      ? `https://exertlogics.vercel.app/api/project/category/${selectedCategory}`
-      : "https://exertlogics.vercel.app/api/category"
-    : "https://exertlogics.vercel.app/api/category";
+    const endpoint = getProject
+      ? selectedCategory
+      ? `${apiUrl}/project/category/${selectedCategory}`
+      : `${apiUrl}/category`
+      : `${apiUrl}/category`;
 
-   const data = await request(endpoint);
+    const data = await request(endpoint);
 
-   if (data.status === "success") {
-     if (getProject) {
-       setProjects(data.project);
-     } else {
-       setCategories(data.category);
-     }
-  //  }
+    if (data.status === "success") {
+      if (getProject) {
+        setProjects(data.project);
+      } else {
+        setCategories(data.category);
       }
- 
+      //  }
+    }
   } catch (error) {
     console.error('Error fetching data:', error);
   }
@@ -81,7 +80,7 @@ const fetchCategoriesData = async (getProject = false) => {
     const { _id, ...serviceData } = serviceToSave;
 
     try {
-      const data = await request(`https://exertlogics.vercel.app/api/project/${proId}/`, 'PATCH', serviceData);
+      const data = await request(`${apiUrl}/project/${proId}/`, 'PATCH', serviceData);
 
       setProjects((prevPro) =>
         prevPro.map((pro) => (pro._id === data._id ? data : pro))
@@ -104,8 +103,8 @@ const fetchCategoriesData = async (getProject = false) => {
 
       try {
         const updatedProject = await request(
-          `https://exertlogics.vercel.app/api/project/project-logo/${proId}`,
-          'PATCH',
+          `${apiUrl}/project/project-logo/${proId}`,
+          "PATCH",
           formData,
           true
         );

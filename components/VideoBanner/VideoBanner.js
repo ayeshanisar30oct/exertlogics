@@ -17,6 +17,8 @@ import yt from 'youtube';
 import routeLink from 'public/text/link';
 import useStyles from './banner-style';
 import Link from '../Link';
+import apiUrl from "config";
+
 
 function VideoBanner({homeData}) {
 
@@ -88,6 +90,7 @@ function VideoBanner({homeData}) {
       rel: 0,
       showinfo: 0,
       mute: 1,
+      // origin: "http://localhost:3001/",
       origin: "https://exertlogics.vercel.app/",
     },
   };

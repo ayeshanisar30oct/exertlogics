@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import React from "react";
 import { toast } from "react-toastify";
 import Image from "next/image";
+import apiUrl from "config";
 
 
 const About = () => {
@@ -21,7 +22,7 @@ const About = () => {
   // GET ABOUT  DATA
   const fetchAboutData = async () => {
     try {
-      const response = await fetch("https://exertlogics.vercel.app/api/about");
+      const response = await fetch(`${apiUrl}/about`);
       const data = await response.json();
       if (data.status === "success" && data.about.length > 0) {
         const aboutData = data.about[0];
@@ -87,7 +88,7 @@ const About = () => {
     setIsLoading(true); // Set loading state
 
     try {
-      const response = await fetch("https://exertlogics.vercel.app/api/about", {
+      const response = await fetch(`${apiUrl}/about`, {
         method: "PATCH",
         body: JSON.stringify(bodyData),
         headers: {
@@ -124,7 +125,7 @@ const About = () => {
         formData.append("type", "aboutBanner");
 
         const res = await fetch(
-          "https://exertlogics.vercel.app/api/about/about-banner",
+          `${apiUrl}/about/about-banner`,
           {
             method: "PATCH",
             body: formData,

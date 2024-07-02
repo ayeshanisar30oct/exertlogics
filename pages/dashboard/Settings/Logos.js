@@ -2,6 +2,7 @@ import Breadcrumb from "../components/Breadcrumbs/Breadcrumb";
 import Image from "next/image";
 import React, { useState } from "react";
 import { toast } from "react-toastify";
+import apiUrl from "config";
 
 const Logos = ({ initialLogosData }) => {
   const [lightLogo, setLightLogo] = useState(
@@ -20,7 +21,7 @@ const Logos = ({ initialLogosData }) => {
     try {
       setIsLoading(true);
       // setError(false);
-      const resp = await fetch("http://localhost:3001/api/logo");
+      const resp = await fetch(`${apiUrl}/logo`);
       if (!resp.ok) {
         throw new Error("Error occurred fetching data!");
       }
@@ -56,7 +57,7 @@ const Logos = ({ initialLogosData }) => {
 
         formData.append("type", fileName);
 
-        const res = await fetch("http://localhost:3001/api/logo", {
+        const res = await fetch(`${apiUrl}/logo`, {
           method: "PATCH",
           body: formData,
         });
@@ -343,7 +344,7 @@ const Logos = ({ initialLogosData }) => {
 };
 
 export async function getStaticProps() {
-  const resp = await fetch("http://localhost:3001/api/logo");
+  const resp = await fetch(`${apiUrl}/logo`);
   const initialLogosData = await resp.json();
 
   return {

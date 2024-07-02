@@ -2,6 +2,8 @@ import Breadcrumb from "../components/Breadcrumbs/Breadcrumb";
 import React from "react";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
+import apiUrl from "config";
+
 
 const ContactDetails = () => {
   const [phoneNumber, setPhoneNumber] = useState();
@@ -12,7 +14,7 @@ const ContactDetails = () => {
 
   const fetchContactData = async () => {
     try {
-      const response = await fetch("https://exertlogics.vercel.app/api/contact");
+      const response = await fetch(`${apiUrl}/contact`);
       const data = await response.json();
       if (data.status === "success" && data.contact.length > 0) {
         const contactData = data.contact[0];
@@ -69,7 +71,7 @@ const ContactDetails = () => {
     setIsLoading(true); // Set loading state
 
     try {
-      const response = await fetch("https://exertlogics.vercel.app/api/contact", {
+      const response = await fetch(`${apiUrl}/contact`, {
         method: "PATCH",
         body: JSON.stringify(bodyData),
         headers: {

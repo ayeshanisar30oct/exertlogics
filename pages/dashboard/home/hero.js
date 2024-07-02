@@ -2,6 +2,7 @@ import Breadcrumb from "../components/Breadcrumbs/Breadcrumb";
 import React from "react";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
+import apiUrl from "config";
 
 
 const Hero = () => {
@@ -13,11 +14,10 @@ const Hero = () => {
 
 
   useEffect(() => {
-    fetch("https://exertlogics.vercel.app/api/home")
+    fetch(`${apiUrl}/home`)
       .then((response) => response.json())
       .then((data) => {
         setHeroData(data);
-
 
         if (data && data.home && data.home[0].title) {
           setTitle(data.home[0].title);
@@ -70,7 +70,7 @@ const formSubmitHandler = async (e) => {
   setIsLoading(true); // Set loading state
 
   try {
-    const response = await fetch("https://exertlogics.vercel.app/api/home", {
+    const response = await fetch(`${apiUrl}/home`, {
       method: "PATCH",
       body: JSON.stringify(bodyData),
       headers: {

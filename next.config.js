@@ -4,12 +4,16 @@ const withImages = require('next-images');
 const ESLintPlugin = require('eslint-webpack-plugin');
 
 module.exports = withImages({
+  env: {
+    API_BASE_URL_DEV: process.env.API_BASE_URL_DEV,
+    API_BASE_URL_PROD: process.env.API_BASE_URL_PROD,
+  },
   // Enable this code below for Server Side Rendering/Translation (SSR)
   //  i18n,
   // output: 'export', // Please disable/comment for SSR Mode
   trailingSlash: true,
   images: {
-    disableStaticImages: true
+    disableStaticImages: true,
   },
   eslint: {
     // Warning: This allows production builds to successfully complete even if
@@ -17,18 +21,20 @@ module.exports = withImages({
     ignoreDuringBuilds: true,
   },
   publicRuntimeConfig: {
-    localeSubpaths: typeof process.env.LOCALE_SUBPATHS === 'string'
-      ? process.env.LOCALE_SUBPATHS
-      : 'none',
+    localeSubpaths:
+      typeof process.env.LOCALE_SUBPATHS === "string"
+        ? process.env.LOCALE_SUBPATHS
+        : "none",
   },
   webpack: (config, options) => {
     cssModules: true,
-    config.plugins.push(
-      //      new ESLintPlugin({
-      //       exclude: ['node_modules']
-      //      })
-    );
-    config.node = {}
+      config.plugins
+        .push
+        //      new ESLintPlugin({
+        //       exclude: ['node_modules']
+        //      })
+        ();
+    config.node = {};
     return config;
   },
 });

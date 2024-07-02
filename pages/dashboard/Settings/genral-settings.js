@@ -1,8 +1,8 @@
 import Breadcrumb from "../components/Breadcrumbs/Breadcrumb";
 import { useEffect, useState } from "react";
 import React from "react";
-import DefaultLayout from "../components/Layouts/DefaultLayout";
 import { toast } from 'react-toastify';
+import apiUrl from "config";
 
 const GeneralSettings = () => {
 
@@ -18,47 +18,46 @@ const GeneralSettings = () => {
 
 // GET FOOTER DATA
 useEffect(() => {
-  fetch("https://exertlogics.vercel.app/api/footer")
+  fetch(`${apiUrl}/footer`)
     .then((response) => response.json())
     .then((data) => {
-      setFooterData(data); 
+      setFooterData(data);
 
-         if (data && data.footer && data.footer[0].socialLinks) {
-           const facebookLink = data.footer[0].socialLinks.find(
-             (link) => link.type === "facebook"
-           );
-           const twitterLink = data.footer[0].socialLinks.find(
-             (link) => link.type === "twitter"
-           );
-           const instagramLink = data.footer[0].socialLinks.find(
-             (link) => link.type === "instagram"
-           );
-           const linkedinLink = data.footer[0].socialLinks.find(
-             (link) => link.type === "linkedin"
-           );
+      if (data && data.footer && data.footer[0].socialLinks) {
+        const facebookLink = data.footer[0].socialLinks.find(
+          (link) => link.type === "facebook"
+        );
+        const twitterLink = data.footer[0].socialLinks.find(
+          (link) => link.type === "twitter"
+        );
+        const instagramLink = data.footer[0].socialLinks.find(
+          (link) => link.type === "instagram"
+        );
+        const linkedinLink = data.footer[0].socialLinks.find(
+          (link) => link.type === "linkedin"
+        );
 
-           if (facebookLink) {
-             setFacebookURL(facebookLink.url);
-           } 
-           if (twitterLink) {
-             setTwitterURL(twitterLink.url);
-           } 
-           if (instagramLink) {
-             setInstagramURL(instagramLink.url);
-           } 
-           if (linkedinLink) {
+        if (facebookLink) {
+          setFacebookURL(facebookLink.url);
+        }
+        if (twitterLink) {
+          setTwitterURL(twitterLink.url);
+        }
+        if (instagramLink) {
+          setInstagramURL(instagramLink.url);
+        }
+        if (linkedinLink) {
+          setLinkedinURL(linkedinLink.url);
+        }
+      }
 
-             setLinkedinURL(linkedinLink.url);
-           } 
-         } 
+      if (data && data.footer && data.footer[0].subTitle) {
+        setDescriptionData(data.footer[0].subTitle);
+      }
 
-          if (data && data.footer && data.footer[0].subTitle) {
-             setDescriptionData(data.footer[0].subTitle);
-          }
-
-          if (data && data.footer && data.footer[0].copyrightText) {
-            setCopyrightData(data.footer[0].copyrightText);
-          }
+      if (data && data.footer && data.footer[0].copyrightText) {
+        setCopyrightData(data.footer[0].copyrightText);
+      }
     })
     .catch((error) => console.error("Error fetching footerData:", error));
 }, []);
@@ -126,11 +125,11 @@ const formSubmitHandler = async (e) => {
   setIsLoading(true); // Set loading state
 
   try {
-    const response = await fetch('https://exertlogics.vercel.app/api/footer', {
-      method: 'PATCH',
+    const response = await fetch(`${apiUrl}/footer`, {
+      method: "PATCH",
       body: JSON.stringify(bodyData),
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
     });
 
