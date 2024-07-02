@@ -1,3 +1,7 @@
+
+import { Redirect } from '../lib/redirect';
+export default Redirect;
+
 // import { Redirect } from '../lib/redirect';
 // export default Redirect;
 
@@ -144,3 +148,4 @@ export default Landing;
 
 const getStaticProps = makeStaticProps(['common']);
 export {  getStaticProps };
+

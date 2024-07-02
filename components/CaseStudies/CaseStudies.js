@@ -31,7 +31,7 @@ function CaseStudies({categoriesData}) {
 
   const fetchProjects = async () => {
     try {
-      // console.log("SELECTED CATE ID :",selectedCatgoryId)
+
       const response = await fetch(`http://localhost:3001/api/project/category/${selectedCatgoryId}`);
       const data = await response.json();
       if (data.status === "success" && data.project.length > 0) {
@@ -51,7 +51,7 @@ function CaseStudies({categoriesData}) {
     fetchProjects();
   }, [selectedCatgoryId]);
 
-  // console.log("LOADED PROJECTS ARE :",caseData)
+
 
   // Theme breakpoints
   const theme = useTheme();
@@ -69,7 +69,7 @@ function CaseStudies({categoriesData}) {
   // const [selectedIndex, setSelectedIndex] = useState("corporate");
 
   function handleListItemClick(event, index) {
-    // console.log("SELECTED CATEGORY :",index);
+
     setSelectedIndex(index);
   }
 

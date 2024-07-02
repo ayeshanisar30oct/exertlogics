@@ -11,11 +11,11 @@ export const hasReferencedPath = async(model,id) => {
   Object.keys(schemaPaths).forEach((path) => {
     if (schemaPaths[path].options && schemaPaths[path].options.ref) {
       const refPathName = path;
-      //console.log(refPathName)
+
       
         filter[refPathName] = id;
     }
   });
-  //console.log("FILTER FORMED IS :",filter)
+
   return filter;
 };

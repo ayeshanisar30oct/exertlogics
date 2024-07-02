@@ -20,7 +20,6 @@ function About({ aboutData }) {
     projectsCount,
     clientsCount,
   } = aboutData;
-// console.log("ABOUT DATA :",aboutData)
 
   // Theme breakpoints
   const theme = useTheme();
