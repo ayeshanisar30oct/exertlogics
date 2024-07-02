@@ -14,6 +14,7 @@ const controllers = {
 export default async function handler(req, res) {
   const { method, url } = req;
   const endpoint = url.split("/")[2]; // Get the endpoint name from URL
+
   if (!controllers[endpoint]) {
     res.status(404).json({ status: "fail", message: "Endpoint not found" });
     return;
@@ -34,10 +35,20 @@ export default async function handler(req, res) {
 
   try {
     if (method === "GET") {
+
       const methodName = method.toLowerCase() + endpoint.charAt(0).toUpperCase() + endpoint.slice(1);
       const methodToExecute = controller[methodName];
   
       if (methodToExecute && typeof methodToExecute === "function") {
+
+      
+      const methodName = method.toLowerCase() + endpoint.charAt(0).toUpperCase() + endpoint.slice(1);
+      const methodToExecute = controller[methodName];
+      //console.log("GET IFF METHOD NAME",methodName,methodToExecute);
+  
+      if (methodToExecute && typeof methodToExecute === "function") {
+      
+
         await methodToExecute()(req, res);
       }
     } else if (method === "PATCH") {

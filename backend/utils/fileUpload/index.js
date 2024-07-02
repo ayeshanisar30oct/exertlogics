@@ -19,6 +19,7 @@ export const fileUpload = async (req, res) => {
   });
 
   try {
+
     const { fields, files } = await new Promise((resolve, reject) => {
       form.parse(req, (err, fields, files) => {
         if (err) {

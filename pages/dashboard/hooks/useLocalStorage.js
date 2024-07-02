@@ -14,7 +14,7 @@ function useLocalStorage(key, initialValue) {
       }
     } catch (error) {
       // If error also return initialValue
-      console.log(error);
+      //console.log(error);
       return initialValue;
     }
   });
@@ -34,7 +34,7 @@ function useLocalStorage(key, initialValue) {
       }
     } catch (error) {
       // A more advanced implementation would handle the error case
-      console.log(error);
+      //console.log(error);
     }
   }, [key, storedValue]);
 

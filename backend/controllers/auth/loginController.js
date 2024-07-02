@@ -33,7 +33,7 @@ export async function login(req, res) {
     const payload = {
       id: user.id,
     };
-    const token = generateAccessToken(payload);
+    const token = await generateAccessToken(payload);
 
     res.status(200).json({ status: "success", token });
   } catch (err) {

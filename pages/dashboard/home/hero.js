@@ -18,6 +18,7 @@ const Hero = () => {
       .then((data) => {
         setHeroData(data);
 
+
         if (data && data.home && data.home[0].title) {
           setTitle(data.home[0].title);
         }
@@ -33,14 +34,17 @@ const Hero = () => {
   }, []);
 
   const titleInputHandler = (e) => {
+
     setTitle(e.target.value);
   };
 
   const subTitleInputHandler = (e) => {
+
     setSubTitle(e.target.value);
   };
 
   const videoUrlInputHandler = (e) => {
+
     setVideoUrl(e.target.value);
   };
 
@@ -79,6 +83,7 @@ const formSubmitHandler = async (e) => {
     }
 
     const result = await response.json();
+
     toast.success("Hero Data Updated Successfully");
   } catch (error) {
     console.error("Error submitting form:", error);

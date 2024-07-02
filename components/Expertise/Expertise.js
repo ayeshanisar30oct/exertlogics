@@ -40,6 +40,11 @@ function Expertise({expertiseData}) {
   const isDesktop = useMediaQuery(theme.breakpoints.up('lg'));
   const isTablet = useMediaQuery(theme.breakpoints.down('md'));
 
+  function capitalizeFirstLetter(text) {
+    if (!text) return text;
+    return text.charAt(0).toUpperCase() + text.slice(1);
+  }
+
   // Translate Function
   const { t } = useTranslation('common');
 
@@ -129,10 +134,10 @@ function Expertise({expertiseData}) {
                 className={cx(title.default, text.subtitle)}
                 variant="h4"
               >
-                {subTitle}
+                {capitalizeFirstLetter(subTitle)}
               </Typography>
               <Typography className={cx(classes.desc, text.paragraph)}>
-                {description}
+                {capitalizeFirstLetter(description)}
               </Typography>
               {!isTablet && (
                 <div className={classes.runningTag}>

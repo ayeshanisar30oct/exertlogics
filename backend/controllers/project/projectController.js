@@ -16,6 +16,7 @@ export const updateProjectLogos = catchAsync(async (req, res) => {
     const id = req.query?.id;
     let filter = id ? { _id: id } : {};
 
+
     const { fileUrl, err } = await fileUpload(req, res);
     if(err) return res.status(500).json({status:'fail',message:'File upload failed!'})
 

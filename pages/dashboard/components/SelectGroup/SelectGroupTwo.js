@@ -9,10 +9,12 @@ const SelectGroupTwo = ({ categories, setCategory }) => {
     setIsOptionSelected(true);
   };
   const changeHandler = (e) => {
+
     setSelectedOption(e.target.value)
     setCategory(e.target.value);
     changeTextColor();
   }
+
   return (
     <div>
       <div className="relative z-20 bg-white dark:bg-form-input">

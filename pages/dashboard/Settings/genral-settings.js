@@ -22,6 +22,7 @@ useEffect(() => {
     .then((response) => response.json())
     .then((data) => {
       setFooterData(data); 
+
          if (data && data.footer && data.footer[0].socialLinks) {
            const facebookLink = data.footer[0].socialLinks.find(
              (link) => link.type === "facebook"
@@ -70,22 +71,28 @@ const handleInputChange = (e) => {
 
   // Handler function to update state
   const fbInputHandler = (e) => {
+
     setFacebookURL(e.target.value);
 
   };
 const twtInputHandler = (e) => {
+
   setTwitterURL(e.target.value);
 };
 const instaInputHandler = (e) => {
+
   setInstagramURL(e.target.value);
 };
 const linkedinInputHandler = (e) => {
+
   setLinkedinURL(e.target.value);
 };
 const descInputHandler = (e) => {
+
   setDescriptionData(e.target.value);
 };
 const copyrightInputHandler = (e) => {
+
   setCopyrightData(e.target.value);
 };
 
@@ -132,6 +139,7 @@ const formSubmitHandler = async (e) => {
     }
 
     const result = await response.json();
+
     toast.success('Footer updated!');
   } catch (error) {
     console.error('Error submitting form:', error);

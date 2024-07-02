@@ -63,14 +63,14 @@ function About({ aboutData }) {
               className={cx(title.default, text.subtitle)}
               variant="h4"
             >
-              {subTitle}
+              {capitalizeFirstLetter(subTitle)}
             </Typography>
             <Counter
               employeesCount={employeesCount}
               projectsCount={projectsCount}
               clientsCount={clientsCount}
             />
-            <blockquote>{description}</blockquote>
+            <blockquote>{capitalizeFirstLetter(description)}</blockquote>
           </Grid>
         </Grid>
       </Container>
