@@ -2,11 +2,7 @@ import Breadcrumb from "../components/Breadcrumbs/Breadcrumb";
 import { useEffect, useState } from "react";
 import classNames from "classnames";
 import { toast } from "react-toastify";
-import {
-  PencilSquareIcon,
-  BookmarkSquareIcon,
-} from "@heroicons/react/24/outline";
-import DefaultLayout from "../components/Layouts/DefaultLayout";
+import apiUrl from "config";
 
 const Menu = () => {
   const [data, setData] = useState(null);
@@ -14,7 +10,7 @@ const Menu = () => {
 
   // Fetch header menu
   useEffect(() => {
-    fetch("http://localhost:3001/api/header")
+     fetch(`${apiUrl}/header`)
       .then((response) => response.json())
       .then(setData)
       .catch(console.error);
@@ -47,7 +43,7 @@ const Menu = () => {
        siteTitle: "ExertLogics",
        links: updatedLinks,
      };
-    fetch(`http://localhost:3001/api/header/`, {
+    fetch(`${apiUrl}/header`, {
       method: "PATCH",
       body: JSON.stringify(bodyData),
       headers: {
@@ -66,8 +62,7 @@ const Menu = () => {
           };
         });
         setEditingLinkId(null);
-            toast.success("Menu Item Has Been Updated.");
-
+        toast.success("Menu Item Has Been Updated.");
       })
       .catch((error) => {
         console.error("Error updating data:", error);

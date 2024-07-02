@@ -1,8 +1,10 @@
-import expertise from "pages/api/expertise";
 
+import apiUrl from "config";
+  
 export const fetchContactData = async () => {
   try {
-    const response = await fetch("http://localhost:3001/api/contact");
+      const response = await fetch(`${apiUrl}/contact`);
+
     const data = await response.json();
     if (data.status === "success" && data.contact.length > 0) {
       return { contactData: data.contact[0] };
@@ -13,10 +15,11 @@ export const fetchContactData = async () => {
   return { contactData: null };
 };
 
-// load Navebar menu links
+// load Navbar menu links
 export const fetchMenus = async () => {
   try {
-    const response = await fetch("http://localhost:3001/api/header/");
+          const response = await fetch(`${apiUrl}/header`);
+
     const data = await response.json();
     if (data.status === "success" && data.header.length > 0) {
       const menuList = data.header[0].links.map((link) => ({
@@ -35,8 +38,9 @@ export const fetchMenus = async () => {
 // Load Navabar logo
 export const fetchLogoData = async () => {
   try {
-    const logoResponse = await fetch("http://localhost:3001/api/logo/");
-    const logoData = await logoResponse.json();
+          const response = await fetch(`${apiUrl}/logo`);
+
+    const logoData = await response.json();
     if (logoData.status === "success" && logoData.logos.length > 0) {
       return { logoUrl: logoData.logos[0].logoLightUrl };
     }
@@ -49,7 +53,8 @@ export const fetchLogoData = async () => {
 // Load Hero section data
 export const fetchHomeData = async() => {
   try {
-    const response = await fetch("http://localhost:3001/api/home");
+          const response = await fetch(`${apiUrl}/home`);
+
     const data = await response.json();
     if (data.status === "success" && data.home.length > 0) {
       return { homeData : data.home[0] };
@@ -63,7 +68,8 @@ export const fetchHomeData = async() => {
 // Load About data 
 export const fetchAboutData = async () => {
   try {
-    const response = await fetch("http://localhost:3001/api/about");
+              const response = await fetch(`${apiUrl}/about`);
+
     const data = await response.json();
     if (data.status === "success" && data.about.length > 0) {
       return { aboutData : data.about[0]};
@@ -76,7 +82,8 @@ export const fetchAboutData = async () => {
 
 export const fetchServicesData = async() => {
     try {
-      const response = await fetch("http://localhost:3001/api/service/");
+                const response = await fetch(`${apiUrl}/service`);
+
       const data = await response.json();
       if (data.status === "success") {
         const services = data.service.map((service) => ({
@@ -95,7 +102,8 @@ export const fetchServicesData = async() => {
 // Load expertise data
 export const fetchExpertiseData = async() => {
     try {
-      const response = await fetch("http://localhost:3001/api/expertise");
+                const response = await fetch(`${apiUrl}/expertise`);
+
       const data = await response.json();
       if (data.status === "success" && data.expertise.length > 0) {
         const exps = data.expertise[0];
@@ -116,7 +124,8 @@ export const fetchExpertiseData = async() => {
 // Load categories and projects
 export const fetchCategories = async () => {
   try {
-    const response = await fetch("http://localhost:3001/api/category");
+              const response = await fetch(`${apiUrl}/category`);
+
     const data = await response.json();
     if (data.status === "success" && data.category.length > 0) {
         return { categoriesData : data.category }
@@ -130,32 +139,11 @@ export const fetchCategories = async () => {
 
 export const fetchFooterData = async() => {
     try {
-      const response = await fetch("http://localhost:3001/api/footer");
+                const response = await fetch(`${apiUrl}/footer`);
+
       const data = await response.json();
       if (data.status === "success" && data.footer.length > 0) {
         return {footerData : data.footer[0]}
-
-        // setSubTitle(footerData.subTitle);
-        // setCopyrightText(footerData.copyrightText);
-
-        // footerData.socialLinks.forEach((link) => {
-        //   switch (link.type) {
-        //     case "facebook":
-        //       setFacebookUrl(link.url);
-        //       break;
-        //     case "twitter":
-        //       setTwitterUrl(link.url);
-        //       break;
-        //     case "instagram":
-        //       setInstagramUrl(link.url);
-        //       break;
-        //     case "linkedin":
-        //       setLinkedinUrl(link.url);
-        //       break;
-        //     default:
-        //       break;
-        //   }
-        // });
       }
     } catch (error) {
       console.error("Error fetching footer data:", error);

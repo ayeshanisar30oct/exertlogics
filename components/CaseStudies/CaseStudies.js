@@ -14,6 +14,8 @@ import CaseCard from "../Cards/Case";
 import useStyles from "./case-study-style";
 import useTitle from "../Title/title-style";
 import { transfromProjects } from "public/projects";
+import apiUrl from "config";
+
 
 const categories = [
   "corporate",
@@ -32,7 +34,8 @@ function CaseStudies({categoriesData}) {
   const fetchProjects = async () => {
     try {
 
-      const response = await fetch(`http://localhost:3001/api/project/category/${selectedCatgoryId}`);
+      // const response = await fetch(`${apiUrl}/project/category/${selectedCatgoryId}`);
+      const response = await fetch(`${apiUrl}/project/category/${selectedCatgoryId}`);
       const data = await response.json();
       if (data.status === "success" && data.project.length > 0) {
               const projectCards = transfromProjects(data.project);
@@ -68,8 +71,8 @@ function CaseStudies({categoriesData}) {
   const { classes: title } = useTitle();
   // const [selectedIndex, setSelectedIndex] = useState("corporate");
 
-  function handleListItemClick(event, index) {
-
+  function handleListItemClick(e, index) {
+    setSelectedCategoryId(e.target.value)
     setSelectedIndex(index);
   }
 

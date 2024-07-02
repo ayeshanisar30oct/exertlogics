@@ -17,6 +17,8 @@ import yt from 'youtube';
 import routeLink from 'public/text/link';
 import useStyles from './banner-style';
 import Link from '../Link';
+import apiUrl from "config";
+
 
 function VideoBanner({homeData}) {
 
@@ -79,16 +81,18 @@ function VideoBanner({homeData}) {
   };
 
   const opts = {
-    height: '720',
-    width: '1080',
-    playerVars: { // https://developers.google.com/youtube/player_parameters
+    height: "720",
+    width: "1080",
+    playerVars: {
+      // https://developers.google.com/youtube/player_parameters
       autoplay: 1,
       controls: 0,
       rel: 0,
       showinfo: 0,
       mute: 1,
-      origin: 'http://localhost:3001'
-    }
+      // origin: "http://localhost:3001/",
+      origin: "https://exertlogics.vercel.app/",
+    },
   };
 
   // function capitalizeFirstLetterOfEachWord(text) {
