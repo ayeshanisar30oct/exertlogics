@@ -49,7 +49,6 @@ const Hero = () => {
   };
 
 const formSubmitHandler = async (e) => {
-  console.log("SUBMIT")
   e.preventDefault();
 
   // Basic validation
@@ -71,7 +70,7 @@ const formSubmitHandler = async (e) => {
   setIsLoading(true); // Set loading state
 
   try {
-    console.log("SUBMIT try");
+
     const response = await fetch(`${apiUrl}/home`, {
       method: "PATCH",
       body: JSON.stringify(bodyData),
