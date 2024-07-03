@@ -14,10 +14,10 @@ const controllers = {
 export default async function handler(req, res) {
   const { method, url } = req;
   const endpoint = url.split("/")[2]; // Get the endpoint name from URL
-
+  console.log("Checking Handler");
   if (!controllers[endpoint]) {
-    res.status(404).json({ status: "fail", message: "Endpoint not found" });
-    return;
+    console.log("Checking Handler");
+ return res.status(404).json({ status: "fail", message: "Endpoint not found" });
   }
 
   const controller = await controllers[endpoint];
