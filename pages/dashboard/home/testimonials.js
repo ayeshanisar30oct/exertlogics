@@ -7,30 +7,27 @@ import Breadcrumb from "../components/Breadcrumbs/Breadcrumb";
 import ServiceModal from "../modals/ServiceModal";
 import apiUrl from "config";
 
-const Services = () => {
+const Testimonials = () => {
   const [services, setServices] = useState([]);
   const [editingServiceId, setEditingServiceId] = useState(null);
   const [selectedFile, setSelectedFile] = useState(null);
-    const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
+  const fetchServicesData = async () => {
+    try {
+      const response = await fetch(`${apiUrl}/service`);
+      const data = await response.json();
+      if (data.status === "success") {
+        setServices(data.service);
+      }
+    } catch (error) {
+      console.error("Error fetching service data:", error);
+    }
+  };
 
-
- const fetchServicesData = async () => {
-   try {
-     const response = await fetch(`${apiUrl}/service`);
-     const data = await response.json();
-     if (data.status === "success") {
-          setServices(data.service);
-     }
-   } catch (error) {
-     console.error("Error fetching service data:", error);
-   }
- };
-
- useEffect(() => {
-   fetchServicesData();
- }, []);
-
+  useEffect(() => {
+    fetchServicesData();
+  }, []);
 
   const handleEdit = (serviceId) => {
     setEditingServiceId(serviceId);
@@ -53,34 +50,31 @@ const Services = () => {
     const serviceToSave = services.find((service) => service._id === serviceId);
     const { _id, ...serviceData } = serviceToSave;
 
-      try {
-        const response = await fetch(
-          `${apiUrl}/service/${serviceId}/`,
-          {
-            method: "PATCH",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify(serviceData),
-          }
-        );
+    try {
+      const response = await fetch(`${apiUrl}/service/${serviceId}/`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(serviceData),
+      });
 
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
-
-        const updatedService = await response.json();
-        setServices((prevServices) =>
-          prevServices.map((service) =>
-            service._id === updatedService._id ? updatedService : service
-          )
-        );
-        setEditingServiceId(null);
-        toast.success("Service updated successfully");
-      } catch (error) {
-        console.error("Error updating service:", error);
-        toast.error("Failed to update service");
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
       }
+
+      const updatedService = await response.json();
+      setServices((prevServices) =>
+        prevServices.map((service) =>
+          service._id === updatedService._id ? updatedService : service
+        )
+      );
+      setEditingServiceId(null);
+      toast.success("Service updated successfully");
+    } catch (error) {
+      console.error("Error updating service:", error);
+      toast.error("Failed to update service");
+    }
   };
 
   const imageUpload = async (serviceId) => {
@@ -112,7 +106,7 @@ const Services = () => {
             service._id === updatedService._id ? updatedService : service
           )
         );
-        
+
         setEditingServiceId(null);
         setSelectedFile(null);
         toast.success("Service updated successfully");
@@ -123,17 +117,17 @@ const Services = () => {
     }
   };
 
-    const openModal = () => {
-      setIsModalOpen(true);
-    };
+  const openModal = () => {
+    setIsModalOpen(true);
+  };
 
-    const closeModal = () => {
-      setIsModalOpen(false);
-    };
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
 
   return (
     <div className="mx-auto">
-      <Breadcrumb pageName="Services" />
+      <Breadcrumb pageName="Testimonials" />
       <div className="rounded-sm border border-stroke bg-white px-5 pb-2.5 pt-6 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
         <div className="flex justify-end mb-4">
           <ServiceModal isOpen={openModal} onRequestClose={closeModal} />
@@ -142,17 +136,23 @@ const Services = () => {
           <table className="w-full table-auto">
             <thead>
               <tr className="bg-gray-2 text-left dark:bg-meta-4">
-                <th className="min-w-[220px] px-4 py-4 font-medium text-black dark:text-white xl:pl-11">
-                  Image
-                </th>
-                <th className="min-w-[150px] px-4 py-4 font-medium text-black dark:text-white">
-                  Service Title
-                </th>
-                <th className="min-w-[150px] px-4 py-4 font-medium text-black dark:text-white">
-                  Description
+                <th className="px-4 py-4 font-medium text-black dark:text-white xl:pl-11">
+                  Avatar
                 </th>
                 <th className="px-4 py-4 font-medium text-black dark:text-white">
-                  Actions
+                  Name
+                </th>
+                <th className="px-4 py-4 font-medium text-black dark:text-white">
+                  Title
+                </th>
+                <th className="px-4 py-4 font-medium text-black dark:text-white">
+                  Message
+                </th>
+                <th className="px-4 py-4 font-medium text-black dark:text-white">
+                  Rating
+                </th>
+                <th className="px-4 py-4 font-medium text-black dark:text-white">
+                  Action
                 </th>
               </tr>
             </thead>
@@ -312,4 +312,4 @@ const Services = () => {
   );
 };
 
-export default Services;
+export default Testimonials;

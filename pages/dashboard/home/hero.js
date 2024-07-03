@@ -49,6 +49,7 @@ const Hero = () => {
   };
 
 const formSubmitHandler = async (e) => {
+  console.log("SUBMIT")
   e.preventDefault();
 
   // Basic validation
@@ -70,6 +71,7 @@ const formSubmitHandler = async (e) => {
   setIsLoading(true); // Set loading state
 
   try {
+    console.log("SUBMIT try");
     const response = await fetch(`${apiUrl}/home`, {
       method: "PATCH",
       body: JSON.stringify(bodyData),
@@ -94,7 +96,7 @@ const formSubmitHandler = async (e) => {
 
   return (
       <div className="mx-auto">
-        <Breadcrumb pageName="Hero" />
+        <Breadcrumb pageName="Hero"/>
         <div className="grid grid-cols-5 gap-8">
           <div className="col-span-5 xl:col-span-5">
             <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">

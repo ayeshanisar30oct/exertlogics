@@ -4,7 +4,6 @@ import apiUrl from "config";
 export const fetchContactData = async () => {
   try {
       const response = await fetch(`${apiUrl}/contact`);
-
     const data = await response.json();
     if (data.status === "success" && data.contact.length > 0) {
       return { contactData: data.contact[0] };
@@ -132,7 +131,7 @@ export const fetchCategories = async () => {
 
     }
   } catch (error) {
-    console.error("Error fetching about data:", error);
+    console.error("Error fetching categories:", error);
   }
   return { categoriesData : null }
 };

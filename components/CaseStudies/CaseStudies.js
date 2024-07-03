@@ -16,43 +16,39 @@ import useTitle from "../Title/title-style";
 import { transfromProjects } from "public/projects";
 import apiUrl from "config";
 
-
-const categories = [
-  "corporate",
-  "advertising",
-  "marketing",
-  "government",
-  "creative",
-];
-
 function CaseStudies({categoriesData}) {
   // const [categoriesData, setCategoriesData] = useState([]);
-    const [selectedCatgoryId, setSelectedCategoryId] = useState(categoriesData[0]?._id);
-    const [selectedIndex, setSelectedIndex] = useState(null);
+    const [selectedCategoryId, setSelectedCategoryId] = useState(categoriesData[0]?._id);
     const [caseData, setCaseData] = useState(null);
 
   const fetchProjects = async () => {
-    try {
+    if(selectedCategoryId){
 
-      // const response = await fetch(`${apiUrl}/project/category/${selectedCatgoryId}`);
-      const response = await fetch(`${apiUrl}/project/category/${selectedCatgoryId}`);
-      const data = await response.json();
-      if (data.status === "success" && data.project.length > 0) {
-              const projectCards = transfromProjects(data.project);
-              if(projectCards.length>0){
-
-                setCaseData(projectCards);
-              }
-
+      try {
+  
+        const response = await fetch(`${apiUrl}/project/category/${selectedCategoryId}`);
+  
+        const data = await response.json();
+        if (data.status === "success" && data?.project?.length > 0) {
+                const projectCards = transfromProjects(data.project);
+                if(projectCards.length>0){
+  
+                  setCaseData(projectCards);
+                }
+  
+        }
+        else{
+          setCaseData([])
+        }
+      } catch (error) {
+        console.error("Error fetching category data:", error);
       }
-    } catch (error) {
-      console.error("Error fetching about data:", error);
     }
   };
 
   useEffect(() => {
     fetchProjects();
-  }, [selectedCatgoryId]);
+  }, [selectedCategoryId]);
 
 
 
@@ -69,11 +65,9 @@ function CaseStudies({categoriesData}) {
 
   const { classes, cx } = useStyles();
   const { classes: title } = useTitle();
-  // const [selectedIndex, setSelectedIndex] = useState("corporate");
 
-  function handleListItemClick(e, index) {
-    setSelectedCategoryId(e.target.value)
-    setSelectedIndex(index);
+  function handleListItemClick(e, item) {
+    setSelectedCategoryId(item._id)
   }
 
   function onMovePrevRequest() {
@@ -132,13 +126,13 @@ function CaseStudies({categoriesData}) {
                   {t("agency-landing.case_title")}
                 </Typography>
                 <List component="nav">
-                  {categoriesData.map((item, index) => (
+                  {categoriesData.map((item) => (
                     <ListItem
                       button
                       key={item._id}
                       className={cx(
                         classes.filter,
-                        selectedIndex === item.title && classes.active
+                        selectedCategoryId === item.title && classes.active
                       )}
                       onClick={(event) => handleListItemClick(event, item)}
                     >
@@ -161,12 +155,13 @@ function CaseStudies({categoriesData}) {
                     duration={0.4}
                   >
                     <div>
-                      {caseData && caseData.map((item, index) => {
-                        if (item.size === "small") {
-                          return renderCard(item, index);
-                        }
-                        return false;
-                      })}
+                      {caseData &&
+                        caseData.map((item, index) => {
+                          if (item.size === "small") {
+                            return renderCard(item, index);
+                          }
+                          return false;
+                        })}
                     </div>
                   </ScrollAnimation>
                 </Grid>
@@ -179,12 +174,13 @@ function CaseStudies({categoriesData}) {
                     duration={0.4}
                   >
                     <div>
-                      {caseData && caseData.map((item, index) => {
-                        if (item.size === "medium") {
-                          return renderCard(item, index);
-                        }
-                        return false;
-                      })}
+                      {caseData &&
+                        caseData.map((item, index) => {
+                          if (item.size === "medium") {
+                            return renderCard(item, index);
+                          }
+                          return false;
+                        })}
                     </div>
                   </ScrollAnimation>
                 </Grid>
@@ -197,12 +193,13 @@ function CaseStudies({categoriesData}) {
                     duration={0.4}
                   >
                     <div>
-                      {caseData && caseData.map((item, index) => {
-                        if (item.size === "big") {
-                          return renderCard(item, index);
-                        }
-                        return false;
-                      })}
+                      {caseData &&
+                        caseData.map((item, index) => {
+                          if (item.size === "big") {
+                            return renderCard(item, index);
+                          }
+                          return false;
+                        })}
                     </div>
                   </ScrollAnimation>
                 </Grid>

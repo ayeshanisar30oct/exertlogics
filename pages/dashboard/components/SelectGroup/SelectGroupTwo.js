@@ -1,19 +1,19 @@
 "use client";
 import React, { useState } from "react";
 
-const SelectGroupTwo = ({ categories, setCategory }) => {
+const SelectGroupTwo = ({ categories = [], setCategory }) => {
   const [selectedOption, setSelectedOption] = useState("");
   const [isOptionSelected, setIsOptionSelected] = useState(false);
 
   const changeTextColor = () => {
     setIsOptionSelected(true);
   };
-  const changeHandler = (e) => {
 
-    setSelectedOption(e.target.value)
+  const changeHandler = (e) => {
+    setSelectedOption(e.target.value);
     setCategory(e.target.value);
     changeTextColor();
-  }
+  };
 
   return (
     <div>
@@ -29,9 +29,13 @@ const SelectGroupTwo = ({ categories, setCategory }) => {
             Select Category
           </option>
           {categories.map((cat) => (
-          <option value={cat._id} className="text-body dark:text-bodydark">
-            {cat.title.toUpperCase()}
-          </option>
+            <option
+              key={cat._id}
+              value={cat._id}
+              className="text-body dark:text-bodydark"
+            >
+              {cat.title.toUpperCase()}
+            </option>
           ))}
         </select>
 

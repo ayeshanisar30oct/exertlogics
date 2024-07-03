@@ -35,36 +35,39 @@ export default async function handler(req, res) {
 
   try {
     if (method === "GET") {
-
-      const methodName = method.toLowerCase() + endpoint.charAt(0).toUpperCase() + endpoint.slice(1);
+      const methodName =
+        method.toLowerCase() +
+        endpoint.charAt(0).toUpperCase() +
+        endpoint.slice(1);
       const methodToExecute = controller[methodName];
-  
-      if (methodToExecute && typeof methodToExecute === "function") {
 
-      
-      const methodName = method.toLowerCase() + endpoint.charAt(0).toUpperCase() + endpoint.slice(1);
-      const methodToExecute = controller[methodName];
-      //console.log("GET IFF METHOD NAME",methodName,methodToExecute);
-  
       if (methodToExecute && typeof methodToExecute === "function") {
-      
+        const methodName =
+          method.toLowerCase() +
+          endpoint.charAt(0).toUpperCase() +
+          endpoint.slice(1);
+        const methodToExecute = controller[methodName];
 
-        await methodToExecute()(req, res);
+        if (methodToExecute && typeof methodToExecute === "function") {
+          await methodToExecute()(req, res);
+        }
       }
     } else if (method === "PATCH") {
-
-      const methodName = "update" + endpoint.charAt(0).toUpperCase() + endpoint.slice(1);
+      const methodName =
+        "update" + endpoint.charAt(0).toUpperCase() + endpoint.slice(1);
       const methodToExecute = controller[methodName];
-  
+
       if (methodToExecute && typeof methodToExecute === "function") {
         await methodToExecute(req, res);
       }
     } else {
       res.setHeader("Allow", methodNames);
-      res.status(405).json({ status: "fail", message: `Method ${method} Not Allowed` });
+      res
+        .status(405)
+        .json({ status: "fail", message: `Method ${method} Not Allowed` });
     }
-  }
- } catch (error) {
+ } 
+ catch (error) {
     console.error(error);
     return res.status(500).json({ status: "error", message: "Internal Server Error" });
   }

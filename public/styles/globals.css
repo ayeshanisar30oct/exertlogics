@@ -260,11 +260,14 @@ input[type="search"]::-webkit-search-cancel-button {
 /* HEADER SECTION ENDS  */
 
 
-/* DASHBOARD STARTS */
+/* SERVICES STARTS */
 
+.service-modal svg
+{
+    display: none;
+}
 
-
-/* DASHBOARD ENDS */
+/* SERVICES ENDS */
 
 
 
