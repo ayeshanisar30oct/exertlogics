@@ -24,7 +24,7 @@ const ContactDetails = () => {
         setAddress(contactData.address);
       }
     } catch (error) {
-      console.error("Error fetching about data:", error);
+      console.error("Error fetching contact details:", error);
     }
   };
 

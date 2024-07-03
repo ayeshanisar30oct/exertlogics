@@ -5,8 +5,7 @@ const ESLintPlugin = require('eslint-webpack-plugin');
 
 module.exports = withImages({
   env: {
-    API_BASE_URL_DEV: process.env.API_BASE_URL_DEV,
-    API_BASE_URL_PROD: process.env.API_BASE_URL_PROD,
+    NEXT_PUBLIC_API_BASE_URL: process.env.NEXT_PUBLIC_API_BASE_URL
   },
   // Enable this code below for Server Side Rendering/Translation (SSR)
   //  i18n,

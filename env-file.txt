@@ -18,4 +18,4 @@ EMAIL_USER=your@email.com
 EMAIL_PASS=yourpassword
 
 API_BASE_URL_DEV = http://localhost:3001/api
-API_BASE_URL_PROD = https://exertlogics.vercel.app/api
+API_BASE_URL_PROD = http://localhost:3001/api

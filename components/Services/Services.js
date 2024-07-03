@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { useTheme } from "@mui/material/styles";
 import Container from "@mui/material/Container";
@@ -7,7 +7,6 @@ import Carousel from "react-slick";
 import PrevIcon from "@mui/icons-material/ArrowBack";
 import NextIcon from "@mui/icons-material/ArrowForward";
 import { useTranslation } from "next-i18next";
-import imgApi from "public/images/imgAPI";
 import useStyles from "./services-style";
 import TitleIcon from "../Title/WithIcon";
 import Card from "../Cards/Default";
@@ -29,6 +28,9 @@ function Services({ serviceData }) {
   const isDesktop = useMediaQuery(theme.breakpoints.up("lg"));
   const { classes } = useStyles();
   const slider = useRef(null);
+
+  const [selectedService, setSelectedService] = useState(null);
+
   const settings = {
     dots: false,
     infinite: false,
@@ -67,14 +69,15 @@ function Services({ serviceData }) {
     }
   }, [theme.direction, serviceData.length]);
 
-  // Debug: Check if the modal open function is triggered
-  const handleOpenModal = () => {
-    console.log("Modal Opened");
+  const handleOpenModal = (service) => {
+    setSelectedService(service);
     onOpen();
   };
+
   useEffect(() => {
     if (isOpen) {
-      document.body.style.filter = "blur(5px)";
+      // document.body.style.filter = "blur(5px)";
+      document.body.style.filter = "none";
     } else {
       document.body.style.filter = "none";
     }
@@ -105,7 +108,7 @@ function Services({ serviceData }) {
                     desc={item.desc}
                     img={item.img}
                     button="See Details"
-                    onButtonClick={handleOpenModal} // Use the handler here
+                    onButtonClick={() => handleOpenModal(item)} // Pass the item data
                   />
                 </div>
               ))}
@@ -148,49 +151,38 @@ function Services({ serviceData }) {
           </div>
         </Container>
       </div>
-      <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
-        <ModalContent className="fixed inset-0 flex items-center justify-center">
-          {(onClose) => (
-            <div
-              className="bg-white text-black p-4 rounded-lg shadow-lg border border-gray-300"
-              style={{
-                width: "33%",
-                boxShadow:
-                  "0 4px 8px rgba(0, 0, 0, 0.1), 0 6px 20px rgba(0, 0, 0, 0.1)",
-              }}
-            >
-              <ModalHeader className="flex flex-col gap-1">
-                Modal Title
-              </ModalHeader>
-              <ModalBody>
-                <p>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                  Nullam pulvinar risus non risus hendrerit venenatis.
-                  Pellentesque sit amet hendrerit risus, sed porttitor quam.
-                </p>
-                <p>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                  Nullam pulvinar risus non risus hendrerit venenatis.
-                  Pellentesque sit amet hendrerit risus, sed porttitor quam.
-                </p>
-                <p>
-                  Magna exercitation reprehenderit magna aute tempor cupidatat
-                  consequat elit dolor adipisicing. Mollit dolor eiusmod sunt ex
-                  incididunt cillum quis. Velit duis sit officia eiusmod Lorem
-                  aliqua enim laboris do dolor eiusmod. Et mollit incididunt
-                  nisi consectetur esse laborum eiusmod pariatur proident Lorem
-                  eiusmod et. Culpa deserunt nostrud ad veniam.
-                </p>
-              </ModalBody>
-              <ModalFooter>
-                <Button color="primary" onPress={onClose}>
-                  Close
-                </Button>
-              </ModalFooter>
-            </div>
-          )}
-        </ModalContent>
-      </Modal>
+      {selectedService && (
+        <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
+          <ModalContent className="fixed inset-0 flex items-center justify-center service-modal">
+            {(onClose) => (
+              <div
+                className="bg-white text-black p-4 rounded-lg shadow-lg"
+                style={{
+                  width: "33%",
+                  boxShadow:
+                    "0 4px 8px rgba(0, 0, 0, 0.2), 0 6px 20px rgba(0, 0, 0, 0.1)",
+                }}
+              >
+                <ModalHeader className="flex flex-col gap-1">
+                  {selectedService.title}
+                </ModalHeader>
+                <ModalBody>
+                  <p>{selectedService.desc}</p>
+                </ModalBody>
+                <ModalFooter>
+                  <Button
+                    className="text-white rounded-md"
+                    color="primary"
+                    onPress={onClose}
+                  >
+                    Close
+                  </Button>
+                </ModalFooter>
+              </div>
+            )}
+          </ModalContent>
+        </Modal>
+      )}
     </div>
   );
 }

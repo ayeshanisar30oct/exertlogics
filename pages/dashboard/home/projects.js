@@ -3,12 +3,12 @@ import { toast } from "react-toastify";
 import classNames from "classnames";
 import Breadcrumb from "../components/Breadcrumbs/Breadcrumb";
 import SelectGroupTwo from "../components/SelectGroup/SelectGroupTwo";
-import useApi from "../hooks/useApi";
 import ProjectModal from "../modals/ProjectModal";
 import apiUrl from "config";
 
 const Projects = () => {
-  const { request , loading, error } = useApi();
+    const [loading, setLoading] = useState(false);
+      const [error, setError] = useState(null);
   const [categories, setCategories] = useState([]);
   const [projects, setProjects] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState("");
@@ -18,14 +18,46 @@ const Projects = () => {
 
 
 // Load categories
+const request = async (
+  url,
+  method = "GET",
+  body = null,
+  isFormData = false
+) => {
+  setLoading(true);
+  setError(null);
+
+  const headers = !isFormData ? { "Content-Type": "application/json" } : {};
+
+  try {
+    const response = await fetch(url, {
+      method,
+      headers,
+      body: isFormData ? body : body ? JSON.stringify(body) : null,
+    });
+
+    if (!response.ok) {
+      throw new Error("Network response was not ok");
+    }
+
+    const data = await response.json();
+    setLoading(false);
+    return data;
+  } catch (error) {
+    setError(error);
+    setLoading(false);
+    throw error;
+  }
+};
+
 const fetchCategoriesData = async (getProject = false) => {
   try {
-    // if()
-    //   {
+    setLoading(true);
+
     const endpoint = getProject
       ? selectedCategory
-      ? `${apiUrl}/project/category/${selectedCategory}`
-      : `${apiUrl}/category`
+        ? `${apiUrl}/project/category/${selectedCategory}`
+        : `${apiUrl}/category`
       : `${apiUrl}/category`;
 
     const data = await request(endpoint);
@@ -36,10 +68,12 @@ const fetchCategoriesData = async (getProject = false) => {
       } else {
         setCategories(data.category);
       }
-      //  }
     }
   } catch (error) {
-    console.error('Error fetching data:', error);
+    console.error("Error fetching data:", error);
+    setError(error);
+  } finally {
+    setLoading(false);
   }
 };
 
@@ -75,23 +109,32 @@ const fetchCategoriesData = async (getProject = false) => {
   };
 
   // Save updated project
-  const handleSave = async (proId) => {
-    const serviceToSave = projects.find((pro) => pro._id === proId);
-    const { _id, ...serviceData } = serviceToSave;
+ const handleSave = async (proId) => {
+   try {
+     setLoading(true);
 
-    try {
-      const data = await request(`${apiUrl}/project/${proId}/`, 'PATCH', serviceData);
+     const serviceToSave = projects.find((pro) => pro._id === proId);
+     const { _id, ...serviceData } = serviceToSave;
 
-      setProjects((prevPro) =>
-        prevPro.map((pro) => (pro._id === data._id ? data : pro))
-      );
-      setEditingProjectId(null);
-      toast.success('Service updated successfully');
-    } catch (error) {
-      console.error('Error updating service:', error);
-      toast.error('Failed to update service');
-    }
-  };
+     const data = await request(
+       `${apiUrl}/project/${proId}/`,
+       "PATCH",
+       serviceData
+     );
+
+     setProjects((prevPro) =>
+       prevPro.map((pro) => (pro._id === data._id ? data : pro))
+     );
+     setEditingProjectId(null);
+     toast.success("Service updated successfully");
+   } catch (error) {
+     console.error("Error updating service:", error);
+     toast.error("Failed to update service");
+     setError(error);
+   } finally {
+     setLoading(false);
+   }
+ };
 
   // Media upload for a project
   const imageUpload = async (proId) => {

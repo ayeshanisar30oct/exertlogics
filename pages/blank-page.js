@@ -44,7 +44,6 @@ function BlankPage(props) {
 //   const { onToggleDark, onToggleDir } = props;
   const { t } = useTranslation('common');
   const { onToggleDark, onToggleDir, logoUrl, footerData, menuList } = props;
-  //console.log("BLANK PAGE :",props)
 
   return (
     <React.Fragment>

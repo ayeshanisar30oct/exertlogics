@@ -6,7 +6,7 @@ import catchAsync from "backend/utils/catchAsync";
 import connectDB from "../../../backend/db/connectDB";
 import { isEmptyObject } from "backend/utils/helpers";
 
-// Get About data
+
 export const getService = () => getFactory(Service);
 
 // Create or update Service data

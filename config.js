@@ -1,6 +1,4 @@
 const apiUrl =
-  process.env.NODE_ENV === "production"
-    ? process.env.API_BASE_URL_PROD
-    : process.env.API_BASE_URL_DEV;
+process.env.NEXT_PUBLIC_API_BASE_URL;
 
 export default apiUrl;

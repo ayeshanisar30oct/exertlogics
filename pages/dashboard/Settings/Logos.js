@@ -343,16 +343,34 @@ const Logos = ({ initialLogosData }) => {
   );
 };
 
-export async function getStaticProps() {
-  const resp = await fetch(`${apiUrl}/logo`);
-  const initialLogosData = await resp.json();
+// export async function getStaticProps() {
+//   const resp = await fetch(`${apiUrl}/logo`);
+//   const initialLogosData = await resp.json();
 
+//   return {
+//     props: {
+//       initialLogosData,
+//     },
+//     // Re-generate the page at most once every 5 seconds if a request comes in
+//     revalidate: 5,
+//   };
+// }
+export async function getStaticProps() {
+  let initialLogosData = {};
+  try {
+    const res = await fetch(`${apiUrl}/logo`);
+    if (!res.ok) {
+      throw new Error("Failed to fetch");
+    }
+    initialLogosData = await res.json();
+  } catch (error) {
+    console.error("Error fetching initial logo data:", error);
+    initialLogosData = {
+      logos: [{ logoLightUrl: "", logoDarkUrl: "", faviconUrl: "" }],
+    }; // fallback data
+  }
   return {
-    props: {
-      initialLogosData,
-    },
-    // Re-generate the page at most once every 5 seconds if a request comes in
-    revalidate: 5,
+    props: { initialLogosData },
   };
 }
 
