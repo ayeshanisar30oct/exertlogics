@@ -140,6 +140,6 @@ Landing.propTypes = {
 
 export default Landing;
 
-const getStaticProps = makeStaticProps(['common']);
-export {  getStaticProps };
+const getServerSideProps = makeStaticProps(['common']);
+export { getServerSideProps };
 
