@@ -12,9 +12,9 @@ export const config = {
 
 export default async function handler(req, res) {
   if (req.method === "GET") {
-     getLogo(req, res);
+     await getLogo(req, res);
   } else if (req.method === "PATCH") {
-     updateLogo(req, res);
+     await updateLogo(req, res);
   } else {
     res.setHeader("Allow", ["GET", "PATCH"]);
     res
