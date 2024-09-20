@@ -53,14 +53,16 @@ export const fetchLogoData = async () => {
       `${process.env.NEXT_PUBLIC_API_BASE_URL}/logo`
     );
     if (!response.ok) {
+      console.log(response);
       throw new Error("Something went wrong!");
+
     }
     const logoData = await response.json();
     if (logoData.status === "success" && logoData.logos.length > 0) {
       return { logoUrl: logoData.logos[0].logoLightUrl };
     }
   } catch (error) {
-    console.error("Error fetching logo:", error);
+    console.error("Error fetching logo:", error, process.env.NEXT_PUBLIC_API_BASE_URL + "/logo");
     return { logoUrl: null };
   }
 };
